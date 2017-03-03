@@ -11,6 +11,7 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -66,19 +67,13 @@ public class HelpActivity extends AppCompatActivity implements NavigationView.On
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 if(adapter.getMenuText(position).equals("문의하기")){
+                    Log.i("문의하기", "1111");
                     Intent it = new Intent(Intent.ACTION_SEND);
                     String[] mailaddr = {"npe.dongauniv@gmail.com"};
                     it.setType("plaine/text");
                     it.putExtra(Intent.EXTRA_EMAIL, mailaddr);
                     startActivity(it);
-                }
-            }
-        });
-
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                if(adapter.getMenuText(position).equals("약관 및 정책")){
+                }else if(adapter.getMenuText(position).equals("약관 및 정책")){
                     Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.dongaboomin.xyz/privacy"));
                     startActivity(intent);
                 }

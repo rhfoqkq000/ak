@@ -69,6 +69,7 @@ public class Manage_LetterFragment extends Fragment {
                 public void onResponse(Call<com.donga.examples.boomin.retrofit.retrofitNormalFcm.Master> call, Response<com.donga.examples.boomin.retrofit.retrofitNormalFcm.Master> response) {
                     Log.i("onresponse", "done");
                     Toast.makeText(getContext(), "전송 완료!", Toast.LENGTH_SHORT);
+
                 }
 
                 @Override

@@ -34,7 +34,7 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 public class FirstActivity extends AppCompatActivity {
-    public final int MY_PERMISSIONS_REQUEST_READ_PHONE_STATE = 1;
+
 
     AppendLog log = new AppendLog();
 
@@ -50,30 +50,6 @@ public class FirstActivity extends AppCompatActivity {
         int badgeCount = 0;
         ShortcutBadger.applyCount(getApplicationContext(), badgeCount);
 
-        //READ_PHONE_STATE 권한 체크
-        if (ContextCompat.checkSelfPermission(this,
-                Manifest.permission.READ_PHONE_STATE)
-                != PackageManager.PERMISSION_GRANTED && ContextCompat.checkSelfPermission(this,
-                Manifest.permission.WRITE_EXTERNAL_STORAGE)
-                != PackageManager.PERMISSION_GRANTED) {
-
-
-            // Should we show an explanation?
-            if (ActivityCompat.shouldShowRequestPermissionRationale(this,
-                    Manifest.permission.READ_PHONE_STATE)) {
-
-                // Show an expanation to the user *asynchronously* -- don't block
-                // this thread waiting for the user's response! After the user
-                // sees the explanation, try again to request the permission.
-
-            } else {
-                // No explanation needed, we can request the permission.
-
-                ActivityCompat.requestPermissions(this,
-                        new String[]{Manifest.permission.READ_PHONE_STATE, Manifest.permission.WRITE_EXTERNAL_STORAGE},
-                        MY_PERMISSIONS_REQUEST_READ_PHONE_STATE);
-            }
-        }
     }
 
     @Override
@@ -145,21 +121,7 @@ public class FirstActivity extends AppCompatActivity {
         }
     }
 
-    @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        switch (requestCode) {
-            case MY_PERMISSIONS_REQUEST_READ_PHONE_STATE: {
-                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                    //권한 동의 버튼 선택
-                    Log.i("requestPermissions", "done");
-                } else {
-                    Toast.makeText(this, "권한 사용에 동의해주셔야 이용이 가능합니다.", Toast.LENGTH_SHORT);
-//                    log.appendLog("permission denied");
-                    finish();
-                }
-            }
-        }
-    }
+
 
     public static String Decrypt(String text, String key) throws Exception {
         Cipher cipher = Cipher.getInstance("AES/CBC/PKCS5Padding");

@@ -1,11 +1,17 @@
 package com.donga.examples.boomin.activity;
 
+import android.Manifest;
+import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.telephony.TelephonyManager;
 import android.util.Base64;
@@ -39,11 +45,11 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class LoginActivity extends AppCompatActivity {
     private ProgressDialog mProgressDialog;
-
+    public final int MY_PERMISSIONS_REQUEST_READ_PHONE_STATE = 1;
     private final long FINISH_INTERVAL_TIME = 2000;
     private long backPressedTime = 0;
     AppendLog log = new AppendLog();
-
+    Activity activity = this;
     @BindView(R.id.s_id)
     EditText s_id;
     @BindView(R.id.s_pw)
@@ -51,6 +57,9 @@ public class LoginActivity extends AppCompatActivity {
 
     @OnClick(R.id.login_bt)
     void loginButton() {
+
+
+
         showProgressDialog();
 
         //retrofit 통신
@@ -101,7 +110,6 @@ public class LoginActivity extends AppCompatActivity {
                                 InfoSingleton.getInstance().setStuId(String.valueOf(sharedPreferences.getInt("stuID", 0)));
                                 InfoSingleton.getInstance().setStuPw(sharedPreferences.getString("pw", ""));
 
-
                                 Retrofit client = new Retrofit.Builder().baseUrl(getString(R.string.retrofit_url))
                                         .addConverterFactory(GsonConverterFactory.create()).build();
                                 Interface_checkCircle chk = client.create(Interface_checkCircle.class);
@@ -114,15 +122,20 @@ public class LoginActivity extends AppCompatActivity {
                                         if(response.body().getResult_code() == 1){
                                             //선택된 동아리가 있을 때
                                             Intent intent = new Intent(getApplicationContext(), HomeActivity.class);
-                                            Log.i("LoginActivity", "동아리잇다");
+
                                             editor.putInt("checkCircle", 1);
+                                            editor.commit();
+                                            Log.i("동아리잇다", ""+sharedPreferences.getInt("checkCircle", 50));
+                                            intent.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
                                             hideProgressDialog();
                                             startActivity(intent);
                                         }else{
                                             Intent intent = new Intent(getApplicationContext(), HomeActivity.class);
-                                            hideProgressDialog();
-                                            Log.i("LoginActivity", "동아리업다");
                                             editor.putInt("checkCircle", 0);
+                                            editor.commit();
+                                            intent.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
+                                            Log.i("LoginActivity", "동아리업다");
+                                            hideProgressDialog();
                                             startActivity(intent);
                                         }
 
@@ -172,10 +185,51 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        switch (requestCode) {
+            case MY_PERMISSIONS_REQUEST_READ_PHONE_STATE: {
+                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    //권한 동의 버튼 선택
+                    Log.i("requestPermissions", "done");
+                } else {
+                    Toast.makeText(this, "권한 사용에 동의해주셔야 이용이 가능합니다.", Toast.LENGTH_SHORT);
+//                    log.appendLog("permission denied");
+                    finish();
+                }
+            }
+        }
+    }
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         ButterKnife.bind(this);
+
+        //READ_PHONE_STATE 권한 체크
+        if (ContextCompat.checkSelfPermission(activity,
+                Manifest.permission.READ_PHONE_STATE)
+                != PackageManager.PERMISSION_GRANTED && ContextCompat.checkSelfPermission(activity,
+                Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                != PackageManager.PERMISSION_GRANTED) {
+
+
+            // Should we show an explanation?
+            if (ActivityCompat.shouldShowRequestPermissionRationale(activity,
+                    Manifest.permission.READ_PHONE_STATE)) {
+
+                // Show an expanation to the user *asynchronously* -- don't block
+                // this thread waiting for the user's response! After the user
+                // sees the explanation, try again to request the permission.
+
+            } else {
+                // No explanation needed, we can request the permission.
+
+                ActivityCompat.requestPermissions(activity,
+                        new String[]{Manifest.permission.READ_PHONE_STATE, Manifest.permission.WRITE_EXTERNAL_STORAGE},
+                        MY_PERMISSIONS_REQUEST_READ_PHONE_STATE);
+            }
+        }
 
         SharedPreferences sharedPreferences = getSharedPreferences(getResources().getString(R.string.SFLAG), Context.MODE_PRIVATE);
         if (sharedPreferences.contains("stuID") && sharedPreferences.contains("ID") && sharedPreferences.contains("pw")) {
@@ -231,7 +285,7 @@ public class LoginActivity extends AppCompatActivity {
 
     @Override
     protected void onPause() {
-        finish();
+//        finish();
         super.onPause();
     }
 

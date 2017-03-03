@@ -142,10 +142,10 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
                 i.putExtra("major", sharedPreferences.getString("major", ""));
                 final SharedPreferences.Editor editor = sharedPreferences.edit();
                 editor.putInt("checkCircle", 1);
+                editor.commit();
                 startActivity(i);
             }
         }
-
     }
 
 
