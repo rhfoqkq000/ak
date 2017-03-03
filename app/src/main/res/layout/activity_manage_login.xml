@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/gra"
+    android:cacheColorHint="#00000000"
+    android:orientation="vertical"
+    android:gravity="center_vertical">
+
+    <ImageView
+        android:layout_width="186dp"
+        android:layout_height="70dp"
+        android:src="@drawable/login"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginBottom="50dp"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:paddingBottom="25dp"
+        android:paddingLeft="30dp"
+        android:paddingRight="30dp"
+        android:paddingTop="20dp">
+
+        <EditText
+            android:id="@+id/s_manageId"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:backgroundTint="#fff"
+            android:drawableLeft="@drawable/user"
+            android:drawablePadding="10dp"
+            android:hint="아이디를 입력하세요."
+            android:inputType="textEmailAddress"
+            android:paddingBottom="20dp"
+            android:textColorHint="#fff" />
+
+        <EditText
+            android:id="@+id/s_managePw"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="10dp"
+            android:backgroundTint="#fff"
+            android:drawableLeft="@drawable/lock"
+            android:drawablePadding="10dp"
+            android:ems="30"
+            android:hint="비밀번호를 입력하세요."
+            android:inputType="textPassword"
+            android:paddingBottom="20dp"
+            android:textColorHint="#fff" />
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/login_manageBt"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="40dp"
+        android:layout_marginRight="40dp"
+        android:paddingBottom="10dp"
+        android:paddingTop="10dp"
+        android:background="@drawable/round"
+        android:textColor="@color/four"
+        android:textStyle="bold"
+        android:text="관리자 로그인" />
+
+</LinearLayout>

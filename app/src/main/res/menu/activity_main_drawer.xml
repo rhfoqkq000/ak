@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <group
+        android:id="@+id/nav_first"
+        android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_res"
+            android:icon="@drawable/rest"
+            android:title="식당" />
+        <item
+            android:id="@+id/nav_room"
+            android:icon="@drawable/room"
+            android:title="열람실" />
+        <item
+            android:id="@+id/nav_pro"
+            android:icon="@drawable/prof"
+            android:title="To. 교수님" />
+        <item
+            android:id="@+id/nav_stu"
+            android:icon="@drawable/stud"
+            android:title="학생정보" />
+        <item
+            android:id="@+id/nav_empty"
+            android:icon="@drawable/empt"
+            android:title="빈강" />
+        <item
+            android:id="@+id/nav_wisper"
+            android:icon="@drawable/le"
+            android:title="쪽지함" />
+        <item
+            android:id="@+id/nav_site"
+            android:icon="@drawable/network"
+            android:title="사이트" />
+    </group>
+
+    <group
+        android:id="@+id/settting"
+        android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_noti"
+            android:icon="@drawable/megaphone"
+            android:title="공지사항" />
+        <item
+            android:id="@+id/nav_help"
+            android:icon="@drawable/help"
+            android:title="도움말" />
+    </group>
+    <group
+        android:id="@+id/manage"
+        android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_logout"
+            android:icon="@drawable/enter"
+            android:title="로그아웃" />
+        <item
+            android:id="@+id/nav_manage"
+            android:icon="@drawable/crown"
+            android:title="관리자로그인" />
+    </group>
+</menu>

@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_alert_dialog"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/wisper_popup_round"
+    android:gravity="center_horizontal|center_vertical"
+    tools:context=".activity.SendDialogActivity">
+
+    <ScrollView
+        android:id="@+id/dialog_scroll"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="16dp">
+
+
+            <TextView
+                android:id="@+id/dialog_wisper_content"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="내용"
+                android:textColor="#fff"
+                android:textSize="20dp" />
+        </LinearLayout>
+    </ScrollView>
+
+
+    <View
+        android:id="@+id/popup_line"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_below="@+id/dialog_scroll"
+        android:background="#fff" />
+
+    <TextView
+        android:id="@+id/popup_close"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/popup_line"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:layout_marginBottom="10dp"
+        android:layout_marginTop="10dp"
+        android:gravity="center_horizontal|center_vertical"
+        android:text="확인"
+        android:textColor="#fff"
+        android:textSize="20dp" />
+
+</RelativeLayout>

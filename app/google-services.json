@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "48803329602",
+    "firebase_url": "https://boomin-e9bdf.firebaseio.com",
+    "project_id": "boomin-e9bdf",
+    "storage_bucket": "boomin-e9bdf.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:48803329602:android:ddfe83b5dccbe6ab",
+        "android_client_info": {
+          "package_name": "com.donga.examples.boomin"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "48803329602-41onmg1utrpnmhs2vl1fm1rk8sjv65f9.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.donga.examples.boomin",
+            "certificate_hash": "1ebac175f26f6dbf9fa34c7d96ae26dc8313f0d7"
+          }
+        },
+        {
+          "client_id": "48803329602-s07cj0dhomms7lee7di2ob7tou7b86dn.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCEV7wKZjuEbGqZW3AM61-V3F5pJDQ3ibo"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "48803329602-s07cj0dhomms7lee7di2ob7tou7b86dn.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="8dp">
+
+    <TextView
+        android:id="@+id/pro_sub_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="10dp"
+        android:textStyle="bold"
+        android:text="이름"
+        android:textSize="19dp" />
+
+    <TextView
+        android:id="@+id/pro_sub_major"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@+id/pro_sub_name"
+        android:text="학과"
+        android:textSize="15dp" />
+
+    <ImageButton
+        android:id="@+id/pro_sub_mail"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_alignParentRight="true"
+        android:background="#41936d"
+        android:padding="5dp"
+        android:src="@drawable/tomail" />
+
+
+    <ImageButton
+        android:id="@+id/pro_sub_call"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_marginRight="10dp"
+        android:layout_toLeftOf="@+id/pro_sub_mail"
+        android:background="#3374b0"
+        android:padding="5dp"
+        android:src="@drawable/call" />
+
+    <TextView
+        android:visibility="gone"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/pro_sub_name"
+        android:layout_toEndOf="@+id/pro_sub_major"
+        android:layout_marginStart="37dp"
+        android:layout_marginTop="161dp"
+        android:id="@+id/pro_call_gone" />
+
+    <TextView
+        android:visibility="gone"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/pro_sub_name"
+        android:layout_toStartOf="@+id/pro_sub_call"
+        android:layout_marginEnd="38dp"
+        android:layout_marginTop="187dp"
+        android:id="@+id/pro_mail_gone" />
+</RelativeLayout>

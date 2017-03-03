@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="horizontal" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingTop="15dp"
+    android:paddingBottom="15dp"
+    android:paddingLeft="9dp"
+    android:paddingRight="9dp"
+    android:weightSum="10">
+    <TextView
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:id="@+id/text_room1"
+        android:text="text1"
+        android:layout_weight="4"
+        android:gravity="center_horizontal|center_vertical"/>
+    <TextView
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:id="@+id/text_room2"
+        android:text="text2"
+        android:layout_weight="1.5"
+        android:gravity="center_horizontal|center_vertical"/>
+    <TextView
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:id="@+id/text_room3"
+        android:text="text3"
+        android:layout_weight="1.5"
+        android:gravity="center_horizontal|center_vertical"/>
+    <TextView
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:id="@+id/text_room4"
+        android:text="text4"
+        android:layout_weight="1.5"
+        android:gravity="center_horizontal|center_vertical"/>
+    <TextView
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:id="@+id/text_room5"
+        android:text="text5"
+        android:layout_weight="1.5"
+        android:gravity="center_horizontal|center_vertical"/>
+</LinearLayout>
