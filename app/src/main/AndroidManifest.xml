@@ -55,17 +55,14 @@
             android:name="com.donga.examples.boomin.activity.HelpActivity"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
+            android:name="com.donga.examples.boomin.activity.PushActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
             android:name="com.donga.examples.boomin.activity.ManageActivity"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name="com.donga.examples.boomin.activity.AlertDialogActivity"
-            android:theme="@android:style/Theme.Panel" />
-        <activity
             android:name="com.donga.examples.boomin.activity.AttendActivity"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity
-            android:name="com.donga.examples.boomin.activity.SendDialogActivity"
-            android:theme="@android:style/Theme.Panel"></activity>
         <activity
             android:name="com.donga.examples.boomin.activity.WisperActivity"
             android:theme="@style/AppTheme.NoActionBar" />
@@ -73,14 +70,20 @@
             android:name="com.donga.examples.boomin.activity.Wisper_NoticeDialogActivity"
             android:theme="@android:style/Theme.Panel" />
         <activity
-            android:name="com.donga.examples.boomin.activity.Wisper_OkDialogActivity"
-            android:theme="@android:style/Theme.Panel" />
-        <activity
             android:name="com.donga.examples.boomin.activity.ManageLoginActivity"
             android:theme="@style/AppTheme.NoActionBar"/>
         <activity
+            android:name="com.donga.examples.boomin.activity.Wisper_OkDialogActivity"
+            android:theme="@android:style/Theme.Panel" />
+        <activity
             android:name="com.donga.examples.boomin.activity.SelectDialogActivity"
             android:theme="@android:style/Theme.Panel"/>
+        <activity
+            android:name="com.donga.examples.boomin.activity.SendDialogActivity"
+            android:theme="@android:style/Theme.Panel"/>
+        <activity
+            android:name="com.donga.examples.boomin.activity.AlertDialogActivity"
+            android:theme="@android:style/Theme.Panel" />
 
         <!-- [START firebase_service] -->
         <service

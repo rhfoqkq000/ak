@@ -7,7 +7,7 @@
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
         <item name="drawerArrowStyle">@style/MyDrawerArrowToggleStyle</item>
-        <item name="android:textSize">17dp</item>
+        <item name="android:textSize">18dp</item>
     </style>
 
     <style name="AppTheme.NoActionBar">
@@ -28,5 +28,9 @@
     </style>
     <style name="MyTabLayoutTextAppearance" parent="TextAppearance.AppCompat.Widget.ActionBar.Title.Inverse">
         <item name="android:textSize">17dp</item>
+    </style>
+    <style name="MySwitch" parent="Theme.AppCompat.Light">
+        <!-- active thumb & track color (30% transparency) -->
+        <item name="colorControlActivated">@color/four</item>
     </style>
 </resources>

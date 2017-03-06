@@ -11,39 +11,30 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ListView;
 
 import com.donga.examples.boomin.R;
-import com.donga.examples.boomin.listviewAdapter.HelpListViewAdapter;
-
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
 /**
- * Created by rhfoq on 2017-02-17.
+ * Created by horse on 2017. 3. 6..
  */
-public class HelpActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
-    @BindView(R.id.toolbar_help)
+public class PushActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
+
+    @BindView(R.id.toolbar_push)
     Toolbar toolbar;
-    @BindView(R.id.drawer_layout_help)
+    @BindView(R.id.drawer_layout_push)
     DrawerLayout drawer;
-    @BindView(R.id.nav_view_help)
+    @BindView(R.id.nav_view_push)
     NavigationView navigationView;
-    @BindView(R.id.list_help)
-    ListView listView;
-
-    HelpListViewAdapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_help);
+        setContentView(R.layout.activity_push);
         ButterKnife.bind(this);
         setSupportActionBar(toolbar);
 
@@ -54,44 +45,15 @@ public class HelpActivity extends AppCompatActivity implements NavigationView.On
 
         navigationView.setNavigationItemSelectedListener(this);
 
-        adapter = new HelpListViewAdapter();
-        listView.setAdapter(adapter);
-
-        adapter.addItem("문의하기", getResources().getDrawable(R.drawable.arrow));
-        adapter.addItem("푸쉬알림", getResources().getDrawable(R.drawable.arrow));
-        adapter.addItem("약관 및 정책", getResources().getDrawable(R.drawable.arrow));
-        adapter.addItem("오픈소스", getResources().getDrawable(R.drawable.arrow));
-        adapter.addItem("앱정보", getResources().getDrawable(R.drawable.arrow));
-
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                if (adapter.getMenuText(position).equals("문의하기")) {
-                    Log.i("문의하기", "1111");
-                    Intent it = new Intent(Intent.ACTION_SEND);
-                    String[] mailaddr = {"npe.dongauniv@gmail.com"};
-                    it.setType("plaine/text");
-                    it.putExtra(Intent.EXTRA_EMAIL, mailaddr);
-                    startActivity(it);
-                } else if (adapter.getMenuText(position).equals("약관 및 정책")) {
-                    Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.dongaboomin.xyz/privacy"));
-                    startActivity(intent);
-                } else if (adapter.getMenuText(position).equals("푸쉬알림")) {
-                    Intent intent = new Intent(getApplicationContext(), PushActivity.class);
-                    startActivity(intent);
-
-                }
-            }
-        });
     }
 
     @Override
     public void onBackPressed() {
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout_help);
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout_push);
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
         } else {
-            Intent intent = new Intent(getBaseContext(), HomeActivity.class);
+            Intent intent = new Intent(getBaseContext(), HelpActivity.class);
             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
             intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
             startActivity(intent);
@@ -168,7 +130,7 @@ public class HelpActivity extends AppCompatActivity implements NavigationView.On
         }
 
 
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout_help);
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout_push);
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
