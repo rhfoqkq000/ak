@@ -21,6 +21,8 @@ import android.widget.ListView;
 import com.donga.examples.boomin.R;
 import com.donga.examples.boomin.Singleton.NoticeSingleton;
 import com.donga.examples.boomin.listviewAdapter.HelpListViewAdapter;
+import com.orhanobut.logger.Logger;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import retrofit2.Call;
