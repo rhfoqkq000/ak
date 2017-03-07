@@ -65,7 +65,7 @@ public class ChangeActivity extends AppCompatActivity implements NavigationView.
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
         } else {
-            Intent intent = new Intent(getBaseContext(), HelpActivity.class);
+            Intent intent = new Intent(getBaseContext(), HomeActivity.class);
             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
             intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
             startActivity(intent);
@@ -137,6 +137,7 @@ public class ChangeActivity extends AppCompatActivity implements NavigationView.
             editor.clear();
             editor.commit();
             Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
             startActivity(intent);
         } else if (id == R.id.nav_manage) {
             Intent intent = new Intent(getApplicationContext(), ManageLoginActivity.class);

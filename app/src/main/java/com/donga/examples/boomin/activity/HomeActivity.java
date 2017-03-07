@@ -1,5 +1,6 @@
 package com.donga.examples.boomin.activity;
 
+import android.app.ActivityManager;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -19,10 +20,11 @@ import android.widget.Toast;
 import com.donga.examples.boomin.R;
 import com.donga.examples.boomin.Singleton.PushSingleton;
 
+import java.util.List;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import es.dmoral.toasty.Toasty;
 import me.leolin.shortcutbadger.ShortcutBadger;
 
 /**
@@ -94,6 +96,13 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
 
         navigationView.setNavigationItemSelectedListener(this);
 
+        ActivityManager am = (ActivityManager)getApplicationContext().getSystemService(Context.ACTIVITY_SERVICE);
+        List<ActivityManager.RunningTaskInfo> taskList = am.getRunningTasks(100);
+        for( int i=0; i < taskList.size(); i++){
+            Log.d("INFO","base="+taskList.get(i).baseActivity.getPackageName()+",top="+taskList.get(i).topActivity.getPackageName());
+            Log.d("INFO","base="+taskList.get(i).baseActivity.getClassName()+",top="+taskList.get(i).topActivity.getClassName());
+            }
+
 
         try {
             bundle = getIntent().getExtras().getBundle("contents");
@@ -157,7 +166,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
             } else    //종료
             {
                 backPressedTime = tempTime;
-                Toasty.normal(getApplicationContext(), "'뒤로'버튼을 한번 더 누르시면 종료됩니다.", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(), "'뒤로'버튼을 한번 더 누르시면 종료됩니다.", Toast.LENGTH_SHORT).show();
             }
         }
     }
@@ -214,10 +223,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         } else if (id == R.id.nav_noti) {
             Intent intent = new Intent(getApplicationContext(), NoticeActivity.class);
             startActivity(intent);
-        } else if (id == R.id.nav_change) {
-            Intent intent = new Intent(getApplicationContext(), ChangeActivity.class);
-            startActivity(intent);
-        }  else if (id == R.id.nav_help) {
+        } else if (id == R.id.nav_help) {
             Intent intent = new Intent(getApplicationContext(), HelpActivity.class);
             startActivity(intent);
         } else if (id == R.id.nav_logout) {
@@ -226,7 +232,9 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
             editor.clear();
             editor.commit();
             Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
             startActivity(intent);
+
         } else if (id == R.id.nav_manage) {
             Intent intent = new Intent(getApplicationContext(), ManageLoginActivity.class);
             startActivity(intent);

@@ -73,6 +73,8 @@ public class FirstActivity extends AppCompatActivity {
         }
 
         final SharedPreferences sharedPreferences = getSharedPreferences(getResources().getString(R.string.SFLAG), Context.MODE_PRIVATE);
+        final SharedPreferences.Editor editor = sharedPreferences.edit();
+
         if (sharedPreferences.contains("stuID") && sharedPreferences.contains("ID") && sharedPreferences.contains("pw")) {
 
             //retrofit 통신
@@ -90,18 +92,46 @@ public class FirstActivity extends AppCompatActivity {
                 @Override
                 public void onResponse(Call<Master> call, Response<Master> response) {
                     if (response.body().getResult_code() == 1) {
-                        Intent intent = new Intent(getApplicationContext(), HomeActivity.class);
 
-                        InfoSingleton.getInstance().setStuId(String.valueOf(sharedPreferences.getInt("stuID", 0)));
-                        InfoSingleton.getInstance().setStuPw(sharedPreferences.getString("pw", ""));
+                        Retrofit client = new Retrofit.Builder().baseUrl(getString(R.string.retrofit_url))
+                                .addConverterFactory(GsonConverterFactory.create()).build();
+                        Interface_checkCircle chk = client.create(Interface_checkCircle.class);
+                        Call<com.donga.examples.boomin.retrofit.retrofitCheckCircle.Master> call7 = chk.checkCircle(String.valueOf(sharedPreferences.getInt("ID", 0)));
+                        call7.enqueue(new Callback<com.donga.examples.boomin.retrofit.retrofitCheckCircle.Master>() {
+                            @Override
+                            public void onResponse(Call<com.donga.examples.boomin.retrofit.retrofitCheckCircle.Master> call, Response<com.donga.examples.boomin.retrofit.retrofitCheckCircle.Master> response) {
+                                Intent intent = new Intent(getApplicationContext(), HomeActivity.class);
 
-                        if (PushSingleton.getInstance().getmString() != null) {
-                            Bundle bun = new Bundle();
-                            bun.putString("contents", PushSingleton.getInstance().getmString());
-                            intent.putExtras(bun);
-                        }
+                                InfoSingleton.getInstance().setStuId(String.valueOf(sharedPreferences.getInt("stuID", 0)));
+                                InfoSingleton.getInstance().setStuPw(sharedPreferences.getString("pw", ""));
 
-                        startActivity(intent);
+                                if (PushSingleton.getInstance().getmString() != null) {
+                                    Bundle bun = new Bundle();
+                                    bun.putString("contents", PushSingleton.getInstance().getmString());
+                                    intent.putExtras(bun);
+                                }
+
+                                if(response.body().getResult_code() == 1){
+                                    //동아리가 있을 때
+                                    editor.putInt("checkCircle", 1);
+                                    editor.commit();
+                                }else{
+                                    //동아리가 없을 때
+                                    editor.putInt("checkCircle", 0);
+                                    editor.commit();
+                                }
+                                startActivity(intent);
+                            }
+
+                            @Override
+                            public void onFailure(Call<com.donga.examples.boomin.retrofit.retrofitCheckCircle.Master> call, Throwable t) {
+
+                            }
+                        });
+
+
+
+
                     } else {
                         log.appendLog("inFirstActivity Att2 code not matched move to LoginActivity");
                         moveToLoginActivity();

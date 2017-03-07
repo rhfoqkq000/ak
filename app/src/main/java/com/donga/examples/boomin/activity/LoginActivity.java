@@ -116,11 +116,11 @@ public class LoginActivity extends AppCompatActivity {
                                         if(response.body().getResult_code() == 1){
                                             //선택된 동아리가 있을 때
                                             Intent intent = new Intent(getApplicationContext(), HomeActivity.class);
-
                                             editor.putInt("checkCircle", 1);
                                             editor.commit();
                                             Log.i("동아리잇다", ""+sharedPreferences.getInt("checkCircle", 50));
                                             hideProgressDialog();
+                                            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                                             startActivity(intent);
                                         }else{
                                             Intent intent = new Intent(getApplicationContext(), HomeActivity.class);
@@ -128,6 +128,7 @@ public class LoginActivity extends AppCompatActivity {
                                             editor.commit();
                                             Log.i("LoginActivity", "동아리업다");
                                             hideProgressDialog();
+                                            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                                             startActivity(intent);
                                         }
 
@@ -235,6 +236,7 @@ public class LoginActivity extends AppCompatActivity {
         SharedPreferences sharedPreferences = getSharedPreferences(getResources().getString(R.string.SFLAG), Context.MODE_PRIVATE);
         if (sharedPreferences.contains("stuID") && sharedPreferences.contains("ID") && sharedPreferences.contains("pw")) {
             Intent intent = new Intent(getApplicationContext(), HomeActivity.class);
+            intent.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
             startActivity(intent);
         } else {
             Toast.makeText(getApplicationContext(), "로그인해주세요", Toast.LENGTH_SHORT).show();
