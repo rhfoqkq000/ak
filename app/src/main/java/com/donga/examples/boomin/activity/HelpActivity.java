@@ -59,6 +59,7 @@ public class HelpActivity extends AppCompatActivity implements NavigationView.On
 
         adapter.addItem("문의하기", getResources().getDrawable(R.drawable.arrow));
         adapter.addItem("푸쉬알림", getResources().getDrawable(R.drawable.arrow));
+        adapter.addItem("동아리/학회 변경", getResources().getDrawable(R.drawable.arrow));
         adapter.addItem("약관 및 정책", getResources().getDrawable(R.drawable.arrow));
         adapter.addItem("오픈소스", getResources().getDrawable(R.drawable.arrow));
         adapter.addItem("앱정보", getResources().getDrawable(R.drawable.arrow));

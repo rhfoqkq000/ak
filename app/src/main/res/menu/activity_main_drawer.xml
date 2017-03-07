@@ -44,7 +44,7 @@
         <item
             android:id="@+id/nav_help"
             android:icon="@drawable/help"
-            android:title="도움말" />
+            android:title="설정/도움말" />
     </group>
     <group
         android:id="@+id/manage"

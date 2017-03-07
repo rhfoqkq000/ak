@@ -22,6 +22,7 @@ import com.donga.examples.boomin.Singleton.PushSingleton;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import es.dmoral.toasty.Toasty;
 import me.leolin.shortcutbadger.ShortcutBadger;
 
 /**
@@ -162,7 +163,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
             } else    //종료
             {
                 backPressedTime = tempTime;
-                Toast.makeText(getApplicationContext(), "'뒤로'버튼을 한번 더 누르시면 종료됩니다.", Toast.LENGTH_SHORT).show();
+                Toasty.normal(getApplicationContext(), "'뒤로'버튼을 한번 더 누르시면 종료됩니다.", Toast.LENGTH_SHORT).show();
             }
         }
     }
