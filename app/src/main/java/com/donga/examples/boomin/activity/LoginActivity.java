@@ -127,14 +127,14 @@ public class LoginActivity extends AppCompatActivity {
                                             editor.putInt("checkCircle", 1);
                                             editor.commit();
                                             Log.i("동아리잇다", ""+sharedPreferences.getInt("checkCircle", 50));
-                                            intent.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
+//                                            intent.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
                                             hideProgressDialog();
                                             startActivity(intent);
                                         }else{
                                             Intent intent = new Intent(getApplicationContext(), HomeActivity.class);
                                             editor.putInt("checkCircle", 0);
                                             editor.commit();
-                                            intent.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
+//                                            intent.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
                                             Log.i("LoginActivity", "동아리업다");
                                             hideProgressDialog();
                                             startActivity(intent);

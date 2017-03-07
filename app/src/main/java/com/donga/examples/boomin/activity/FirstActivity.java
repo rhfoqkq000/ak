@@ -5,6 +5,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
@@ -21,6 +23,7 @@ import com.donga.examples.boomin.Singleton.PushSingleton;
 import com.donga.examples.boomin.retrofit.retrofitCheckCircle.Interface_checkCircle;
 import com.donga.examples.boomin.retrofit.retrofitLogin.Interface_login;
 import com.donga.examples.boomin.retrofit.retrofitLogin.Master;
+import com.orhanobut.logger.Logger;
 
 import javax.crypto.Cipher;
 import javax.crypto.spec.IvParameterSpec;
@@ -50,6 +53,8 @@ public class FirstActivity extends AppCompatActivity {
         int badgeCount = 0;
         ShortcutBadger.applyCount(getApplicationContext(), badgeCount);
 
+
+        networkCheck();
     }
 
     @Override
@@ -116,8 +121,9 @@ public class FirstActivity extends AppCompatActivity {
         } else {
             //기기에 저장된 SharedPreferences 없으면 LoginActivity로 이동
 //            log.appendLog("inFirstActivity no sharedPreferences move to LoginActivity");
-            Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
-            startActivity(intent);
+//            Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
+//            startActivity(intent);
+            moveToLoginActivity();
         }
     }
 
@@ -144,6 +150,25 @@ public class FirstActivity extends AppCompatActivity {
         editor.commit();
 
         Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
         startActivity(intent);
     }
+
+    public Boolean networkCheck() {
+        ConnectivityManager manager = (ConnectivityManager)getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo phone = manager.getNetworkInfo(ConnectivityManager.TYPE_MOBILE);
+        NetworkInfo wifi = manager.getNetworkInfo(ConnectivityManager.TYPE_WIFI);
+
+        if(phone.isConnected()&&wifi.isConnected()){
+            Toast.makeText(getApplicationContext(), "wifi", Toast.LENGTH_SHORT).show();
+        }else if(phone.isConnected()&&!wifi.isConnected()){
+            Toast.makeText(getApplicationContext(), "data", Toast.LENGTH_SHORT).show();
+        }else if(!phone.isConnected()&&wifi.isConnected()){
+            Toast.makeText(getApplicationContext(), "wifi", Toast.LENGTH_SHORT).show();
+        }else if(!phone.isConnected()&&!wifi.isConnected()){
+            Toast.makeText(getApplicationContext(), "no internet", Toast.LENGTH_SHORT).show();
+        }
+        return true;
+    }
+
 }
