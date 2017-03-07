@@ -184,7 +184,7 @@ public class LoginActivity extends AppCompatActivity {
                     Log.i("requestPermissions", "done");
                 } else {
                     Toast.makeText(this, "권한 사용에 동의해주셔야 이용이 가능합니다.", Toast.LENGTH_SHORT).show();
-//                    log.appendLog("permission denied");
+                    log.appendLog("permission denied");
                     finish();
                 }
             }

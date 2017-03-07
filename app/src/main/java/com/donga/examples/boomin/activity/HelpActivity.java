@@ -91,7 +91,6 @@ public class HelpActivity extends AppCompatActivity implements NavigationView.On
                     startActivity(intent);
                 } else if (adapter.getMenuText(position).equals("오픈소스")) {
 
-
                 }
             }
         });
