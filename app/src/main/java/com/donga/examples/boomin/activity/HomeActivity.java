@@ -128,12 +128,6 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
 //            //쪽지함 dialog 색깔, 시간표 "준비 중입니다.", 공지사항이랑 버전정보 없앨까,
 //            // 관리자 로그인 후 회원목록이랑 쪽지함 지우기 안보이게
 //        }
-
-//        if(sharedPreferences.getInt("isFirst", 0)==22){
-//            Intent i= new Intent(this, SelectDialogActivity.class);
-//            i.putExtra("major", sharedPreferences.getString("major", ""));
-//            startActivity(i);
-//        }
             Log.i("HomeActivity", ""+sharedPreferences.getInt("checkCircle", 1));
 
             int check = sharedPreferences.getInt("checkCircle", 0);

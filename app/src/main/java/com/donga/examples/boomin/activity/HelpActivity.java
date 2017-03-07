@@ -19,11 +19,15 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 
 import com.donga.examples.boomin.R;
+import com.donga.examples.boomin.Singleton.NoticeSingleton;
 import com.donga.examples.boomin.listviewAdapter.HelpListViewAdapter;
-import com.orhanobut.logger.Logger;
-
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 /**
  * Created by rhfoq on 2017-02-17.
@@ -67,6 +71,7 @@ public class HelpActivity extends AppCompatActivity implements NavigationView.On
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
                 switch (adapter.getPosition(position)){
                     case 0:
                         Logger.d("문의하기");

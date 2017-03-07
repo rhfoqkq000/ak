@@ -1,5 +1,6 @@
 package com.donga.examples.boomin.activity;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -29,6 +30,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
  */
 public class AttendActivity extends AppCompatActivity {
     AppendLog log = new AppendLog();
+    private ProgressDialog mProgressDialog;
 
     int attend;
     String attend2;
@@ -50,6 +52,7 @@ public class AttendActivity extends AppCompatActivity {
 
         Intent i = getIntent();
 
+        showProgressDialog();
         Retrofit client = new Retrofit.Builder().baseUrl(getString(R.string.retrofit_url))
                 .addConverterFactory(GsonConverterFactory.create()).build();
         Interface_adminCircleNotis adminCircleNotis = client.create(Interface_adminCircleNotis.class);
@@ -80,6 +83,7 @@ public class AttendActivity extends AppCompatActivity {
                         }
                         adapter.addItem(response.body().getResult_body().get(i).getStuId(), response.body().getResult_body().get(i).getName(), attend2);
                         adapter.notifyDataSetChanged();
+                        hideProgressDialog();
                     }
 
                     View view = findViewById(R.id.linearView);
@@ -91,16 +95,35 @@ public class AttendActivity extends AppCompatActivity {
 
                 } else {
                     log.appendLog("inAttendActivity code not matched");
+                    hideProgressDialog();
                     Toast.makeText(getApplicationContext(), "불러오기 실패", Toast.LENGTH_SHORT).show();
                 }
             }
 
             @Override
             public void onFailure(Call<Master> call, Throwable t) {
+                hideProgressDialog();
                 t.printStackTrace();
                 log.appendLog("inAttendActivity failure");
                 Toast.makeText(getApplicationContext(), "불러오기 실패", Toast.LENGTH_SHORT).show();
             }
         });
+    }
+
+    private void showProgressDialog() {
+        if (mProgressDialog == null) {
+            mProgressDialog = new ProgressDialog(this);
+            mProgressDialog.setMessage(getString(R.string.loading));
+            mProgressDialog.setIndeterminate(true);
+        }
+
+        mProgressDialog.show();
+    }
+
+    private void hideProgressDialog() {
+        if (mProgressDialog != null && mProgressDialog.isShowing()) {
+            mProgressDialog.hide();
+            mProgressDialog.dismiss();
+        }
     }
 }

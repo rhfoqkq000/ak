@@ -1,5 +1,6 @@
 package com.donga.examples.boomin.activity;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -24,6 +25,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class ManageLoginActivity extends AppCompatActivity {
     AppendLog log = new AppendLog();
+    private ProgressDialog mProgressDialog;
 
     @BindView(R.id.s_manageId)
     EditText s_manageId;
@@ -43,6 +45,7 @@ public class ManageLoginActivity extends AppCompatActivity {
     void onLoginClicked(){
         Log.i("CLICK", s_manageId.getText().toString()+","+s_managePw.getText().toString());
 
+        showProgressDialog();
         //retrofit 통신
         Retrofit client = new Retrofit.Builder().baseUrl(getString(R.string.retrofit_url))
                 .addConverterFactory(GsonConverterFactory.create()).build();
@@ -57,25 +60,25 @@ public class ManageLoginActivity extends AppCompatActivity {
                     ManageSingleton.getInstance().setManagerID(s_manageId.getText().toString());
                     ManageSingleton.getInstance().setManagePW(s_managePw.getText().toString());
 
-                    Log.i("ManageLoginActivity", "started");
-//
                     Intent i = new Intent(getApplicationContext(), ManageActivity.class);
+                    hideProgressDialog();
                     startActivity(i);
                 }else {
                     try{
                         log.appendLog("inManageLoginActivity code not matched");
-                        Toast.makeText(getApplicationContext(), "로그인 실패", Toast.LENGTH_SHORT);
+                        Toast.makeText(getApplicationContext(), "로그인 실패", Toast.LENGTH_SHORT).show();
                     }catch(Exception e){
                         e.printStackTrace();
                     }
-
+                    hideProgressDialog();
                 }
             }
 
             @Override
             public void onFailure(Call<com.donga.examples.boomin.retrofit.retrofitAuthLogin.Master> call, Throwable t) {
+                hideProgressDialog();
                 log.appendLog("inManageLoginActivity failure");
-                Toast.makeText(getApplicationContext(), "로그인 실패", Toast.LENGTH_SHORT);
+                Toast.makeText(getApplicationContext(), "로그인 실패", Toast.LENGTH_SHORT).show();
                 t.printStackTrace();
             }
         });
@@ -85,5 +88,22 @@ public class ManageLoginActivity extends AppCompatActivity {
     protected void onPause() {
         super.onPause();
         finish();
+    }
+
+    private void showProgressDialog() {
+        if (mProgressDialog == null) {
+            mProgressDialog = new ProgressDialog(this);
+            mProgressDialog.setMessage(getString(R.string.loading));
+            mProgressDialog.setIndeterminate(true);
+        }
+
+        mProgressDialog.show();
+    }
+
+    private void hideProgressDialog() {
+        if (mProgressDialog != null && mProgressDialog.isShowing()) {
+            mProgressDialog.hide();
+            mProgressDialog.dismiss();
+        }
     }
 }
