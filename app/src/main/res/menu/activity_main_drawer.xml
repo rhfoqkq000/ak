@@ -42,6 +42,10 @@
             android:icon="@drawable/megaphone"
             android:title="공지사항" />
         <item
+            android:id="@+id/nav_change"
+            android:icon="@drawable/megaphone"
+            android:title="동아리/학회 변경" />
+        <item
             android:id="@+id/nav_help"
             android:icon="@drawable/help"
             android:title="설정/도움말" />
