@@ -1,6 +1,5 @@
 package com.donga.examples.boomin.activity;
 
-import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -21,9 +20,6 @@ import android.widget.Toast;
 import com.donga.examples.boomin.AppendLog;
 import com.donga.examples.boomin.R;
 import com.donga.examples.boomin.retrofit.retrofitChangePushPermit.Interface_changePushPermit;
-import com.donga.examples.boomin.retrofit.retrofitLogin.Interface_login;
-import com.donga.examples.boomin.retrofit.retrofitLogin.Master;
-import com.orhanobut.logger.Logger;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -37,23 +33,20 @@ import retrofit2.converter.gson.GsonConverterFactory;
  * Created by horse on 2017. 3. 6..
  */
 
-public class PushActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
+public class ChangeActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
     AppendLog log = new AppendLog();
-    private ProgressDialog mProgressDialog;
 
-    @BindView(R.id.toolbar_push)
+    @BindView(R.id.toolbar_change)
     Toolbar toolbar;
-    @BindView(R.id.drawer_layout_push)
+    @BindView(R.id.drawer_layout_change)
     DrawerLayout drawer;
-    @BindView(R.id.nav_view_push)
+    @BindView(R.id.nav_view_change)
     NavigationView navigationView;
-    @BindView(R.id.switch_push)
-    Switch switch_push;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_push);
+        setContentView(R.layout.activity_change);
         ButterKnife.bind(this);
         setSupportActionBar(toolbar);
 
@@ -63,51 +56,12 @@ public class PushActivity extends AppCompatActivity implements NavigationView.On
         toggle.syncState();
 
         navigationView.setNavigationItemSelectedListener(this);
-        final SharedPreferences sharedPreferences = getSharedPreferences(getResources().getString(R.string.SFLAG), Context.MODE_PRIVATE);
 
-        switch_push.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                showProgressDialog();
-                //retrofit 통신
-                Retrofit client = new Retrofit.Builder().baseUrl(getString(R.string.retrofit_url))
-                        .addConverterFactory(GsonConverterFactory.create()).build();
-                Interface_changePushPermit changePushPermit = client.create(Interface_changePushPermit.class);
-                Call<com.donga.examples.boomin.retrofit.retrofitChangePushPermit.Master> call =
-                        changePushPermit.changePushPermit(String.valueOf(sharedPreferences.getInt("ID", 99999)));
-                call.enqueue(new Callback<com.donga.examples.boomin.retrofit.retrofitChangePushPermit.Master>() {
-                    @Override
-                    public void onResponse(Call<com.donga.examples.boomin.retrofit.retrofitChangePushPermit.Master> call, Response<com.donga.examples.boomin.retrofit.retrofitChangePushPermit.Master> response) {
-                        if(response.body().getResult_code() == 1){
-                            if(response.body().getResult_body() == 0){
-                                //푸쉬 허용
-                                Toast.makeText(getApplicationContext(), "푸쉬 알림이 허용되었습니다.", Toast.LENGTH_SHORT).show();
-                            }else if(response.body().getResult_body() == 1){
-                                //푸쉬 거부
-                                Toast.makeText(getApplicationContext(), "푸쉬 알림이 거부되었습니다.", Toast.LENGTH_SHORT).show();
-                            }
-                            hideProgressDialog();
-                        }else{
-                            log.appendLog("inPushActivity code not matched");
-                            Toast.makeText(getApplicationContext(), "통신 실패", Toast.LENGTH_SHORT).show();
-                        }
-                    }
-
-                    @Override
-                    public void onFailure(Call<com.donga.examples.boomin.retrofit.retrofitChangePushPermit.Master> call, Throwable t) {
-                        hideProgressDialog();
-                        log.appendLog("inPushActivity failure");
-                        Toast.makeText(getApplicationContext(), "통신 실패", Toast.LENGTH_SHORT).show();
-                        t.printStackTrace();
-                    }
-                });
-            }
-        });
     }
 
     @Override
     public void onBackPressed() {
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout_push);
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout_change);
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
         } else {
@@ -190,25 +144,8 @@ public class PushActivity extends AppCompatActivity implements NavigationView.On
         }
 
 
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout_push);
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout_change);
         drawer.closeDrawer(GravityCompat.START);
         return true;
-    }
-
-    private void showProgressDialog() {
-        if (mProgressDialog == null) {
-            mProgressDialog = new ProgressDialog(this);
-            mProgressDialog.setMessage(getString(R.string.loading));
-            mProgressDialog.setIndeterminate(true);
-        }
-
-        mProgressDialog.show();
-    }
-
-    private void hideProgressDialog() {
-        if (mProgressDialog != null && mProgressDialog.isShowing()) {
-            mProgressDialog.hide();
-            mProgressDialog.dismiss();
-        }
     }
 }

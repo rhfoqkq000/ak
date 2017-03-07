@@ -37,6 +37,7 @@ import javax.crypto.spec.SecretKeySpec;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import es.dmoral.toasty.Toasty;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -143,7 +144,9 @@ public class LoginActivity extends AppCompatActivity {
                             } else {
                                 log.appendLog("FirstLogin code not matched");
                                 hideProgressDialog();
-                                Toast.makeText(getApplicationContext(), "로그인 실패!", Toast.LENGTH_SHORT).show();
+
+                                Toasty.warning(getApplicationContext(), "로그인 실패!", Toast.LENGTH_SHORT).show();
+
                             }
                         }
 
@@ -151,14 +154,18 @@ public class LoginActivity extends AppCompatActivity {
                         public void onFailure(Call<com.donga.examples.boomin.retrofit.retrofitFirstLogin.Master> call, Throwable t) {
                             log.appendLog("FirstLogin onFailure");
                             hideProgressDialog();
-                            Toast.makeText(getApplicationContext(), "로그인 실패!", Toast.LENGTH_SHORT).show();
+
+                            Toasty.warning(getApplicationContext(), "로그인 실패!", Toast.LENGTH_SHORT).show();
+
                             t.printStackTrace();
                         }
                     });
 
 
                 } else {
-                    Toast.makeText(getApplicationContext(), "로그인 실패!", Toast.LENGTH_SHORT).show();
+
+                    Toasty.warning(getApplicationContext(), "로그인 실패!", Toast.LENGTH_SHORT).show();
+
                     log.appendLog("inLoginActivity Att2 code not matched");
                     hideProgressDialog();
                 }
@@ -167,7 +174,8 @@ public class LoginActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<Master> call, Throwable t) {
-                Toast.makeText(getApplicationContext(), "로그인 실패!", Toast.LENGTH_SHORT).show();
+
+                Toasty.warning(getApplicationContext(), "로그인 실패!", Toast.LENGTH_SHORT).show();
                 log.appendLog("inLoginActivity login failure");
                 hideProgressDialog();
                 t.printStackTrace();
@@ -184,7 +192,9 @@ public class LoginActivity extends AppCompatActivity {
                     Log.i("requestPermissions", "done");
                 } else {
                     Toast.makeText(this, "권한 사용에 동의해주셔야 이용이 가능합니다.", Toast.LENGTH_SHORT).show();
+
                     log.appendLog("permission denied");
+
                     finish();
                 }
             }

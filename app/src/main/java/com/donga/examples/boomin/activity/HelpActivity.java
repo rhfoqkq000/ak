@@ -21,11 +21,6 @@ import android.widget.ListView;
 import com.donga.examples.boomin.R;
 import com.donga.examples.boomin.Singleton.NoticeSingleton;
 import com.donga.examples.boomin.listviewAdapter.HelpListViewAdapter;
-import com.donga.examples.boomin.retrofit.retrofitRemoveNormalNotis.Interface_removeNormalNotis;
-import com.donga.examples.boomin.retrofit.retrofitRemoveNormalNotis.JsonRequest;
-
-import java.util.ArrayList;
-
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import retrofit2.Call;
@@ -76,20 +71,35 @@ public class HelpActivity extends AppCompatActivity implements NavigationView.On
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                if (adapter.getMenuText(position).equals("문의하기")) {
-                    Log.i("문의하기", "1111");
-                    Intent it = new Intent(Intent.ACTION_SEND);
-                    String[] mailaddr = {"npe.dongauniv@gmail.com"};
-                    it.setType("plaine/text");
-                    it.putExtra(Intent.EXTRA_EMAIL, mailaddr);
-                    startActivity(it);
-                } else if (adapter.getMenuText(position).equals("약관 및 정책")) {
-                    Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.dongaboomin.xyz/privacy"));
-                    startActivity(intent);
-                } else if (adapter.getMenuText(position).equals("푸쉬알림")) {
-                    Intent intent = new Intent(getApplicationContext(), PushActivity.class);
-                    startActivity(intent);
-                } else if (adapter.getMenuText(position).equals("오픈소스")) {
+
+                switch (adapter.getPosition(position)){
+                    case 0:
+                        Logger.d("문의하기");
+                        Intent it = new Intent(Intent.ACTION_SEND);
+                        String[] mailaddr = {"npe.dongauniv@gmail.com"};
+                        it.setType("plaine/text");
+                        it.putExtra(Intent.EXTRA_EMAIL, mailaddr);
+                        startActivity(it);
+                        break;
+                    case 1:
+                        Logger.d("푸쉬알림");
+                        Intent push_intent = new Intent(getApplicationContext(), PushActivity.class);
+                        startActivity(push_intent);
+                        break;
+                    case 2:
+                        Logger.d("약관 및 정책");
+                        Intent pi_intent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.dongaboomin.xyz/privacy"));
+                        startActivity(pi_intent);
+                        break;
+                    case 3:
+                        Logger.d("오픈소스");
+                        break;
+                    case 4:
+                        Logger.d("앱정보");
+                        break;
+                    default:
+                        Logger.e("오류 빽");
+                        break;
 
                 }
             }
@@ -162,7 +172,10 @@ public class HelpActivity extends AppCompatActivity implements NavigationView.On
         } else if (id == R.id.nav_noti) {
             Intent intent = new Intent(getApplicationContext(), NoticeActivity.class);
             startActivity(intent);
-        } else if (id == R.id.nav_help) {
+        } else if (id == R.id.nav_change) {
+            Intent intent = new Intent(getApplicationContext(), ChangeActivity.class);
+            startActivity(intent);
+        }  else if (id == R.id.nav_help) {
             Intent intent = new Intent(getApplicationContext(), HelpActivity.class);
             startActivity(intent);
         } else if (id == R.id.nav_logout) {
@@ -172,7 +185,6 @@ public class HelpActivity extends AppCompatActivity implements NavigationView.On
             editor.commit();
             Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
             startActivity(intent);
-
         } else if (id == R.id.nav_manage) {
             Intent intent = new Intent(getApplicationContext(), ManageLoginActivity.class);
             startActivity(intent);

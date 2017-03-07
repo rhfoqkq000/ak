@@ -154,7 +154,10 @@ public class RoomActivity extends AppCompatActivity
         } else if (id == R.id.nav_noti) {
             Intent intent = new Intent(getApplicationContext(), NoticeActivity.class);
             startActivity(intent);
-        } else if (id == R.id.nav_help) {
+        } else if (id == R.id.nav_change) {
+            Intent intent = new Intent(getApplicationContext(), ChangeActivity.class);
+            startActivity(intent);
+        }  else if (id == R.id.nav_help) {
             Intent intent = new Intent(getApplicationContext(), HelpActivity.class);
             startActivity(intent);
         } else if (id == R.id.nav_logout) {
@@ -164,7 +167,6 @@ public class RoomActivity extends AppCompatActivity
             editor.commit();
             Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
             startActivity(intent);
-
         } else if (id == R.id.nav_manage) {
             Intent intent = new Intent(getApplicationContext(), ManageLoginActivity.class);
             startActivity(intent);

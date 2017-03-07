@@ -59,6 +59,9 @@
             android:name="com.donga.examples.boomin.activity.PushActivity"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
+            android:name="com.donga.examples.boomin.activity.ChangeActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
             android:name="com.donga.examples.boomin.activity.ManageActivity"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
