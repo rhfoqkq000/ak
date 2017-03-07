@@ -11,15 +11,22 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.CompoundButton;
+import android.widget.ListView;
 import android.widget.Switch;
 import android.widget.Toast;
 
 import com.donga.examples.boomin.AppendLog;
 import com.donga.examples.boomin.R;
+import com.donga.examples.boomin.listviewAdapter.ChangeListViewAdapter;
+import com.donga.examples.boomin.listviewAdapter.NoticeListViewAdapter;
 import com.donga.examples.boomin.retrofit.retrofitChangePushPermit.Interface_changePushPermit;
+import com.jaredrummler.materialspinner.MaterialSpinner;
+import com.orhanobut.logger.Logger;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -34,7 +41,6 @@ import retrofit2.converter.gson.GsonConverterFactory;
  */
 
 public class ChangeActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
-    AppendLog log = new AppendLog();
 
     @BindView(R.id.toolbar_change)
     Toolbar toolbar;
@@ -42,6 +48,12 @@ public class ChangeActivity extends AppCompatActivity implements NavigationView.
     DrawerLayout drawer;
     @BindView(R.id.nav_view_change)
     NavigationView navigationView;
+    @BindView(R.id.change_spinner)
+    MaterialSpinner change_spinner;
+    @BindView(R.id.list_change)
+    ListView listView;
+
+    ChangeListViewAdapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,6 +69,65 @@ public class ChangeActivity extends AppCompatActivity implements NavigationView.
 
         navigationView.setNavigationItemSelectedListener(this);
 
+//      spinner 아이템채우기
+        change_spinner.setItems("경영학과","국제관광학과","국제무역학과","경영정보학과","정치외교학과","행정학과","사회학과"
+                ,"사회복지학과","미디어커뮤니케이션학과","경제학과","금융학과");
+        change_spinner.setOnItemSelectedListener(new MaterialSpinner.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(MaterialSpinner view, int position, long id, Object item) {
+                switch (position){
+                    case 0:
+                        Logger.d("경영학과");
+                        break;
+                    case 1:
+                        Logger.d("국제관광학과");
+                        break;
+                    case 2:
+                        Logger.d("국제무역학과");
+                        break;
+                    case 3:
+                        Logger.d("경영정보학과");
+                        listView.setVisibility(View.VISIBLE);
+                        break;
+                    case 4:
+                        Logger.d("정치외교학과");
+                        break;
+                    case 5:
+                        Logger.d("행정학과");
+                        break;
+                    case 6:
+                        Logger.d("사회학과");
+                        break;
+                    case 7:
+                        Logger.d("사회복지학과");
+                        break;
+                    case 8:
+                        Logger.d("미디어커뮤니케이션학과");
+                        break;
+                    case 9:
+                        Logger.d("경제학과");
+                        break;
+                    case 10:
+                        Logger.d("금융학과");
+                        break;
+                    default:
+                        Logger.d("없쪄염");
+                        break;
+                }
+            }
+        });
+
+        //listview
+        adapter = new ChangeListViewAdapter();
+        listView.setAdapter(adapter);
+
+        adapter.addItem("모도리");
+        adapter.addItem("오감도");
+        adapter.addItem("포미스");
+        adapter.addItem("심심풀이");
+        adapter.addItem("노래몰이");
+        adapter.addItem("평행봉");
+        adapter.addItem("미파");
     }
 
     @Override
@@ -137,7 +208,6 @@ public class ChangeActivity extends AppCompatActivity implements NavigationView.
             editor.clear();
             editor.commit();
             Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
-            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
             startActivity(intent);
         } else if (id == R.id.nav_manage) {
             Intent intent = new Intent(getApplicationContext(), ManageLoginActivity.class);

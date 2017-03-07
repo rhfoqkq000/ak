@@ -19,6 +19,11 @@ import android.widget.TextView;
 
 import com.donga.examples.boomin.AppendLog;
 import com.donga.examples.boomin.R;
+import com.donga.examples.boomin.listviewAdapter.SelectListViewAdapter;
+import com.donga.examples.boomin.retrofit.retrofitGetCircle.Interface_getCircle;
+import com.donga.examples.boomin.retrofit.retrofitGetCircle.Master;
+import com.donga.examples.boomin.retrofit.retrofitMeal.Interface_meal;
+import com.donga.examples.boomin.retrofit.retrofitMeal.Master3;
 import com.donga.examples.boomin.retrofit.retrofitSetCircle.Circles;
 import com.donga.examples.boomin.retrofit.retrofitSetCircle.Interface_setCircle;
 import com.jaredrummler.materialspinner.MaterialSpinner;
@@ -44,6 +49,8 @@ public class SelectDialogActivity extends Activity {
     MaterialSpinner select_spinner;
     @BindView(R.id.list_select)
     ListView listView;
+
+    SelectListViewAdapter adapter;
 
     @OnClick(R.id.popup_close)
     void onCloseClicked() {

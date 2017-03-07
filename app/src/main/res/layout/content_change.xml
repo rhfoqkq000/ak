@@ -15,12 +15,22 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="학과"/>
+            android:layout_marginRight="10dp"
+            android:text="학과"
+            android:textStyle="bold" />
+
         <com.jaredrummler.materialspinner.MaterialSpinner
+            android:id="@+id/change_spinner"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content" />
     </LinearLayout>
+    <ListView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/list_change"
+        android:visibility="gone"></ListView>
 </LinearLayout>
