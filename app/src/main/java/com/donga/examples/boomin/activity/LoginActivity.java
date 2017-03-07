@@ -57,9 +57,6 @@ public class LoginActivity extends AppCompatActivity {
 
     @OnClick(R.id.login_bt)
     void loginButton() {
-
-
-
         showProgressDialog();
 
         //retrofit 통신
@@ -91,7 +88,7 @@ public class LoginActivity extends AppCompatActivity {
 
                     //Firebase push token
                     String token = FirebaseInstanceId.getInstance().getToken();
-                    Log.e("PUSH_SERVICE_TOKEN", token);
+                    Log.i("PUSH_SERVICE_TOKEN", token);
 
                     Retrofit client = new Retrofit.Builder().baseUrl(getString(R.string.retrofit_url))
                             .addConverterFactory(GsonConverterFactory.create()).build();
@@ -105,8 +102,6 @@ public class LoginActivity extends AppCompatActivity {
                         public void onResponse(Call<com.donga.examples.boomin.retrofit.retrofitFirstLogin.Master> call,
                                                Response<com.donga.examples.boomin.retrofit.retrofitFirstLogin.Master> response) {
                             if (response.body().getResult_code() == 1 || response.body().getResult_code() == 2) {
-                                Log.i("FirstLoginOnResponse", String.valueOf(response.body().getResult_code()));
-
                                 InfoSingleton.getInstance().setStuId(String.valueOf(sharedPreferences.getInt("stuID", 0)));
                                 InfoSingleton.getInstance().setStuPw(sharedPreferences.getString("pw", ""));
 
@@ -114,11 +109,9 @@ public class LoginActivity extends AppCompatActivity {
                                         .addConverterFactory(GsonConverterFactory.create()).build();
                                 Interface_checkCircle chk = client.create(Interface_checkCircle.class);
                                 Call<com.donga.examples.boomin.retrofit.retrofitCheckCircle.Master> call7 = chk.checkCircle(String.valueOf(sharedPreferences.getInt("ID", 0)));
-                                Log.i("shared?ID?", String.valueOf(sharedPreferences.getInt("ID", 0)));
                                 call7.enqueue(new Callback<com.donga.examples.boomin.retrofit.retrofitCheckCircle.Master>() {
                                     @Override
                                     public void onResponse(Call<com.donga.examples.boomin.retrofit.retrofitCheckCircle.Master> call, Response<com.donga.examples.boomin.retrofit.retrofitCheckCircle.Master> response) {
-                                        Log.i("rrrrrr", ""+response.body().getResult_code());
                                         if(response.body().getResult_code() == 1){
                                             //선택된 동아리가 있을 때
                                             Intent intent = new Intent(getApplicationContext(), HomeActivity.class);
@@ -126,14 +119,12 @@ public class LoginActivity extends AppCompatActivity {
                                             editor.putInt("checkCircle", 1);
                                             editor.commit();
                                             Log.i("동아리잇다", ""+sharedPreferences.getInt("checkCircle", 50));
-//                                            intent.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
                                             hideProgressDialog();
                                             startActivity(intent);
                                         }else{
                                             Intent intent = new Intent(getApplicationContext(), HomeActivity.class);
                                             editor.putInt("checkCircle", 0);
                                             editor.commit();
-//                                            intent.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
                                             Log.i("LoginActivity", "동아리업다");
                                             hideProgressDialog();
                                             startActivity(intent);
@@ -152,7 +143,7 @@ public class LoginActivity extends AppCompatActivity {
                             } else {
                                 log.appendLog("FirstLogin code not matched");
                                 hideProgressDialog();
-                                Toast.makeText(getApplicationContext(), "로그인 실패!", Toast.LENGTH_SHORT);
+                                Toast.makeText(getApplicationContext(), "로그인 실패!", Toast.LENGTH_SHORT).show();
                             }
                         }
 
@@ -160,14 +151,14 @@ public class LoginActivity extends AppCompatActivity {
                         public void onFailure(Call<com.donga.examples.boomin.retrofit.retrofitFirstLogin.Master> call, Throwable t) {
                             log.appendLog("FirstLogin onFailure");
                             hideProgressDialog();
-                            Toast.makeText(getApplicationContext(), "로그인 실패!", Toast.LENGTH_SHORT);
+                            Toast.makeText(getApplicationContext(), "로그인 실패!", Toast.LENGTH_SHORT).show();
                             t.printStackTrace();
                         }
                     });
 
 
                 } else {
-                    Toast.makeText(getApplicationContext(), "로그인 실패!", Toast.LENGTH_SHORT);
+                    Toast.makeText(getApplicationContext(), "로그인 실패!", Toast.LENGTH_SHORT).show();
                     log.appendLog("inLoginActivity Att2 code not matched");
                     hideProgressDialog();
                 }
@@ -176,7 +167,7 @@ public class LoginActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<Master> call, Throwable t) {
-                Toast.makeText(getApplicationContext(), "로그인 실패!", Toast.LENGTH_SHORT);
+                Toast.makeText(getApplicationContext(), "로그인 실패!", Toast.LENGTH_SHORT).show();
                 log.appendLog("inLoginActivity login failure");
                 hideProgressDialog();
                 t.printStackTrace();
@@ -192,7 +183,7 @@ public class LoginActivity extends AppCompatActivity {
                     //권한 동의 버튼 선택
                     Log.i("requestPermissions", "done");
                 } else {
-                    Toast.makeText(this, "권한 사용에 동의해주셔야 이용이 가능합니다.", Toast.LENGTH_SHORT);
+                    Toast.makeText(this, "권한 사용에 동의해주셔야 이용이 가능합니다.", Toast.LENGTH_SHORT).show();
 //                    log.appendLog("permission denied");
                     finish();
                 }
@@ -235,7 +226,6 @@ public class LoginActivity extends AppCompatActivity {
         if (sharedPreferences.contains("stuID") && sharedPreferences.contains("ID") && sharedPreferences.contains("pw")) {
             Intent intent = new Intent(getApplicationContext(), HomeActivity.class);
             startActivity(intent);
-            Log.i("로그인 에러", "아놔");
         } else {
             Toast.makeText(getApplicationContext(), "로그인해주세요", Toast.LENGTH_SHORT).show();
         }

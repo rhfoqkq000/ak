@@ -7,13 +7,17 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.donga.examples.boomin.AppendLog;
 import com.donga.examples.boomin.R;
+import com.donga.examples.boomin.Singleton.NoticeSingleton;
 import com.donga.examples.boomin.activity.Wisper_NoticeDialogActivity;
 import com.donga.examples.boomin.retrofit.retrofitNormalRead.Interface_normalRead;
+import com.orhanobut.logger.Logger;
 
 import java.util.ArrayList;
 
@@ -33,8 +37,9 @@ public class WisperAdapter extends RecyclerView.Adapter<WisperAdapter.ViewHolder
     // you provide access to all the views for a data item in a view holder
     public static class ViewHolder extends RecyclerView.ViewHolder {
         // each data item is just a string in this case
-        public TextView dateText, nameText, titleText, contentText, read_check;
+        public TextView dateText, nameText, titleText, contentText, read_check, none_id;
         public RelativeLayout rLayout;
+        public CheckBox checkBox;
         public CardView cardview;
 
         public ViewHolder(View view) {
@@ -44,7 +49,9 @@ public class WisperAdapter extends RecyclerView.Adapter<WisperAdapter.ViewHolder
             titleText = (TextView)view.findViewById(R.id.wisper_title);
             contentText = (TextView)view.findViewById(R.id.wisper_content);
             read_check = (TextView)view.findViewById(R.id.wisper_read_check);
+            none_id = (TextView)view.findViewById(R.id.wisper_none_id);
             cardview = (CardView)view.findViewById(R.id.wisper_cardview);
+            checkBox = (CheckBox)view.findViewById(R.id.wisper_checkbox);
             rLayout = (RelativeLayout)view.findViewById(R.id.wisper_layout_cardview);
         }
     }
@@ -77,10 +84,25 @@ public class WisperAdapter extends RecyclerView.Adapter<WisperAdapter.ViewHolder
         holder.titleText.setText(mDataset.get(position).title);
         holder.contentText.setText(mDataset.get(position).content);
         holder.read_check.setText(mDataset.get(position).read_check);
+        holder.none_id.setText(mDataset.get(position).none_id);
+        holder.checkBox.setChecked(false);
 
         if(mDataset.get(position).read_check.equals("0")){
             holder.rLayout.setBackground(context.getResources().getDrawable(R.drawable.left_line2));
         }
+
+        holder.checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                ArrayList<String> noticeIdArray = NoticeSingleton.getInstance().getNoticeIdArray();
+                if(!isChecked){
+                    noticeIdArray.remove(holder.none_id.getText().toString());
+                }else {
+                    noticeIdArray.add(holder.none_id.getText().toString());
+                }
+                NoticeSingleton.getInstance().setNoticeIdArray(noticeIdArray);
+            }
+        });
 
         holder.cardview.setOnClickListener(new View.OnClickListener() {
             @Override

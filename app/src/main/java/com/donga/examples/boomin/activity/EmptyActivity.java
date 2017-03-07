@@ -96,7 +96,6 @@ public class EmptyActivity extends AppCompatActivity
         navigationView.setNavigationItemSelectedListener(this);
 
         List<String> empty_day_list = Arrays.asList(getResources().getStringArray(R.array.empty_day));
-//        final List<String> empty_clock_list = Arrays.asList(getResources().getStringArray(R.array.empty_clock));
         final ArrayList<String> empty_clock_list = new ArrayList<>();
         for(int i = 3; i<=20; i++){
             empty_clock_list.add(String.valueOf(i));
@@ -108,8 +107,6 @@ public class EmptyActivity extends AppCompatActivity
 
         ArrayAdapter<String> empty_day_adapter = new ArrayAdapter<String>(this, R.layout.spinner_item,
                 empty_day_list);
-//        ArrayAdapter<String> empty_clock_adapter = new ArrayAdapter<String>(this, R.layout.spinner_item,
-//                empty_clock_list);
         ArrayAdapter<String> empty_clock_adapter = new ArrayAdapter<String>(this, R.layout.spinner_item,
                 empty_array2);
         empty_day.setAdapter(empty_day_adapter);
@@ -119,15 +116,10 @@ public class EmptyActivity extends AppCompatActivity
         empty_clock1.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                Log.i("onItemSelected", ""+Integer.parseInt(parent.getSelectedItem().toString().split("\\(")[0]));
-                int j = 0;
                 ArrayList<String> empty_clock2_list = new ArrayList<String>();
                 int selected = Integer.parseInt(parent.getSelectedItem().toString().split("\\(")[0]);
-//                int selected = position+3;
-
                 for (int i = selected; i <= 20; i++) {
                     empty_clock2_list.add(empty_array2.get(i-3));
-                    j++;
                 }
                 ArrayAdapter<String> empty_clock2_adapter = new ArrayAdapter<String>(getApplicationContext(),
                         R.layout.spinner_item, empty_clock2_list);
@@ -203,11 +195,8 @@ public class EmptyActivity extends AppCompatActivity
             @Override
             public void onResponse(Call<com.donga.examples.boomin.retrofit.retrofitEmpty.Master> call, Response<com.donga.examples.boomin.retrofit.retrofitEmpty.Master> response) {
                 if (response.body().getResult_code() == 1) {
-                    // Adapter 생성
                     adapter = new EmptyListViewAdapter();
-                    // 리스트뷰 참조 및 Adapter달기
                     listview.setAdapter(adapter);
-                    // 리스트뷰 아이템 추가
                     for (int i = 0; i < response.body().getResult_body().size(); i++) {
                         adapter.addItem(response.body().getResult_body().get(i).getRoom_no());
                         hideProgressDialog();

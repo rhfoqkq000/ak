@@ -19,10 +19,20 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 
 import com.donga.examples.boomin.R;
+import com.donga.examples.boomin.Singleton.NoticeSingleton;
 import com.donga.examples.boomin.listviewAdapter.HelpListViewAdapter;
+import com.donga.examples.boomin.retrofit.retrofitRemoveNormalNotis.Interface_removeNormalNotis;
+import com.donga.examples.boomin.retrofit.retrofitRemoveNormalNotis.JsonRequest;
+
+import java.util.ArrayList;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 /**
  * Created by rhfoq on 2017-02-17.
@@ -79,6 +89,8 @@ public class HelpActivity extends AppCompatActivity implements NavigationView.On
                 } else if (adapter.getMenuText(position).equals("푸쉬알림")) {
                     Intent intent = new Intent(getApplicationContext(), PushActivity.class);
                     startActivity(intent);
+                } else if (adapter.getMenuText(position).equals("오픈소스")) {
+
 
                 }
             }

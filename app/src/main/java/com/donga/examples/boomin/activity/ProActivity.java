@@ -1,5 +1,6 @@
 package com.donga.examples.boomin.activity;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -37,7 +38,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
  * Created by rhfoq on 2017-02-17.
  */
 public class ProActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
-
+    private ProgressDialog mProgressDialog;
     AppendLog log = new AppendLog();
 
     @BindView(R.id.toolbar_pro)
@@ -86,6 +87,7 @@ public class ProActivity extends AppCompatActivity implements NavigationView.OnN
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
 
                 final ProListViewItem item = (ProListViewItem) adapterView.getItemAtPosition(position);
+                showProgressDialog();
                 //retrofit 통신
                 Retrofit client = new Retrofit.Builder().baseUrl(getString(R.string.retrofit_url))
                         .addConverterFactory(GsonConverterFactory.create()).build();
@@ -99,22 +101,23 @@ public class ProActivity extends AppCompatActivity implements NavigationView.OnN
 
                             Intent intent = new Intent(getApplicationContext(), ProSubActivity.class);
                             intent.putExtra("name", item.getPro_main_name());
+                            hideProgressDialog();
                             startActivity(intent);
                         } else {
+                            hideProgressDialog();
                             log.appendLog("inProActivity code not matched");
-                            Toast.makeText(getApplicationContext(), "불러오기 실패", Toast.LENGTH_SHORT);
+                            Toast.makeText(getApplicationContext(), "불러오기 실패", Toast.LENGTH_SHORT).show();
                         }
                     }
 
                     @Override
                     public void onFailure(Call<com.donga.examples.boomin.retrofit.retrofitProfessor.Master> call, Throwable t) {
+                        hideProgressDialog();
                         log.appendLog("inProActivity failure");
-                        Toast.makeText(getApplicationContext(), "불러오기 실패", Toast.LENGTH_SHORT);
+                        Toast.makeText(getApplicationContext(), "불러오기 실패", Toast.LENGTH_SHORT).show();
                         t.printStackTrace();
                     }
                 });
-
-
             }
         });
     }
@@ -206,6 +209,23 @@ public class ProActivity extends AppCompatActivity implements NavigationView.OnN
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout_pro);
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    private void showProgressDialog() {
+        if (mProgressDialog == null) {
+            mProgressDialog = new ProgressDialog(this);
+            mProgressDialog.setMessage(getString(R.string.loading));
+            mProgressDialog.setIndeterminate(true);
+        }
+
+        mProgressDialog.show();
+    }
+
+    private void hideProgressDialog() {
+        if (mProgressDialog != null && mProgressDialog.isShowing()) {
+            mProgressDialog.hide();
+            mProgressDialog.dismiss();
+        }
     }
 
 }

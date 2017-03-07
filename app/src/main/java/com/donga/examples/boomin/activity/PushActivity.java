@@ -1,5 +1,6 @@
 package com.donga.examples.boomin.activity;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -38,6 +39,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class PushActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
     AppendLog log = new AppendLog();
+    private ProgressDialog mProgressDialog;
 
     @BindView(R.id.toolbar_push)
     Toolbar toolbar;
@@ -66,6 +68,7 @@ public class PushActivity extends AppCompatActivity implements NavigationView.On
         switch_push.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                showProgressDialog();
                 //retrofit 통신
                 Retrofit client = new Retrofit.Builder().baseUrl(getString(R.string.retrofit_url))
                         .addConverterFactory(GsonConverterFactory.create()).build();
@@ -83,12 +86,19 @@ public class PushActivity extends AppCompatActivity implements NavigationView.On
                                 //푸쉬 거부
                                 Toast.makeText(getApplicationContext(), "푸쉬 알림이 거부되었습니다.", Toast.LENGTH_SHORT).show();
                             }
+                            hideProgressDialog();
+                        }else{
+                            log.appendLog("inPushActivity code not matched");
+                            Toast.makeText(getApplicationContext(), "통신 실패", Toast.LENGTH_SHORT).show();
                         }
                     }
 
                     @Override
                     public void onFailure(Call<com.donga.examples.boomin.retrofit.retrofitChangePushPermit.Master> call, Throwable t) {
-
+                        hideProgressDialog();
+                        log.appendLog("inPushActivity failure");
+                        Toast.makeText(getApplicationContext(), "통신 실패", Toast.LENGTH_SHORT).show();
+                        t.printStackTrace();
                     }
                 });
             }
@@ -181,5 +191,22 @@ public class PushActivity extends AppCompatActivity implements NavigationView.On
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout_push);
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    private void showProgressDialog() {
+        if (mProgressDialog == null) {
+            mProgressDialog = new ProgressDialog(this);
+            mProgressDialog.setMessage(getString(R.string.loading));
+            mProgressDialog.setIndeterminate(true);
+        }
+
+        mProgressDialog.show();
+    }
+
+    private void hideProgressDialog() {
+        if (mProgressDialog != null && mProgressDialog.isShowing()) {
+            mProgressDialog.hide();
+            mProgressDialog.dismiss();
+        }
     }
 }

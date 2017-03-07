@@ -84,7 +84,7 @@ public class FirstActivity extends AppCompatActivity {
                 call4 = room.loginUser(String.valueOf(sharedPreferences.getInt("stuID", 0)), Decrypt(sharedPreferences.getString("pw", ""), getString(R.string.decrypt_key)));
             } catch (Exception e) {
                 e.printStackTrace();
-//                log.appendLog("inFirstActivity LOGIN FAILED");
+                log.appendLog("inFirstActivity LOGIN FAILED");
             }
             call4.enqueue(new Callback<Master>() {
                 @Override
@@ -103,7 +103,7 @@ public class FirstActivity extends AppCompatActivity {
 
                         startActivity(intent);
                     } else {
-//                        log.appendLog("inFirstActivity Att2 code not matched move to LoginActivity");
+                        log.appendLog("inFirstActivity Att2 code not matched move to LoginActivity");
                         moveToLoginActivity();
                     }
                 }
@@ -112,7 +112,7 @@ public class FirstActivity extends AppCompatActivity {
                 public void onFailure(Call<Master> call, Throwable t) {
                     //retrofit 통신 실패시 SharedPreferences 삭제 후 LoginActivity로 이동
                     t.printStackTrace();
-//                    log.appendLog("inFirstActivity AUTO LOGIN FAILED");
+                    log.appendLog("inFirstActivity AUTO LOGIN FAILED");
                     moveToLoginActivity();
                 }
             });

@@ -19,6 +19,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.donga.examples.boomin.AppendLog;
 import com.donga.examples.boomin.R;
@@ -43,6 +44,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class ResActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
     AppendLog log = new AppendLog();
+
 
     private ProgressDialog mProgressDialog;
     public int count = 0;
@@ -242,6 +244,7 @@ public class ResActivity extends AppCompatActivity
                     hideProgressDialog();
                 } else {
                     log.appendLog("inResActivity code not matched");
+                    Toast.makeText(getApplicationContext(), "불러오기 실패", Toast.LENGTH_SHORT).show();
                     hideProgressDialog();
                 }
             }
@@ -250,6 +253,7 @@ public class ResActivity extends AppCompatActivity
             public void onFailure(Call<Master3> call, Throwable t) {
                 log.appendLog("inResActivity failure");
                 hideProgressDialog();
+                Toast.makeText(getApplicationContext(), "불러오기 실패", Toast.LENGTH_SHORT).show();
                 t.printStackTrace();
             }
         });
