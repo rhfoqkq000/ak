@@ -57,11 +57,6 @@ public class SelectDialogActivity extends Activity {
                     .addConverterFactory(GsonConverterFactory.create()).build();
             Interface_setCircle setCircle = client.create(Interface_setCircle.class);
 
-//        Circles circles = new Circles(Integer.parseInt(circleIds.get(selected)));
-//        circles.setCircles(Integer.parseInt(circleIds.get(selected)));
-//        Log.i("circles", ""+circles.toString());
-//        arrayCircles.add(circles);
-//        arrayCircles.add(new Circles(Integer.parseInt(circleIds.get(selected))));
             SharedPreferences sharedPreferences = getSharedPreferences(getResources().getString(R.string.SFLAG), Context.MODE_PRIVATE);
 
             retrofit2.Call<com.donga.examples.boomin.retrofit.retrofitSetCircle.Master> call = setCircle.setCircle(sharedPreferences.getInt("ID", 0), circleIds.get(selected));
@@ -113,8 +108,6 @@ public class SelectDialogActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-
 
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         getWindow().clearFlags(WindowManager.LayoutParams.FLAG_DIM_BEHIND);

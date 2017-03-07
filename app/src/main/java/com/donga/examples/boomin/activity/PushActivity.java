@@ -13,16 +13,31 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.CompoundButton;
+import android.widget.Switch;
+import android.widget.Toast;
 
+import com.donga.examples.boomin.AppendLog;
 import com.donga.examples.boomin.R;
+import com.donga.examples.boomin.retrofit.retrofitChangePushPermit.Interface_changePushPermit;
+import com.donga.examples.boomin.retrofit.retrofitLogin.Interface_login;
+import com.donga.examples.boomin.retrofit.retrofitLogin.Master;
+import com.orhanobut.logger.Logger;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 /**
  * Created by horse on 2017. 3. 6..
  */
 
 public class PushActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
+    AppendLog log = new AppendLog();
 
     @BindView(R.id.toolbar_push)
     Toolbar toolbar;
@@ -30,6 +45,8 @@ public class PushActivity extends AppCompatActivity implements NavigationView.On
     DrawerLayout drawer;
     @BindView(R.id.nav_view_push)
     NavigationView navigationView;
+    @BindView(R.id.switch_push)
+    Switch switch_push;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,7 +61,38 @@ public class PushActivity extends AppCompatActivity implements NavigationView.On
         toggle.syncState();
 
         navigationView.setNavigationItemSelectedListener(this);
+        final SharedPreferences sharedPreferences = getSharedPreferences(getResources().getString(R.string.SFLAG), Context.MODE_PRIVATE);
 
+        switch_push.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                //retrofit 통신
+                Retrofit client = new Retrofit.Builder().baseUrl(getString(R.string.retrofit_url))
+                        .addConverterFactory(GsonConverterFactory.create()).build();
+                Interface_changePushPermit changePushPermit = client.create(Interface_changePushPermit.class);
+                Call<com.donga.examples.boomin.retrofit.retrofitChangePushPermit.Master> call =
+                        changePushPermit.changePushPermit(String.valueOf(sharedPreferences.getInt("ID", 99999)));
+                call.enqueue(new Callback<com.donga.examples.boomin.retrofit.retrofitChangePushPermit.Master>() {
+                    @Override
+                    public void onResponse(Call<com.donga.examples.boomin.retrofit.retrofitChangePushPermit.Master> call, Response<com.donga.examples.boomin.retrofit.retrofitChangePushPermit.Master> response) {
+                        if(response.body().getResult_code() == 1){
+                            if(response.body().getResult_body() == 0){
+                                //푸쉬 허용
+                                Toast.makeText(getApplicationContext(), "푸쉬 알림이 허용되었습니다.", Toast.LENGTH_SHORT).show();
+                            }else if(response.body().getResult_body() == 1){
+                                //푸쉬 거부
+                                Toast.makeText(getApplicationContext(), "푸쉬 알림이 거부되었습니다.", Toast.LENGTH_SHORT).show();
+                            }
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<com.donga.examples.boomin.retrofit.retrofitChangePushPermit.Master> call, Throwable t) {
+
+                    }
+                });
+            }
+        });
     }
 
     @Override
