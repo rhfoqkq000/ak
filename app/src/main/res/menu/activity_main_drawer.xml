@@ -43,7 +43,7 @@
             android:title="공지사항" />
         <item
             android:id="@+id/nav_change"
-            android:icon="@drawable/megaphone"
+            android:icon="@drawable/change"
             android:title="동아리/학회 변경" />
         <item
             android:id="@+id/nav_help"

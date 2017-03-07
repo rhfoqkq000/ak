@@ -24,6 +24,7 @@ import com.donga.examples.boomin.retrofit.retrofitMeal.Interface_meal;
 import com.donga.examples.boomin.retrofit.retrofitMeal.Master3;
 import com.donga.examples.boomin.retrofit.retrofitSetCircle.Circles;
 import com.donga.examples.boomin.retrofit.retrofitSetCircle.Interface_setCircle;
+import com.jaredrummler.materialspinner.MaterialSpinner;
 
 import java.util.ArrayList;
 
@@ -42,7 +43,7 @@ public class SelectDialogActivity extends Activity {
 
     ArrayList<Circles> arrayCircles;
     @BindView(R.id.select_spinner)
-    Spinner select_spinner;
+    MaterialSpinner select_spinner;
 
     @OnClick(R.id.popup_close)
     void onCloseClicked() {
@@ -51,7 +52,7 @@ public class SelectDialogActivity extends Activity {
 
     @OnClick(R.id.select_btn_ok)
     void onOkClicked(){
-        int selected = select_spinner.getSelectedItemPosition();
+        int selected = select_spinner.getSelectedIndex();
         if(selected>-1){
             Retrofit client = new Retrofit.Builder().baseUrl(getString(R.string.retrofit_url))
                     .addConverterFactory(GsonConverterFactory.create()).build();
@@ -132,7 +133,8 @@ public class SelectDialogActivity extends Activity {
                         circleNames.add(response.body().getResult_body().get(i).getName());
                         circleIds.add(response.body().getResult_body().get(i).getId());
                     }
-                    ArrayAdapter adapter = new ArrayAdapter(getApplicationContext(), android.R.layout.simple_spinner_dropdown_item, circleNames);
+                    select_spinner.setItems(circleNames);
+//                    ArrayAdapter adapter = new ArrayAdapter(getApplicationContext(), android.R.layout.simple_spinner_dropdown_item, circleNames);
 //                    ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(
 //                            getApplicationContext(),
 //                            android.R.layout.simple_list_item_multiple_choice, circleNames){
@@ -147,10 +149,10 @@ public class SelectDialogActivity extends Activity {
 //                            textView.setCompoundDrawablesWithIntrinsicBounds (0, 0,R.drawable.checkbox_selector ,0);
 //                            textView.setTextColor(getResources().getColor(R.color.one));
 //                            //set background color for view
-//                            return view;
+//                            return view;r
 //                        }
 //                    };
-                    select_spinner.setAdapter(adapter);
+//                    select_spinner.setAdapter(adapter);
                     Log.i("done", "done");
                 }else{
                     log.appendLog("inSelectDialog code not matched");
