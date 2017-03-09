@@ -51,6 +51,7 @@ public class LoginActivity extends AppCompatActivity {
     private long backPressedTime = 0;
     AppendLog log = new AppendLog();
     Activity activity = this;
+
     @BindView(R.id.s_id)
     EditText s_id;
     @BindView(R.id.s_pw)

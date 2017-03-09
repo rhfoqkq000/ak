@@ -17,6 +17,7 @@ import com.donga.examples.boomin.Singleton.InfoSingleton;
 import com.donga.examples.boomin.retrofit.retrofitGrad.Interface_grad;
 import com.donga.examples.boomin.retrofit.retrofitGrad.Master;
 
+import java.util.ArrayList;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -145,10 +146,11 @@ public class Stu_GrageFragment extends Fragment {
                         tv_early.setText(response.body().getResult_body().getInfo().getEarly());
                         tv_smart.setText(response.body().getResult_body().getInfo().getSmart());
 
-                        kyo_02.setText(response.body().getResult_body().getTitle2().get(0));
-                        kyo_03.setText(response.body().getResult_body().getTitle2().get(1));
-                        kyo_04.setText(response.body().getResult_body().getTitle2().get(2));
-                        kyo_05.setText(response.body().getResult_body().getTitle2().get(3));
+                        ArrayList<String> title = response.body().getResult_body().getTitle2();
+                        kyo_02.setText(title.get(0).split("교양")[0]);
+                        kyo_03.setText(title.get(1).split("교양")[0]);
+                        kyo_04.setText(title.get(2).split("교양")[0]);
+                        kyo_05.setText(title.get(3).split("교양")[0]);
 
                         kyo_11.setText(response.body().getResult_body().getNeed().get(1));
                         kyo_12.setText(response.body().getResult_body().getNeed().get(2));

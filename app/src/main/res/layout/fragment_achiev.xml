@@ -20,12 +20,17 @@
             card_view:cardCornerRadius="5dp"
             card_view:cardElevation="2dp">
 
-            <Spinner
+            <!--<Spinner-->
+                <!--android:id="@+id/achiev_all"-->
+                <!--android:layout_width="175dp"-->
+                <!--android:layout_height="35dp"-->
+                <!--android:layout_gravity="center_vertical"-->
+                <!--android:entries="@array/achiev_select" />-->
+            <com.jaredrummler.materialspinner.MaterialSpinner
                 android:id="@+id/achiev_all"
                 android:layout_width="175dp"
                 android:layout_height="35dp"
-                android:layout_gravity="center_vertical"
-                android:entries="@array/achiev_select" />
+                android:layout_gravity="center_vertical" />
         </android.support.v7.widget.CardView>
 
         <android.support.v7.widget.CardView

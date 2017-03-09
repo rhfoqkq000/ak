@@ -18,6 +18,7 @@ import com.donga.examples.boomin.Singleton.ManageSingleton;
 import com.donga.examples.boomin.retrofit.retrofitCircleFcm.Interface_CircleFcm;
 import com.donga.examples.boomin.retrofit.retrofitCircleFcm.Master;
 import com.donga.examples.boomin.retrofit.retrofitNormalFcm.Interface_normalFcm;
+import com.orhanobut.logger.Logger;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -57,6 +58,7 @@ public class Manage_LetterFragment extends Fragment {
     void onSendClick(){
         if(manage_letter_spinner.getSelectedItemPosition() == 0){
             //일반 공지 보낼 시
+            Logger.d("일반");
             //retrofit 통신
             Retrofit client = new Retrofit.Builder().baseUrl(getString(R.string.retrofit_url))
                     .addConverterFactory(GsonConverterFactory.create()).build();
@@ -81,6 +83,7 @@ public class Manage_LetterFragment extends Fragment {
             });
         } else{
             //행사참여여부 공지 보낼 시
+            Logger.d("참여여부");
             //retrofit 통신
             Retrofit client = new Retrofit.Builder().baseUrl(getString(R.string.retrofit_url))
                     .addConverterFactory(GsonConverterFactory.create()).build();
@@ -91,10 +94,10 @@ public class Manage_LetterFragment extends Fragment {
                 @Override
                 public void onResponse(Call<Master> call, Response<Master> response) {
                     if(response.body().getSuccess().equals("HTTP 요청 처리 완료")){
-                        Toast.makeText(getContext(), "전송 완료", Toast.LENGTH_SHORT);
+                        Toast.makeText(getContext(), "전송 완료", Toast.LENGTH_SHORT).show();
                     }else{
                         log.appendLog("inLetterFragment code not matched");
-                        Toast.makeText(getContext(), "전송 실패", Toast.LENGTH_SHORT);
+                        Toast.makeText(getContext(), "전송 실패", Toast.LENGTH_SHORT).show();
                     }
                 }
 
@@ -102,7 +105,7 @@ public class Manage_LetterFragment extends Fragment {
                 public void onFailure(Call<Master> call, Throwable t) {
                     t.printStackTrace();
                     log.appendLog("inLetterFragment failure");
-                    Toast.makeText(getContext(), "전송 실패", Toast.LENGTH_SHORT);
+                    Toast.makeText(getContext(), "전송 실패", Toast.LENGTH_SHORT).show();
                 }
             });
         }

@@ -15,11 +15,16 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.Toast;
 
+import com.afollestad.materialdialogs.MaterialDialog;
 import com.donga.examples.boomin.R;
 import com.donga.examples.boomin.Singleton.PushSingleton;
+import com.jaredrummler.materialspinner.MaterialSpinner;
+import com.orhanobut.logger.Logger;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
@@ -141,13 +146,40 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
 
             int check = sharedPreferences.getInt("checkCircle", 0);
             if(check == 0){
-                Log.i("HomeActivity", "check=0");
-                Intent i= new Intent(this, SelectDialogActivity.class);
-                i.putExtra("major", sharedPreferences.getString("major", ""));
-                final SharedPreferences.Editor editor = sharedPreferences.edit();
-                editor.putInt("checkCircle", 1);
-                editor.commit();
-                startActivity(i);
+//                Intent i= new Intent(this, SelectDialogActivity.class);
+//                i.putExtra("major", sharedPreferences.getString("major", ""));
+
+                ArrayList<String> list_major = new ArrayList<String>();
+                list_major.add("경영정보학과");
+                list_major.add("경영학과");
+
+                boolean wrapInScrollView = false;
+                MaterialDialog dialog = new MaterialDialog.Builder(this)
+                        .customView(R.layout.activity_select_dialog, wrapInScrollView)
+                        .build();
+
+                View view = dialog.getCustomView();
+                final MaterialSpinner select_spinner = (MaterialSpinner)view.findViewById(R.id.select_spinner);
+                select_spinner.setItems(list_major);
+                select_spinner.setOnItemSelectedListener(new MaterialSpinner.OnItemSelectedListener() {
+                    @Override
+                    public void onItemSelected(MaterialSpinner view, int position, long id, Object item) {
+                        Logger.d(""+select_spinner.getItems().get(position));
+//                        getCircle(select_spinner.getItems().get(position).toString());
+                    }
+                });
+
+                dialog.show();
+
+
+
+//                SelectDialogActivity selectDialogActivity = new SelectDialogActivity(HomeActivity.this);
+//                final SharedPreferences.Editor editor = sharedPreferences.edit();
+//                editor.putInt("checkCircle", 1);
+//                editor.commit();
+//                selectDialogActivity.show();
+
+//                startActivity(i);
             }
         }
     }
