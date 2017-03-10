@@ -3,6 +3,7 @@ package com.donga.examples.boomin.adapter;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.res.Resources;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
@@ -25,6 +26,7 @@ import com.orhanobut.logger.Logger;
 
 import java.util.ArrayList;
 
+import me.leolin.shortcutbadger.ShortcutBadger;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -90,7 +92,9 @@ public class Wisper_okAdapter extends RecyclerView.Adapter<Wisper_okAdapter.View
         holder.none_id.setText(mDataset.get(position).none_id);
         holder.checkBox.setChecked(false);
 
-        if(mDataset.get(position).read_check.equals("0")){
+        final String getReadCheck = mDataset.get(position).read_check;
+
+        if(getReadCheck.equals("0")){
             holder.rLayout.setBackground(context.getResources().getDrawable(R.drawable.left_line2));
         }
 
@@ -107,10 +111,21 @@ public class Wisper_okAdapter extends RecyclerView.Adapter<Wisper_okAdapter.View
             }
         });
 
+        final SharedPreferences sharedPreferences = context.getSharedPreferences(context.getResources().getString(R.string.SFLAG), Context.MODE_PRIVATE);
+
         holder.cardview.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(final View view) {
                 showProgressDialog();
+
+                if(getReadCheck.equals("0")){
+                    int pushCount = sharedPreferences.getInt("pushCount", 0);
+                    pushCount--;
+                    SharedPreferences.Editor editor = sharedPreferences.edit();
+                    editor.putInt("pushCount", pushCount);
+                    editor.commit();
+                    ShortcutBadger.applyCount(context, pushCount);
+                }
                 //retrofit 통신
                 Retrofit client = new Retrofit.Builder().baseUrl(context.getString(R.string.retrofit_url))
                         .addConverterFactory(GsonConverterFactory.create()).build();

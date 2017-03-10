@@ -72,7 +72,7 @@
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name="com.donga.examples.boomin.activity.Wisper_NoticeDialogActivity"
-            android:theme="@android:style/Theme.Panel" />
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name="com.donga.examples.boomin.activity.ManageLoginActivity"
             android:theme="@style/AppTheme.NoActionBar"/>
