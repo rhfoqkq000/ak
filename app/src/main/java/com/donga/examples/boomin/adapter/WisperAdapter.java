@@ -1,7 +1,10 @@
 package com.donga.examples.boomin.adapter;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.content.res.Resources;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -11,6 +14,7 @@ import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.donga.examples.boomin.AppendLog;
 import com.donga.examples.boomin.R;
@@ -21,6 +25,7 @@ import com.orhanobut.logger.Logger;
 
 import java.util.ArrayList;
 
+import me.leolin.shortcutbadger.ShortcutBadger;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -30,6 +35,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class WisperAdapter extends RecyclerView.Adapter<WisperAdapter.ViewHolder> {
     Context context;
     AppendLog log = new AppendLog();
+    private ProgressDialog mProgressDialog;
 
     private ArrayList<MyData_Wisper> mDataset;
     // Provide a reference to the views for each data item
@@ -51,7 +57,7 @@ public class WisperAdapter extends RecyclerView.Adapter<WisperAdapter.ViewHolder
             read_check = (TextView)view.findViewById(R.id.wisper_read_check);
             none_id = (TextView)view.findViewById(R.id.wisper_none_id);
             cardview = (CardView)view.findViewById(R.id.wisper_cardview);
-            checkBox = (CheckBox)view.findViewById(R.id.wisper_checkbox);
+            checkBox = (CheckBox)view.findViewById(R.id.wisper_ok_checkbox);
             rLayout = (RelativeLayout)view.findViewById(R.id.wisper_layout_cardview);
         }
     }
@@ -87,7 +93,9 @@ public class WisperAdapter extends RecyclerView.Adapter<WisperAdapter.ViewHolder
         holder.none_id.setText(mDataset.get(position).none_id);
         holder.checkBox.setChecked(false);
 
-        if(mDataset.get(position).read_check.equals("0")){
+        final String getReadCheck = mDataset.get(position).read_check;
+
+        if(getReadCheck.equals("0")){
             holder.rLayout.setBackground(context.getResources().getDrawable(R.drawable.left_line2));
         }
 
@@ -104,9 +112,21 @@ public class WisperAdapter extends RecyclerView.Adapter<WisperAdapter.ViewHolder
             }
         });
 
+        final SharedPreferences sharedPreferences = context.getSharedPreferences(context.getResources().getString(R.string.SFLAG), Context.MODE_PRIVATE);
+
         holder.cardview.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(final View view) {
+                showProgressDialog();
+
+                if(getReadCheck.equals("0")){
+                    int pushCount = sharedPreferences.getInt("pushCount", 0);
+                    pushCount--;
+                    SharedPreferences.Editor editor = sharedPreferences.edit();
+                    editor.putInt("pushCount", pushCount);
+                    editor.commit();
+                    ShortcutBadger.applyCount(context, pushCount);
+                }
                 //retrofit 통신
                 Retrofit client = new Retrofit.Builder().baseUrl(context.getString(R.string.retrofit_url))
                         .addConverterFactory(GsonConverterFactory.create()).build();
@@ -119,9 +139,15 @@ public class WisperAdapter extends RecyclerView.Adapter<WisperAdapter.ViewHolder
                             holder.rLayout.setBackground(context.getResources().getDrawable(R.drawable.left_line));
                             Intent intent = new Intent(view.getContext(), Wisper_NoticeDialogActivity.class);
                             intent.putExtra("content", holder.contentText.getText().toString());
+                            intent.putExtra("title", holder.titleText.getText().toString());
+                            intent.putExtra("name", holder.nameText.getText().toString());
+                            hideProgressDialog();
                             view.getContext().startActivity(intent);
+
                         }else{
+                            hideProgressDialog();
                             log.appendLog("inWisperAdapter code not matched");
+                            Toast.makeText(context, "불러오기 실패", Toast.LENGTH_SHORT).show();
                         }
                     }
 
@@ -129,6 +155,8 @@ public class WisperAdapter extends RecyclerView.Adapter<WisperAdapter.ViewHolder
                     public void onFailure(Call<com.donga.examples.boomin.retrofit.retrofitNormalRead.Master> call, Throwable t) {
                         t.printStackTrace();
                         log.appendLog("inWisperAdapter failure");
+                        hideProgressDialog();
+                        Toast.makeText(context, "불러오기 실패", Toast.LENGTH_SHORT).show();
                     }
                 });
             }
@@ -139,5 +167,21 @@ public class WisperAdapter extends RecyclerView.Adapter<WisperAdapter.ViewHolder
     @Override
     public int getItemCount() {
         return mDataset.size();
+    }
+
+    private void showProgressDialog() {
+        if (mProgressDialog == null) {
+            mProgressDialog = new ProgressDialog(context);
+            mProgressDialog.setMessage(context.getResources().getString(R.string.loading));
+            mProgressDialog.setIndeterminate(true);
+        }
+        mProgressDialog.show();
+    }
+
+    private void hideProgressDialog() {
+        if (mProgressDialog != null && mProgressDialog.isShowing()) {
+            mProgressDialog.hide();
+            mProgressDialog.dismiss();
+        }
     }
 }

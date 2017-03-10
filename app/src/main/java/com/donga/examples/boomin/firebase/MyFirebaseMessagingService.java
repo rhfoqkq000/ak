@@ -21,6 +21,7 @@ import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.media.RingtoneManager;
 import android.net.Uri;
 import android.os.Bundle;
@@ -38,6 +39,8 @@ import com.google.firebase.messaging.RemoteMessage;
 
 import java.util.List;
 import java.util.Map;
+
+import me.leolin.shortcutbadger.ShortcutBadger;
 
 public class MyFirebaseMessagingService extends FirebaseMessagingService {
 //    Context context = getApplicationContext();
@@ -76,7 +79,13 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
         // Check if message contains a data payload.
         if (remoteMessage.getData().size() > 0) {
 
-//            editor.putInt("PushCount", );
+            SharedPreferences sharedPreferences = getSharedPreferences(getResources().getString(R.string.SFLAG), Context.MODE_PRIVATE);
+            SharedPreferences.Editor editor = sharedPreferences.edit();
+            int pushCount = sharedPreferences.getInt("pushCount", 0);
+            pushCount++;
+            editor.putInt("pushCount", pushCount);
+            editor.commit();
+            ShortcutBadger.applyCount(getApplicationContext(), pushCount);
 
             Map data = remoteMessage.getData();
 
@@ -122,9 +131,6 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
 //                Intent i = new Intent(getApplicationContext(), WisperActivity.class);
 //                startActivity(i);
             }
-//            SharedPreferences sharedPreferences = getSharedPreferences("LOGIN3", Context.MODE_PRIVATE);
-//            SharedPreferences.Editor editor = sharedPreferences.edit();
-//            editor.putString("contents", String.valueOf(data.get("contents")));
         }
 
 

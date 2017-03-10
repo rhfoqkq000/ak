@@ -1,6 +1,7 @@
 package com.donga.examples.boomin.activity;
 
 import android.app.ActivityManager;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -15,17 +16,32 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.ListView;
 import android.widget.Toast;
 
+import com.afollestad.materialdialogs.MaterialDialog;
+import com.donga.examples.boomin.AppendLog;
 import com.donga.examples.boomin.R;
 import com.donga.examples.boomin.Singleton.PushSingleton;
+import com.donga.examples.boomin.listviewAdapter.SelectListViewAdapter;
+import com.donga.examples.boomin.retrofit.retrofitGetCircle.Interface_getCircle;
+import com.donga.examples.boomin.retrofit.retrofitGetCircle.Master;
+import com.jaredrummler.materialspinner.MaterialSpinner;
+import com.orhanobut.logger.Logger;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import me.leolin.shortcutbadger.ShortcutBadger;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 /**
  * Created by rhfoq on 2017-02-07.
@@ -34,10 +50,14 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
 
     private final long FINISH_INTERVAL_TIME = 2000;
     private long backPressedTime = 0;
-    int pushCount = 0;
     Bundle bundle = null;
-    int check;
+    AppendLog log = new AppendLog();
+    private ProgressDialog mProgressDialog;
 
+    ArrayList<String> circleIds = null;
+    SelectListViewAdapter adapter;
+
+    ListView listView;
     @BindView(R.id.toolbar_home)
     Toolbar toolbar;
     @BindView(R.id.drawer_layout_home)
@@ -109,6 +129,8 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         } catch (Exception e){
             bundle = null;
         }
+        SharedPreferences sharedPreferences = getSharedPreferences(getResources().getString(R.string.SFLAG), Context.MODE_PRIVATE);
+
         if (bundle!=null) {
 //            Log.i("getExtras", getIntent().getExtras().getString("contents"));
 //            Intent intent = new Intent(this, AlertDialogActivity.class);
@@ -119,37 +141,95 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
 //            intent.putExtras(bun);
 //            startActivity(intent);
 
+            SharedPreferences.Editor editor = sharedPreferences.edit();
+            int pushCount = sharedPreferences.getInt("pushCount", 0);
+            pushCount++;
+            editor.putInt("pushCount", pushCount);
+            editor.commit();
+            ShortcutBadger.applyCount(getApplicationContext(), pushCount);
+
             Intent i = new Intent(getApplicationContext(), WisperActivity.class);
             startActivity(i);
         }else{
 
-//        LinearLayout linearLayout = (LinearLayout) findViewById(R.id.back);
-
-            SharedPreferences sharedPreferences = getSharedPreferences(getResources().getString(R.string.SFLAG), Context.MODE_PRIVATE);
             int stuID = sharedPreferences.getInt("stuID", 0);
             Log.i("HomeActivity", "" + stuID);
 
-//        if(!sharedPreferences.contains("pushCount")){
-//            SharedPreferences.Editor editor = sharedPreferences.edit();
-//            editor.putInt("pushCount", 0);
-//            ShortcutBadger.applyCount(this, sharedPreferences.getInt("pushCount", 0));
-//            Log.i("HomeActivity", "pushCount:"+sharedPreferences.getInt("pushCount", 0));
-//            //쪽지함 dialog 색깔, 시간표 "준비 중입니다.", 공지사항이랑 버전정보 없앨까,
-//            // 관리자 로그인 후 회원목록이랑 쪽지함 지우기 안보이게
-//        }
-            Log.i("HomeActivity", ""+sharedPreferences.getInt("checkCircle", 1));
-
             int check = sharedPreferences.getInt("checkCircle", 0);
             if(check == 0){
-                Log.i("HomeActivity", "check=0");
-                Intent i= new Intent(this, SelectDialogActivity.class);
-                i.putExtra("major", sharedPreferences.getString("major", ""));
-                final SharedPreferences.Editor editor = sharedPreferences.edit();
-                editor.putInt("checkCircle", 1);
-                editor.commit();
-                startActivity(i);
+//                Intent i= new Intent(this, SelectDialogActivity.class);
+//                i.putExtra("major", sharedPreferences.getString("major", ""));
+
+                ArrayList<String> list_major = new ArrayList<String>();
+                list_major.add("경영정보학과");
+                list_major.add("경영학과");
+
+                boolean wrapInScrollView = false;
+                MaterialDialog dialog = new MaterialDialog.Builder(this)
+                        .customView(R.layout.activity_select_dialog, wrapInScrollView)
+                        .build();
+
+                View view = dialog.getCustomView();
+                listView = (ListView)view.findViewById(R.id.list_select);
+                final MaterialSpinner select_spinner = (MaterialSpinner)view.findViewById(R.id.select_spinner);
+                select_spinner.setItems(list_major);
+                select_spinner.setOnItemSelectedListener(new MaterialSpinner.OnItemSelectedListener() {
+                    @Override
+                    public void onItemSelected(MaterialSpinner view, int position, long id, Object item) {
+                        Logger.d(""+select_spinner.getItems().get(position));
+                        getCircle(select_spinner.getItems().get(position).toString());
+                    }
+                });
+
+                getCircle(select_spinner.getItems().get(0).toString());
+
+                dialog.show();
+
+
+
+//                SelectDialogActivity selectDialogActivity = new SelectDialogActivity(HomeActivity.this);
+//                final SharedPreferences.Editor editor = sharedPreferences.edit();
+//                editor.putInt("checkCircle", 1);
+//                editor.commit();
+//                selectDialogActivity.show();
+
+//                startActivity(i);
             }
         }
+    }
+
+    public void getCircle(String major){
+        showProgressDialog();
+        Retrofit client = new Retrofit.Builder().baseUrl(getString(R.string.retrofit_url))
+                .addConverterFactory(GsonConverterFactory.create()).build();
+        final Interface_getCircle getCircle = client.create(Interface_getCircle.class);
+        retrofit2.Call<Master> call = getCircle.getCircle(major);
+        circleIds = new ArrayList<>();
+        call.enqueue(new Callback<Master>() {
+            @Override
+            public void onResponse(Call<Master> call, Response<Master> response) {
+                if(response.body().getResult_code() == 1){
+                    adapter = new SelectListViewAdapter();
+                    for(int i = 0; i<response.body().getResult_body().size(); i++){
+                        adapter.addItem(response.body().getResult_body().get(i).getName());
+                        adapter.notifyDataSetChanged();
+                    }
+                    listView.setAdapter(adapter);
+                    hideProgressDialog();
+                }else{
+                    hideProgressDialog();
+                    log.appendLog("inSelectDialog code not matched");
+                    Toast.makeText(getApplicationContext(), "불러오기 실패", Toast.LENGTH_SHORT).show();
+                }
+            }
+            @Override
+            public void onFailure(Call<Master> call, Throwable t) {
+                hideProgressDialog();
+                log.appendLog("inSelectDialog failure");
+                Toast.makeText(getApplicationContext(), "불러오기 실패", Toast.LENGTH_SHORT).show();
+                t.printStackTrace();
+            }
+        });
     }
 
 
@@ -253,5 +333,22 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
     protected void onPause() {
 //        finish();
         super.onPause();
+    }
+
+    private void showProgressDialog() {
+        if (mProgressDialog == null) {
+            mProgressDialog = new ProgressDialog(HomeActivity.this);
+            mProgressDialog.setMessage(getString(R.string.loading));
+            mProgressDialog.setIndeterminate(true);
+        }
+
+        mProgressDialog.show();
+    }
+
+    private void hideProgressDialog() {
+        if (mProgressDialog != null && mProgressDialog.isShowing()) {
+            mProgressDialog.hide();
+            mProgressDialog.dismiss();
+        }
     }
 }

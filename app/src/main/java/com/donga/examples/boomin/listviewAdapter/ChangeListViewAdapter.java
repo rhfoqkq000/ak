@@ -7,15 +7,19 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.TextView;
 
 import com.donga.examples.boomin.R;
+import com.donga.examples.boomin.Singleton.ChangeSingleton;
 import com.donga.examples.boomin.listviewItem.ChangeListViewItem;
 import com.donga.examples.boomin.listviewItem.RoomListViewItem;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.logging.Logger;
 
 /**
  * Created by rhfoq on 2017-02-08.
@@ -43,7 +47,7 @@ public class ChangeListViewAdapter extends BaseAdapter {
     public View getView(int position, View convertView, ViewGroup parent) {
         final int pos = position;
         final Context context = parent.getContext();
-        ViewHolder viewHolder = null;
+        final ViewHolder viewHolder;
         View view = myViews.get(position);
 
         convertView = null;
@@ -56,13 +60,27 @@ public class ChangeListViewAdapter extends BaseAdapter {
 
             // 화면에 표시될 View(Layout이 inflate된)으로부터 위젯에 대한 참조 획득
             viewHolder.text_title = (TextView) convertView.findViewById(R.id.change_text);
+            viewHolder.checkBox = (CheckBox) convertView.findViewById(R.id.change_checkbox);
 
             // Data Set(listViewItemList)에서 position에 위치한 데이터 참조 획득
             ChangeListViewItem listViewItem = listViewItemList.get(position);
 
-
             // 아이템 내 각 위젯에 데이터 반영
             viewHolder.text_title.setText(listViewItem.getTitle());
+
+            viewHolder.checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                @Override
+                public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                    ArrayList<String> changeArray = ChangeSingleton.getInstance().getmArray();
+                    if(!isChecked){
+                        changeArray.remove(viewHolder.text_title.getText().toString());
+                    }else {
+                        changeArray.add(viewHolder.text_title.getText().toString());
+                    }
+                    ChangeSingleton.getInstance().setmArray(changeArray);
+                    Log.i("ChangeAdapter", changeArray.toString());
+                }
+            });
 
             convertView.setTag(viewHolder);
 
@@ -100,5 +118,6 @@ public class ChangeListViewAdapter extends BaseAdapter {
 
     class ViewHolder{
         TextView text_title;
+        CheckBox checkBox;
     }
 }
