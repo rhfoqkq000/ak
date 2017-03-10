@@ -80,9 +80,6 @@
             android:name="com.donga.examples.boomin.activity.Wisper_OkDialogActivity"
             android:theme="@android:style/Theme.Panel" />
         <activity
-            android:name="com.donga.examples.boomin.activity.SelectDialogActivity"
-            android:theme="@android:style/Theme.Panel"/>
-        <activity
             android:name="com.donga.examples.boomin.activity.SendDialogActivity"
             android:theme="@android:style/Theme.Panel"/>
         <activity
