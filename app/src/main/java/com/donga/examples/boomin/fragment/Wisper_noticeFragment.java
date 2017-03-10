@@ -85,7 +85,7 @@ public class Wisper_noticeFragment extends Fragment {
 
     @OnClick(R.id.garbage)
     void onGarbageClicked(){
-        AlertDialog.Builder builder = new AlertDialog.Builder(getContext());     // 여기서 this는 Activity의 this
+        AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
 
         // 여기서 부터는 알림창의 속성 설정
         builder.setTitle("삭제 확인 대화 상자")

@@ -38,7 +38,6 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class FirstActivity extends AppCompatActivity {
 
-
     AppendLog log = new AppendLog();
 
     @Override
@@ -49,12 +48,21 @@ public class FirstActivity extends AppCompatActivity {
 
     @Override
     protected void onStart() {
-        super.onStart();
-        int badgeCount = 0;
-        ShortcutBadger.applyCount(getApplicationContext(), badgeCount);
+        SharedPreferences sharedPreferences = getSharedPreferences(getResources().getString(R.string.SFLAG), Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        if(sharedPreferences.contains("pushCount")){
+
+        }else{
+            int badgeCount = 0;
+            ShortcutBadger.applyCount(getApplicationContext(), badgeCount);
+            editor.putInt("pushCount", badgeCount);
+            editor.commit();
+        }
 
 
         networkCheck();
+
+        super.onStart();
     }
 
     @Override
@@ -66,9 +74,6 @@ public class FirstActivity extends AppCompatActivity {
             if (getIntent().getExtras().getString("contents") != null) {
                 Log.i("INTENT", getIntent().getExtras().getString("contents"));
                 PushSingleton.getInstance().setmString(getIntent().getExtras().getString("contents"));
-//                PushSingleton.getInstance().setmStringSend(getIntent().getExtras().getString("send"));
-//                PushSingleton.getInstance().setmStringTitle(getIntent().getExtras().getString("title"));
-//                log.appendLog("inFirstActivity" + getIntent().getExtras().getString("contents"));
             }
         }
 
