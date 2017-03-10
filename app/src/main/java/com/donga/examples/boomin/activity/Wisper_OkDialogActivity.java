@@ -27,12 +27,16 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class Wisper_OkDialogActivity extends Activity {
     AppendLog log = new AppendLog();
 
-    @BindView(R.id.dialog_wisper_content)
+    @BindView(R.id.wisper_ok_content1)
     TextView send_content;
     @BindView(R.id.wisper_none_id_dialog)
     TextView wisper_none_id_dialog;
+    @BindView(R.id.wisper_ok_title)
+    TextView wisper_ok_title;
+    @BindView(R.id.wisper_ok_name)
+    TextView wisper_ok_name;
 
-    @OnClick(R.id.wisper_no)
+    @OnClick(R.id.wisper_ok_none)
     void wisper_no(){
         Retrofit client = new Retrofit.Builder().baseUrl(getString(R.string.retrofit_url))
                 .addConverterFactory(GsonConverterFactory.create()).build();
@@ -58,7 +62,7 @@ public class Wisper_OkDialogActivity extends Activity {
         });
     }
 
-    @OnClick(R.id.wisper_ok)
+    @OnClick(R.id.wisper_ok_ok)
     void wisper_ok(){
         Retrofit client = new Retrofit.Builder().baseUrl(getString(R.string.retrofit_url))
                 .addConverterFactory(GsonConverterFactory.create()).build();
@@ -88,16 +92,18 @@ public class Wisper_OkDialogActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        requestWindowFeature(Window.FEATURE_NO_TITLE);
-        getWindow().clearFlags(WindowManager.LayoutParams.FLAG_DIM_BEHIND);
+//        requestWindowFeature(Window.FEATURE_NO_TITLE);
+//        getWindow().clearFlags(WindowManager.LayoutParams.FLAG_DIM_BEHIND);
 
-        setContentView(R.layout.activity_wisper_ok_dialog);
+        setContentView(R.layout.activity_wisper_ok);
         ButterKnife.bind(this);
 
         Intent i = getIntent();
         try{
             send_content.setText(i.getExtras().getString("content"));
             wisper_none_id_dialog.setText(i.getExtras().getString("circle_notis_id"));
+            wisper_ok_name.setText(i.getExtras().getString("name"));
+            wisper_ok_title.setText(i.getExtras().getString("title"));
         }catch(Exception e){
             e.printStackTrace();
         }

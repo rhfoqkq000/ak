@@ -1,5 +1,6 @@
 package com.donga.examples.boomin.activity;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -22,11 +23,16 @@ import android.widget.Toast;
 
 import com.donga.examples.boomin.AppendLog;
 import com.donga.examples.boomin.R;
+import com.donga.examples.boomin.Singleton.ChangeSingleton;
 import com.donga.examples.boomin.listviewAdapter.ChangeListViewAdapter;
 import com.donga.examples.boomin.listviewAdapter.NoticeListViewAdapter;
 import com.donga.examples.boomin.retrofit.retrofitChangePushPermit.Interface_changePushPermit;
+import com.donga.examples.boomin.retrofit.retrofitGetCircle.Interface_getCircle;
+import com.donga.examples.boomin.retrofit.retrofitGetCircle.Master;
 import com.jaredrummler.materialspinner.MaterialSpinner;
 import com.orhanobut.logger.Logger;
+
+import java.util.ArrayList;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -43,6 +49,9 @@ import retrofit2.converter.gson.GsonConverterFactory;
  */
 
 public class ChangeActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
+    AppendLog log = new AppendLog();
+    private ProgressDialog mProgressDialog;
+    ArrayList<String> changeArray;
 
     @BindView(R.id.toolbar_change)
     Toolbar toolbar;
@@ -72,45 +81,71 @@ public class ChangeActivity extends AppCompatActivity implements NavigationView.
         navigationView.setNavigationItemSelectedListener(this);
 
 //      spinner 아이템채우기
-        change_spinner.setItems("경영학과","국제관광학과","국제무역학과","경영정보학과","정치외교학과","행정학과","사회학과"
+        change_spinner.setItems("경영정보학과","국제관광학과","국제무역학과","경영학과","정치외교학과","행정학과","사회학과"
                 ,"사회복지학과","미디어커뮤니케이션학과","경제학과","금융학과");
+
+
+
+        getCircle(change_spinner.getItems().get(0).toString());
+
         change_spinner.setOnItemSelectedListener(new MaterialSpinner.OnItemSelectedListener() {
             @Override
             public void onItemSelected(MaterialSpinner view, int position, long id, Object item) {
                 switch (position){
                     case 0:
-                        Logger.d("경영학과");
+                        Logger.d(change_spinner.getItems().get(position).toString());
+                        listView.setVisibility(View.VISIBLE);
+                        getCircle(change_spinner.getItems().get(position).toString());
                         break;
                     case 1:
                         Logger.d("국제관광학과");
+                        getCircle(change_spinner.getItems().get(position).toString());
+
                         break;
                     case 2:
                         Logger.d("국제무역학과");
+                        getCircle(change_spinner.getItems().get(position).toString());
+
                         break;
                     case 3:
-                        Logger.d("경영정보학과");
-                        listView.setVisibility(View.VISIBLE);
+                        Logger.d("경영학과");
+                        getCircle(change_spinner.getItems().get(position).toString());
+
                         break;
                     case 4:
                         Logger.d("정치외교학과");
+                        getCircle(change_spinner.getItems().get(position).toString());
+
                         break;
                     case 5:
                         Logger.d("행정학과");
+                        getCircle(change_spinner.getItems().get(position).toString());
+
                         break;
                     case 6:
                         Logger.d("사회학과");
+                        getCircle(change_spinner.getItems().get(position).toString());
+
                         break;
                     case 7:
                         Logger.d("사회복지학과");
+                        getCircle(change_spinner.getItems().get(position).toString());
+
                         break;
                     case 8:
                         Logger.d("미디어커뮤니케이션학과");
+                        getCircle(change_spinner.getItems().get(position).toString());
+
                         break;
                     case 9:
                         Logger.d("경제학과");
+                        getCircle(change_spinner.getItems().get(position).toString());
+
                         break;
                     case 10:
                         Logger.d("금융학과");
+                        getCircle(change_spinner.getItems().get(position).toString());
+
                         break;
                     default:
                         Logger.d("없쪄염");
@@ -119,6 +154,10 @@ public class ChangeActivity extends AppCompatActivity implements NavigationView.
             }
         });
 
+
+    }
+
+    public void getCircle(String major){
         //listview
         adapter = new ChangeListViewAdapter();
         listView.setAdapter(adapter);
@@ -143,6 +182,36 @@ public class ChangeActivity extends AppCompatActivity implements NavigationView.
                         dialog.dismiss();
                     }
                 }).show();
+        showProgressDialog();
+        Retrofit client = new Retrofit.Builder().baseUrl(getString(R.string.retrofit_url))
+                .addConverterFactory(GsonConverterFactory.create()).build();
+        final Interface_getCircle getCircle = client.create(Interface_getCircle.class);
+        retrofit2.Call<Master> call = getCircle.getCircle(major);
+        call.enqueue(new Callback<Master>() {
+            @Override
+            public void onResponse(Call<Master> call, Response<Master> response) {
+                if(response.body().getResult_code() == 1){
+                    int responseSize = response.body().getResult_body().size();
+                    for(int i = 0; i<responseSize; i++){
+                        adapter.addItem(response.body().getResult_body().get(i).getName());
+                        adapter.notifyDataSetChanged();
+                    }
+                    hideProgressDialog();
+                }else{
+                    log.appendLog("inChangeActivity code not matched");
+                    hideProgressDialog();
+                    Toast.makeText(getApplicationContext(), "불러오기 실패", Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Master> call, Throwable t) {
+                log.appendLog("inChangeActivity failure");
+                hideProgressDialog();
+                Toast.makeText(getApplicationContext(), "불러오기 실패", Toast.LENGTH_SHORT).show();
+                t.printStackTrace();
+            }
+        });
     }
 
     @Override
@@ -233,5 +302,30 @@ public class ChangeActivity extends AppCompatActivity implements NavigationView.
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout_change);
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    private void showProgressDialog() {
+        if (mProgressDialog == null) {
+            mProgressDialog = new ProgressDialog(this);
+            mProgressDialog.setMessage(getString(R.string.loading));
+            mProgressDialog.setIndeterminate(true);
+        }
+
+        mProgressDialog.show();
+    }
+
+    private void hideProgressDialog() {
+        if (mProgressDialog != null && mProgressDialog.isShowing()) {
+            mProgressDialog.hide();
+            mProgressDialog.dismiss();
+        }
+    }
+
+    @Override
+    protected void onPause() {
+        changeArray = ChangeSingleton.getInstance().getmArray();
+        changeArray.clear();
+        ChangeSingleton.getInstance().setmArray(changeArray);
+        super.onPause();
     }
 }

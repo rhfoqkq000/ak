@@ -27,6 +27,7 @@ import com.donga.examples.boomin.Singleton.InfoSingleton;
 import com.donga.examples.boomin.retrofit.retrofitAchieveAll.Interface_achall;
 import com.donga.examples.boomin.retrofit.retrofitAchieveAll.Master;
 import com.donga.examples.boomin.retrofit.retrofitAchieveSep.Interface_achsep;
+import com.jaredrummler.materialspinner.MaterialSpinner;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -59,8 +60,10 @@ public class Stu_AchievFragment extends Fragment {
     AppendLog appendLog = new AppendLog();
     HashMap<String, Integer> hash;
 
+//    @BindView(R.id.achiev_all)
+//    Spinner achiev_all;
     @BindView(R.id.achiev_all)
-    Spinner achiev_all;
+    MaterialSpinner achiev_all;
     @BindView(R.id.part_layout)
     RelativeLayout part_layout;
     @BindView(R.id.all_ok_card)
@@ -126,9 +129,9 @@ public class Stu_AchievFragment extends Fragment {
 //            }
 //        });
 
-        achiev_all.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+        achiev_all.setOnItemSelectedListener(new MaterialSpinner.OnItemSelectedListener() {
             @Override
-            public void onItemSelected(AdapterView<?> adapterView, View view, int position, long l) {
+            public void onItemSelected(MaterialSpinner view, int position, long id, Object item) {
                 if (position == 0) {
                     all_ok_card.setVisibility(View.VISIBLE);
                     part_layout.setVisibility(View.GONE);
@@ -146,11 +149,33 @@ public class Stu_AchievFragment extends Fragment {
                 }
             }
 
-            @Override
-            public void onNothingSelected(AdapterView<?> adapterView) {
-                Toast.makeText(getActivity(), "메뉴를 선택해주세요.", Toast.LENGTH_LONG).show();
-            }
+
         });
+//        achiev_all.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+//            @Override
+//            public void onItemSelected(AdapterView<?> adapterView, View view, int position, long l) {
+//                if (position == 0) {
+//                    all_ok_card.setVisibility(View.VISIBLE);
+//                    part_layout.setVisibility(View.GONE);
+//                    ArrayList<String> years = new ArrayList<String>();
+//                    for (int i = Integer.parseInt(new SimpleDateFormat("yyyy").format(new Date(System.currentTimeMillis()))); i >= Integer.parseInt(InfoSingleton.getInstance().getYear()); i--) {
+//                        years.add(String.valueOf(i));
+//                    }
+//                    ArrayAdapter adapter = new ArrayAdapter(getContext(), android.R.layout.simple_spinner_dropdown_item, years);
+//                    achieve_year.setAdapter(adapter);
+//                    ArrayAdapter adapter_side = new ArrayAdapter(getContext(), android.R.layout.simple_spinner_dropdown_item, keyList);
+//                    achiev_side.setAdapter(adapter_side);
+//                } else {
+//                    all_ok_card.setVisibility(View.GONE);
+//                    part_layout.setVisibility(View.VISIBLE);
+//                }
+//            }
+//
+//            @Override
+//            public void onNothingSelected(AdapterView<?> adapterView) {
+//                Toast.makeText(getActivity(), "메뉴를 선택해주세요.", Toast.LENGTH_LONG).show();
+//            }
+//        });
         return rootview;
     }
 

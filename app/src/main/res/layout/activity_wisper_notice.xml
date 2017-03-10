@@ -29,7 +29,7 @@
             android:layout_below="@+id/wisper_notice_name"
             android:background="#ececec"/>
 
-        <EditText
+        <TextView
             android:id="@+id/wisper_notice_title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
