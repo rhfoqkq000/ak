@@ -36,6 +36,8 @@ import java.util.ArrayList;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import cn.refactor.lib.colordialog.ColorDialog;
+import cn.refactor.lib.colordialog.PromptDialog;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -160,6 +162,26 @@ public class ChangeActivity extends AppCompatActivity implements NavigationView.
         adapter = new ChangeListViewAdapter();
         listView.setAdapter(adapter);
 
+        adapter.addItem("모도리");
+        adapter.addItem("오감도");
+        adapter.addItem("포미스");
+        adapter.addItem("심심풀이");
+        adapter.addItem("노래몰이");
+        adapter.addItem("평행봉");
+        adapter.addItem("미파");
+
+        //ColorDialog
+        new PromptDialog(this)
+                .setDialogType(PromptDialog.DIALOG_TYPE_INFO)
+                .setAnimationEnable(true)
+                .setTitleText("알림")
+                .setContentText("동아리 변경을 하실 경우에는 기존의 선택하신 동아리 내역이 삭제됩니다.")
+                .setPositiveListener("확인", new PromptDialog.OnPositiveListener() {
+                    @Override
+                    public void onClick(PromptDialog dialog) {
+                        dialog.dismiss();
+                    }
+                }).show();
         showProgressDialog();
         Retrofit client = new Retrofit.Builder().baseUrl(getString(R.string.retrofit_url))
                 .addConverterFactory(GsonConverterFactory.create()).build();

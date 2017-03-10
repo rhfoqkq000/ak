@@ -14,7 +14,7 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.ListView;
 import android.widget.Toast;
-
+import com.afollestad.materialdialogs.DialogAction;
 import com.donga.examples.boomin.AppendLog;
 import com.donga.examples.boomin.R;
 import com.donga.examples.boomin.listviewAdapter.SelectListViewAdapter;
@@ -49,6 +49,14 @@ public class SelectDialogActivity extends Dialog {
 
     SelectListViewAdapter adapter;
 
+    public SelectDialogActivity(@NonNull Context context) {
+        super(context);
+    }
+
+
+    @OnClick(R.id.popup_close)
+    void onCloseClicked() {
+        dismiss();
     public SelectDialogActivity(Context context) {
         super(context, android.R.style.Theme_Translucent_NoTitleBar);
     }
@@ -59,8 +67,9 @@ public class SelectDialogActivity extends Dialog {
     }
 
     @OnClick(R.id.select_btn_ok)
-    void onOkClicked(){
+    void onOkClicked() {
         int selected = select_spinner.getSelectedIndex();
+        if (selected > -1) {
         if(selected>-1){
             Retrofit client = new Retrofit.Builder().baseUrl(getContext().getResources().getString(R.string.retrofit_url))
                     .addConverterFactory(GsonConverterFactory.create()).build();
@@ -82,7 +91,7 @@ public class SelectDialogActivity extends Dialog {
                     t.printStackTrace();
                 }
             });
-        }else{
+        } else {
 
         }
     }
@@ -91,8 +100,6 @@ public class SelectDialogActivity extends Dialog {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        requestWindowFeature(Window.FEATURE_NO_TITLE);
-        getWindow().clearFlags(WindowManager.LayoutParams.FLAG_DIM_BEHIND);
         setContentView(R.layout.activity_select_dialog);
         ButterKnife.bind(this);
 
@@ -105,6 +112,10 @@ public class SelectDialogActivity extends Dialog {
         select_spinner.setOnItemSelectedListener(new MaterialSpinner.OnItemSelectedListener<String>() {
             @Override
             public void onItemSelected(MaterialSpinner view, int position, long id, String item) {
+                Logger.d("" + select_spinner.getItems().get(position));
+                Log.i("selectDialog", "" + select_spinner.getItems().get(position));
+            }
+        });
                 Logger.d(""+select_spinner.getItems().get(position));
                 getCircle(select_spinner.getItems().get(position).toString());
             }

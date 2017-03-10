@@ -157,6 +157,17 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
 
             int check = sharedPreferences.getInt("checkCircle", 0);
             if(check == 0){
+//                Log.i("HomeActivity", "check=0");
+//                Intent i= new Intent(this, SelectDialogActivity.class);
+//                i.putExtra("major", sharedPreferences.getString("major", ""));
+//                final SharedPreferences.Editor editor = sharedPreferences.edit();
+//                editor.putInt("checkCircle", 1);
+//                editor.commit();
+//                startActivity(i);
+                boolean wrapInScrollView = false;
+                new MaterialDialog.Builder(this)
+                        .customView(R.layout.activity_select_dialog, wrapInScrollView)
+                        .show();
 //                Intent i= new Intent(this, SelectDialogActivity.class);
 //                i.putExtra("major", sharedPreferences.getString("major", ""));
 
@@ -185,14 +196,11 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
 
                 dialog.show();
 
-
-
 //                SelectDialogActivity selectDialogActivity = new SelectDialogActivity(HomeActivity.this);
 //                final SharedPreferences.Editor editor = sharedPreferences.edit();
 //                editor.putInt("checkCircle", 1);
 //                editor.commit();
 //                selectDialogActivity.show();
-
 //                startActivity(i);
             }
         }
