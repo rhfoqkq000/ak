@@ -1,29 +1,22 @@
 package com.donga.examples.boomin.activity;
 
 import android.app.Activity;
+import android.app.Dialog;
 import android.content.Context;
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
+import android.support.annotation.StyleRes;
 import android.util.Log;
-import android.view.View;
-import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
-import android.widget.ArrayAdapter;
-import android.widget.CheckedTextView;
 import android.widget.ListView;
-import android.widget.Spinner;
-import android.widget.TextView;
 
+import com.afollestad.materialdialogs.DialogAction;
 import com.donga.examples.boomin.AppendLog;
 import com.donga.examples.boomin.R;
 import com.donga.examples.boomin.listviewAdapter.SelectListViewAdapter;
-import com.donga.examples.boomin.retrofit.retrofitGetCircle.Interface_getCircle;
-import com.donga.examples.boomin.retrofit.retrofitGetCircle.Master;
-import com.donga.examples.boomin.retrofit.retrofitMeal.Interface_meal;
-import com.donga.examples.boomin.retrofit.retrofitMeal.Master3;
 import com.donga.examples.boomin.retrofit.retrofitSetCircle.Circles;
 import com.donga.examples.boomin.retrofit.retrofitSetCircle.Interface_setCircle;
 import com.jaredrummler.materialspinner.MaterialSpinner;
@@ -40,7 +33,7 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-public class SelectDialogActivity extends Activity {
+public class SelectDialogActivity extends Dialog {
     AppendLog log = new AppendLog();
     ArrayList<String> circleIds = null;
 
@@ -52,20 +45,25 @@ public class SelectDialogActivity extends Activity {
 
     SelectListViewAdapter adapter;
 
+    public SelectDialogActivity(@NonNull Context context) {
+        super(context);
+    }
+
+
     @OnClick(R.id.popup_close)
     void onCloseClicked() {
-        finish();
+        dismiss();
     }
 
     @OnClick(R.id.select_btn_ok)
-    void onOkClicked(){
+    void onOkClicked() {
         int selected = select_spinner.getSelectedIndex();
-        if(selected>-1){
-            Retrofit client = new Retrofit.Builder().baseUrl(getString(R.string.retrofit_url))
+        if (selected > -1) {
+            Retrofit client = new Retrofit.Builder().baseUrl(getContext().getResources().getString(R.string.retrofit_url))
                     .addConverterFactory(GsonConverterFactory.create()).build();
             Interface_setCircle setCircle = client.create(Interface_setCircle.class);
 
-            SharedPreferences sharedPreferences = getSharedPreferences(getResources().getString(R.string.SFLAG), Context.MODE_PRIVATE);
+            SharedPreferences sharedPreferences = getContext().getSharedPreferences(getContext().getResources().getString(R.string.SFLAG), Context.MODE_PRIVATE);
 
             retrofit2.Call<com.donga.examples.boomin.retrofit.retrofitSetCircle.Master> call = setCircle.setCircle(sharedPreferences.getInt("ID", 0), circleIds.get(selected));
 
@@ -74,7 +72,7 @@ public class SelectDialogActivity extends Activity {
                 public void onResponse(Call<com.donga.examples.boomin.retrofit.retrofitSetCircle.Master> call, Response<com.donga.examples.boomin.retrofit.retrofitSetCircle.Master> response) {
                     Log.i("successsss?", String.valueOf(response.body().getResult_code()));
 
-                    finish();
+                    dismiss();
                 }
 
                 @Override
@@ -82,7 +80,7 @@ public class SelectDialogActivity extends Activity {
                     t.printStackTrace();
                 }
             });
-        }else{
+        } else {
 
         }
 
@@ -92,8 +90,6 @@ public class SelectDialogActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        requestWindowFeature(Window.FEATURE_NO_TITLE);
-        getWindow().clearFlags(WindowManager.LayoutParams.FLAG_DIM_BEHIND);
         setContentView(R.layout.activity_select_dialog);
         ButterKnife.bind(this);
 
@@ -106,41 +102,9 @@ public class SelectDialogActivity extends Activity {
         select_spinner.setOnItemSelectedListener(new MaterialSpinner.OnItemSelectedListener<String>() {
             @Override
             public void onItemSelected(MaterialSpinner view, int position, long id, String item) {
-                Logger.d(""+select_spinner.getItems().get(position));
-                Log.i("selectDialog", ""+select_spinner.getItems().get(position));
+                Logger.d("" + select_spinner.getItems().get(position));
+                Log.i("selectDialog", "" + select_spinner.getItems().get(position));
             }
         });
-
-
-//        SharedPreferences sharedPreferences = getSharedPreferences(getResources().getString(R.string.SFLAG), Context.MODE_PRIVATE);
-//        String major = sharedPreferences.getString("major", "");
-//
-//        Retrofit client = new Retrofit.Builder().baseUrl(getString(R.string.retrofit_url))
-//                .addConverterFactory(GsonConverterFactory.create()).build();
-//        final Interface_getCircle getCircle = client.create(Interface_getCircle.class);
-//        retrofit2.Call<Master> call = getCircle.getCircle(major);
-//        final ArrayList<String> circleNames = new ArrayList<>();
-//        circleIds = new ArrayList<>();
-//        call.enqueue(new Callback<Master>() {
-//            @Override
-//            public void onResponse(Call<Master> call, Response<Master> response) {
-//                if(response.body().getResult_code() == 1){
-//                    for(int i = 0; i<response.body().getResult_body().size(); i++){
-//                        circleNames.add(response.body().getResult_body().get(i).getName());
-//                        circleIds.add(response.body().getResult_body().get(i).getId());
-//                    }
-//                    select_spinner.setItems(circleNames);
-//                    Log.i("done", "done");
-//                }else{
-//                    log.appendLog("inSelectDialog code not matched");
-//                }
-//            }
-//
-//            @Override
-//            public void onFailure(Call<Master> call, Throwable t) {
-//                log.appendLog("inSelectDialog failure");
-//                t.printStackTrace();
-//            }
-//        });
     }
 }

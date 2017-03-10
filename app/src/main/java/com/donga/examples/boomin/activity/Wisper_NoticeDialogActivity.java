@@ -36,7 +36,7 @@ public class Wisper_NoticeDialogActivity extends Activity {
 
 
 
-        setContentView(R.layout.activity_wisper_dialog);
+        setContentView(R.layout.activity_wisper_notice);
         ButterKnife.bind(this);
 
         Intent i = getIntent();
