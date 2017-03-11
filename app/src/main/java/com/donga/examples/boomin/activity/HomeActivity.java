@@ -127,9 +127,8 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
             Log.d("INFO","base="+taskList.get(i).baseActivity.getClassName()+",top="+taskList.get(i).topActivity.getClassName());
             }
 
-
         try {
-            bundle = getIntent().getExtras().getBundle("contents");
+            bundle = getIntent().getExtras();
         } catch (Exception e){
             bundle = null;
         }
@@ -153,18 +152,6 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
 
             int check = sharedPreferences.getInt("checkCircle", 0);
             if(check == 0){
-              
-//                Log.i("HomeActivity", "check=0");
-//                Intent i= new Intent(this, SelectDialogActivity.class);
-//                i.putExtra("major", sharedPreferences.getString("major", ""));
-//                final SharedPreferences.Editor editor = sharedPreferences.edit();
-//                editor.putInt("checkCircle", 1);
-//                editor.commit();
-//                startActivity(i);
-
-//                Intent i= new Intent(this, SelectDialogActivity.class);
-//                i.putExtra("major", sharedPreferences.getString("major", ""));
-
                 ArrayList<String> list_major = new ArrayList<String>();
                 list_major.add("경영정보학과");
                 list_major.add("경영학과");
@@ -187,13 +174,11 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
 
                 getCircle(select_spinner.getItems().get(0).toString());
 
-                Button select_btn_ok = (Button)view.findViewById(R.id.select_btn_ok);
+                Button select_btn_ok = (Button)view.findViewById(R.id.select_btn_ok_btn);
                 select_btn_ok.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         showProgressDialog();
-
-                        int selected = select_spinner.getSelectedIndex();
                         SharedPreferences sharedPreferences = getSharedPreferences(getString(R.string.SFLAG), Context.MODE_PRIVATE);
 
                         Retrofit client = new Retrofit.Builder().baseUrl(getString(R.string.retrofit_url))
@@ -210,6 +195,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
                                     hideProgressDialog();
                                     dialog.dismiss();
                                 }else{
+                                    getCircle(String.valueOf(select_spinner.getSelectedIndex()));
                                     hideProgressDialog();
                                     Toast.makeText(HomeActivity.this, "동아리 설정 실패", Toast.LENGTH_SHORT).show();
                                     log.appendLog("inHomeActivity setCircle code not matched");

@@ -50,7 +50,7 @@ public class ChangeListViewAdapter extends BaseAdapter {
         final ViewHolder viewHolder;
         View view = myViews.get(position);
 
-        convertView = null;
+//        convertView = null;
         // "listview_item" Layout을 inflate하여 convertView 참조 획득.
         if (convertView == null) {
             LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -78,12 +78,11 @@ public class ChangeListViewAdapter extends BaseAdapter {
                         changeArray.add(viewHolder.text_title.getText().toString());
                     }
                     ChangeSingleton.getInstance().setmArray(changeArray);
-                    Log.i("ChangeAdapter", changeArray.toString());
+                    Log.e("ChangeAdapter", changeArray.toString());
                 }
             });
 
             convertView.setTag(viewHolder);
-
 
         }else{
             viewHolder = (ViewHolder)convertView.getTag();

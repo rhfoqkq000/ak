@@ -69,7 +69,6 @@ public class FirstActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.splash);
-
         if (getIntent().getExtras() != null) {
             if (getIntent().getExtras().getString("contents") != null) {
                 Log.i("INTENT", getIntent().getExtras().getString("contents"));

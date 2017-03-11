@@ -11,6 +11,7 @@ import android.widget.TextView;
 import com.donga.examples.boomin.AppendLog;
 import com.donga.examples.boomin.R;
 import com.donga.examples.boomin.retrofit.retrofitChange_att.Interface_change_att;
+import com.orhanobut.logger.Logger;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -44,7 +45,8 @@ public class Wisper_OkDialogActivity extends Activity {
         Call<com.donga.examples.boomin.retrofit.retrofitChange_att.Master> call = change_att.change_att(wisper_none_id_dialog.getText().toString(), 2);
         call.enqueue(new Callback<com.donga.examples.boomin.retrofit.retrofitChange_att.Master>() {
             @Override
-            public void onResponse(Call<com.donga.examples.boomin.retrofit.retrofitChange_att.Master> call, Response<com.donga.examples.boomin.retrofit.retrofitChange_att.Master> response) {
+            public void onResponse(Call<com.donga.examples.boomin.retrofit.retrofitChange_att.Master> call,
+                                   Response<com.donga.examples.boomin.retrofit.retrofitChange_att.Master> response) {
                 if(response.body().getResult_code() == 1){
                     Log.i("WisperOKDialog", "to 2 change done");
                     finish();
@@ -68,14 +70,16 @@ public class Wisper_OkDialogActivity extends Activity {
                 .addConverterFactory(GsonConverterFactory.create()).build();
         Interface_change_att change_att = client.create(Interface_change_att.class);
         Call<com.donga.examples.boomin.retrofit.retrofitChange_att.Master> call = change_att.change_att(wisper_none_id_dialog.getText().toString(), 1);
+        Logger.d(wisper_none_id_dialog.getText().toString());
         call.enqueue(new Callback<com.donga.examples.boomin.retrofit.retrofitChange_att.Master>() {
             @Override
-            public void onResponse(Call<com.donga.examples.boomin.retrofit.retrofitChange_att.Master> call, Response<com.donga.examples.boomin.retrofit.retrofitChange_att.Master> response) {
+            public void onResponse(Call<com.donga.examples.boomin.retrofit.retrofitChange_att.Master> call,
+                                   Response<com.donga.examples.boomin.retrofit.retrofitChange_att.Master> response) {
                 if(response.body().getResult_code() == 1){
                     Log.i("WisperOKDialog", "1change done");
                     finish();
                 }else{
-                    log.appendLog("inWisper_OkDialog1change code not matched");
+                    log.appendLog("inWisper_OkDialog1change code not matched, "+response.body().getResult_code());
                     finish();
                 }
             }

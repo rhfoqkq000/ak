@@ -25,25 +25,22 @@ public class Wisper_NoticeDialogActivity extends Activity {
     @BindView(R.id.wisper_notice_title)
     TextView wisper_notice_title;
 
-//    @OnClick(R.id.popup_close)
-//    void close(){
-//        finish();
-//    }
+    @OnClick(R.id.wisper_notice_ok_text)
+    void close(){
+        finish();
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-//        requestWindowFeature(Window.FEATURE_NO_TITLE);
-//        getWindow().clearFlags(WindowManager.LayoutParams.FLAG_DIM_BEHIND);
-
         setContentView(R.layout.activity_wisper_notice);
         ButterKnife.bind(this);
 
         Intent i = getIntent();
-        send_content.setText(i.getExtras().getString("content"));
-        wisper_notice_name.setText(i.getExtras().getString("name"));
-        wisper_notice_title.setText(i.getExtras().getString("title"));
+        send_content.setText("내용 : "+i.getExtras().getString("content"));
+        wisper_notice_name.setText("보낸 이 : "+i.getExtras().getString("name"));
+        wisper_notice_title.setText("제목 : "+i.getExtras().getString("title"));
 
     }
 }

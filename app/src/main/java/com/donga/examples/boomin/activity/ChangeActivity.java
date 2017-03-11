@@ -152,22 +152,12 @@ public class ChangeActivity extends AppCompatActivity implements NavigationView.
                 }
             }
         });
-
-
     }
 
     public void getCircle(String major){
         //listview
         adapter = new ChangeListViewAdapter();
         listView.setAdapter(adapter);
-
-        adapter.addItem("모도리");
-        adapter.addItem("오감도");
-        adapter.addItem("포미스");
-        adapter.addItem("심심풀이");
-        adapter.addItem("노래몰이");
-        adapter.addItem("평행봉");
-        adapter.addItem("미파");
 
         //ColorDialog
         new PromptDialog(this)
