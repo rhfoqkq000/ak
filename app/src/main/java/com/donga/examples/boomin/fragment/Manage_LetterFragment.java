@@ -18,6 +18,8 @@ import com.donga.examples.boomin.Singleton.ManageSingleton;
 import com.donga.examples.boomin.retrofit.retrofitCircleFcm.Interface_CircleFcm;
 import com.donga.examples.boomin.retrofit.retrofitCircleFcm.Master;
 import com.donga.examples.boomin.retrofit.retrofitNormalFcm.Interface_normalFcm;
+import com.donga.examples.boomin.retrofit.retrofitNormalFcm.JsonRequest;
+import com.donga.examples.boomin.retrofit.retrofitNormalFcm.JsonRequest2;
 import com.orhanobut.logger.Logger;
 
 import butterknife.BindView;
@@ -63,27 +65,28 @@ public class Manage_LetterFragment extends Fragment {
             Retrofit client = new Retrofit.Builder().baseUrl(getString(R.string.retrofit_url))
                     .addConverterFactory(GsonConverterFactory.create()).build();
             Interface_normalFcm fcm = client.create(Interface_normalFcm.class);
+            JsonRequest2 jsonRequest2 = new JsonRequest2(manage_letter_title.getText().toString(),
+                    manage_letter_name.getText().toString(), manage_letter_content.getText().toString());
             Call<com.donga.examples.boomin.retrofit.retrofitNormalFcm.Master> call = fcm.sendFcm("bearer "+ManageSingleton.getInstance().getToken(),
-                    manage_letter_name.getText().toString(), manage_letter_title.getText().toString(), manage_letter_content.getText().toString());
+                    "application/json", new JsonRequest(jsonRequest2));
 
             call.enqueue(new Callback<com.donga.examples.boomin.retrofit.retrofitNormalFcm.Master>() {
                 @Override
                 public void onResponse(Call<com.donga.examples.boomin.retrofit.retrofitNormalFcm.Master> call, Response<com.donga.examples.boomin.retrofit.retrofitNormalFcm.Master> response) {
                     Log.i("onresponse", "done");
-                    Toast.makeText(getContext(), "전송 완료!", Toast.LENGTH_SHORT);
+                    Toast.makeText(getContext(), "전송 완료!", Toast.LENGTH_SHORT).show();
 
                 }
 
                 @Override
                 public void onFailure(Call<com.donga.examples.boomin.retrofit.retrofitNormalFcm.Master> call, Throwable t) {
-                    Toast.makeText(getContext(), "전송 실패!", Toast.LENGTH_SHORT);
+                    Toast.makeText(getContext(), "전송 실패!", Toast.LENGTH_SHORT).show();
 
                     t.printStackTrace();
                 }
             });
         } else{
             //행사참여여부 공지 보낼 시
-            Logger.d("참여여부");
             //retrofit 통신
             Retrofit client = new Retrofit.Builder().baseUrl(getString(R.string.retrofit_url))
                     .addConverterFactory(GsonConverterFactory.create()).build();

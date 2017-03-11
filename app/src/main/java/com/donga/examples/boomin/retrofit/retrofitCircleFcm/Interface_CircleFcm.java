@@ -11,7 +11,6 @@ import retrofit2.http.POST;
  */
 
 public interface Interface_CircleFcm {
-    @FormUrlEncoded
     @POST("/circle/fcm")
     Call<Master> sendFcm(@Header("Authorization") String token, @Field("title") String title, @Field("body") String body, @Field("contents") String contents);
 }
