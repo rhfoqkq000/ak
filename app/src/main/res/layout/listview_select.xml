@@ -11,6 +11,13 @@
         android:layout_centerVertical="true"
         android:id="@+id/select_text"
         android:text="학과이름" />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:id="@+id/select_none_id"
+        android:visibility="gone"
+        android:text="" />
     <CheckBox
         android:id="@+id/select_checkbox"
         android:layout_width="wrap_content"

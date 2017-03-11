@@ -48,7 +48,7 @@ public class SelectListViewAdapter extends BaseAdapter {
         final ViewHolder viewHolder;
         View view = myViews.get(position);
 
-        convertView = null;
+//        convertView = null;
         // "listview_item" Layout을 inflate하여 convertView 참조 획득.
         if (convertView == null) {
             LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -58,6 +58,7 @@ public class SelectListViewAdapter extends BaseAdapter {
 
             // 화면에 표시될 View(Layout이 inflate된)으로부터 위젯에 대한 참조 획득
             viewHolder.text_title = (TextView) convertView.findViewById(R.id.select_text);
+            viewHolder.text_none_id = (TextView) convertView.findViewById(R.id.select_none_id);
             viewHolder.checkBox = (CheckBox) convertView.findViewById(R.id.select_checkbox);
 
             // Data Set(listViewItemList)에서 position에 위치한 데이터 참조 획득
@@ -66,15 +67,18 @@ public class SelectListViewAdapter extends BaseAdapter {
 
             // 아이템 내 각 위젯에 데이터 반영
             viewHolder.text_title.setText(listViewItem.getTitle());
+            viewHolder.text_none_id.setText(listViewItem.getNone_id());
 
             viewHolder.checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
                 @Override
                 public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                     ArrayList<String> changeArray = ChangeSingleton.getInstance().getDialogArray();
                     if(!isChecked){
-                        changeArray.remove(viewHolder.text_title.getText().toString());
+//                        changeArray.remove(viewHolder.text_title.getText().toString());
+                        changeArray.remove(viewHolder.text_none_id.getText().toString());
                     }else {
-                        changeArray.add(viewHolder.text_title.getText().toString());
+//                        changeArray.add(viewHolder.text_title.getText().toString());
+                        changeArray.add(viewHolder.text_none_id.getText().toString());
                     }
                     ChangeSingleton.getInstance().setDialogArray(changeArray);
                     Log.i("ChangeAdapter", changeArray.toString());
@@ -82,6 +86,8 @@ public class SelectListViewAdapter extends BaseAdapter {
             });
 
             convertView.setTag(viewHolder);
+        }else{
+            viewHolder = (ViewHolder)convertView.getTag();
         }
 
         myViews.put(position, view);
@@ -103,16 +109,28 @@ public class SelectListViewAdapter extends BaseAdapter {
     }
 
     // 아이템 데이터 추가를 위한 함수. 개발자가 원하는대로 작성 가능.
-    public void addItem(String title) {
+    public void addItem(String title, String none_id) {
         SelectListViewItem item = new SelectListViewItem();
 
         item.setTitle(title);
+        item.setNone_id(none_id);
 
         listViewItemList.add(item);
     }
 
     class ViewHolder{
         TextView text_title;
+        TextView text_none_id;
         CheckBox checkBox;
+    }
+
+    @Override
+    public int getViewTypeCount() {
+        return getCount();
+    }
+
+    @Override
+    public int getItemViewType(int position) {
+        return position;
     }
 }
