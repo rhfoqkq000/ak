@@ -153,6 +153,17 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
 
             int check = sharedPreferences.getInt("checkCircle", 0);
             if(check == 0){
+              
+//                Log.i("HomeActivity", "check=0");
+//                Intent i= new Intent(this, SelectDialogActivity.class);
+//                i.putExtra("major", sharedPreferences.getString("major", ""));
+//                final SharedPreferences.Editor editor = sharedPreferences.edit();
+//                editor.putInt("checkCircle", 1);
+//                editor.commit();
+//                startActivity(i);
+
+//                Intent i= new Intent(this, SelectDialogActivity.class);
+//                i.putExtra("major", sharedPreferences.getString("major", ""));
 
                 ArrayList<String> list_major = new ArrayList<String>();
                 list_major.add("경영정보학과");
