@@ -17,16 +17,20 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.Toast;
 
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.donga.examples.boomin.AppendLog;
 import com.donga.examples.boomin.R;
+import com.donga.examples.boomin.Singleton.ChangeSingleton;
 import com.donga.examples.boomin.Singleton.PushSingleton;
 import com.donga.examples.boomin.listviewAdapter.SelectListViewAdapter;
 import com.donga.examples.boomin.retrofit.retrofitGetCircle.Interface_getCircle;
 import com.donga.examples.boomin.retrofit.retrofitGetCircle.Master;
+import com.donga.examples.boomin.retrofit.retrofitSetCircle.Interface_setCircle;
+import com.donga.examples.boomin.retrofit.retrofitSetCircle.JsonRequest;
 import com.jaredrummler.materialspinner.MaterialSpinner;
 import com.orhanobut.logger.Logger;
 
@@ -155,7 +159,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
                 list_major.add("경영학과");
 
                 boolean wrapInScrollView = false;
-                MaterialDialog dialog = new MaterialDialog.Builder(this)
+                final MaterialDialog dialog = new MaterialDialog.Builder(this)
                         .customView(R.layout.activity_select_dialog, wrapInScrollView)
                         .build();
 
@@ -173,8 +177,46 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
 
                 getCircle(select_spinner.getItems().get(0).toString());
 
-                dialog.show();
+                Button select_btn_ok = (Button)view.findViewById(R.id.select_btn_ok);
+                select_btn_ok.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        showProgressDialog();
 
+                        int selected = select_spinner.getSelectedIndex();
+                        SharedPreferences sharedPreferences = getSharedPreferences(getString(R.string.SFLAG), Context.MODE_PRIVATE);
+
+                        Retrofit client = new Retrofit.Builder().baseUrl(getString(R.string.retrofit_url))
+                                .addConverterFactory(GsonConverterFactory.create()).build();
+                        Interface_setCircle setCircle = client.create(Interface_setCircle.class);
+                        ArrayList<String> selectArray = ChangeSingleton.getInstance().getDialogArray();
+                        Call<com.donga.examples.boomin.retrofit.retrofitSetCircle.Master> call = setCircle.setCircle("application/json",
+                                new JsonRequest(sharedPreferences.getInt("ID", 0), selectArray));
+                        Logger.d(sharedPreferences.getInt("ID", 0)+","+selectArray.toString());
+                        call.enqueue(new Callback<com.donga.examples.boomin.retrofit.retrofitSetCircle.Master>() {
+                            @Override
+                            public void onResponse(Call<com.donga.examples.boomin.retrofit.retrofitSetCircle.Master> call, Response<com.donga.examples.boomin.retrofit.retrofitSetCircle.Master> response) {
+                                if(response.body().getResult_code() == 1){
+                                    hideProgressDialog();
+                                    dialog.dismiss();
+                                }else{
+                                    hideProgressDialog();
+                                    Toast.makeText(HomeActivity.this, "동아리 설정 실패", Toast.LENGTH_SHORT).show();
+                                    log.appendLog("inHomeActivity setCircle code not matched");
+                                }
+                            }
+
+                            @Override
+                            public void onFailure(Call<com.donga.examples.boomin.retrofit.retrofitSetCircle.Master> call, Throwable t) {
+                                hideProgressDialog();
+                                Toast.makeText(HomeActivity.this, "동아리 설정 실패", Toast.LENGTH_SHORT).show();
+                                log.appendLog("inHomeActivity setCircle failure");
+                                t.printStackTrace();
+                            }
+                        });
+                    }
+                });
+                dialog.show();
             }
         }
     }
@@ -192,7 +234,8 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
                 if(response.body().getResult_code() == 1){
                     adapter = new SelectListViewAdapter();
                     for(int i = 0; i<response.body().getResult_body().size(); i++){
-                        adapter.addItem(response.body().getResult_body().get(i).getName());
+                        circleIds.add(response.body().getResult_body().get(i).getId());
+                        adapter.addItem(response.body().getResult_body().get(i).getName(), response.body().getResult_body().get(i).getId());
                         adapter.notifyDataSetChanged();
                     }
                     listView.setAdapter(adapter);
