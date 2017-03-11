@@ -136,14 +136,6 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         SharedPreferences sharedPreferences = getSharedPreferences(getResources().getString(R.string.SFLAG), Context.MODE_PRIVATE);
 
         if (bundle!=null) {
-//            Log.i("getExtras", getIntent().getExtras().getString("contents"));
-//            Intent intent = new Intent(this, AlertDialogActivity.class);
-//            Bundle bun = new Bundle();
-//            bun.putString("contents", getIntent().getExtras().getString("contents"));
-////            bun.putString("send", PushSingleton.getInstance().getmStringSend());
-////            bun.putString("title", PushSingleton.getInstance().getmStringTitle());
-//            intent.putExtras(bun);
-//            startActivity(intent);
 
             SharedPreferences.Editor editor = sharedPreferences.edit();
             int pushCount = sharedPreferences.getInt("pushCount", 0);
@@ -224,7 +216,6 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
                         });
                     }
                 });
-
                 dialog.show();
             }
         }
