@@ -157,7 +157,6 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
                 ArrayList<String> list_major = new ArrayList<String>();
                 list_major.add("경영정보학과");
                 list_major.add("경영학과");
-
                 boolean wrapInScrollView = false;
                 final MaterialDialog dialog = new MaterialDialog.Builder(this)
                         .customView(R.layout.activity_select_dialog, wrapInScrollView)
