@@ -164,10 +164,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
 //                editor.putInt("checkCircle", 1);
 //                editor.commit();
 //                startActivity(i);
-                boolean wrapInScrollView = false;
-                new MaterialDialog.Builder(this)
-                        .customView(R.layout.activity_select_dialog, wrapInScrollView)
-                        .show();
+
 //                Intent i= new Intent(this, SelectDialogActivity.class);
 //                i.putExtra("major", sharedPreferences.getString("major", ""));
 
