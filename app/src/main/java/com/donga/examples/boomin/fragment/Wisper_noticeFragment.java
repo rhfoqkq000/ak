@@ -70,6 +70,7 @@ public class Wisper_noticeFragment extends Fragment {
         mAdapter = new WisperAdapter(myDataset, getContext());
         mRecyclerView.setAdapter(mAdapter);
 
+
         sharedPreferences = this.getActivity().getSharedPreferences(getResources().getString(R.string.SFLAG), Context.MODE_PRIVATE);
 
         retrofit();
@@ -108,7 +109,8 @@ public class Wisper_noticeFragment extends Fragment {
                                     jsonRequest);
                             call.enqueue(new Callback<com.donga.examples.boomin.retrofit.retrofitRemoveNormalNotis.Master>() {
                                 @Override
-                                public void onResponse(Call<com.donga.examples.boomin.retrofit.retrofitRemoveNormalNotis.Master> call, Response<com.donga.examples.boomin.retrofit.retrofitRemoveNormalNotis.Master> response) {
+                                public void onResponse(Call<com.donga.examples.boomin.retrofit.retrofitRemoveNormalNotis.Master> call,
+                                                       Response<com.donga.examples.boomin.retrofit.retrofitRemoveNormalNotis.Master> response) {
                                     for(int i = 0; i<noticeIdArray.size(); i++){
                                         myDataset.remove(i);
                                     }

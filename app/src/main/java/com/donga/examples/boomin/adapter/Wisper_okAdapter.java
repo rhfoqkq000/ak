@@ -19,6 +19,7 @@ import android.widget.Toast;
 
 import com.donga.examples.boomin.AppendLog;
 import com.donga.examples.boomin.R;
+import com.donga.examples.boomin.Singleton.ChangeSingleton;
 import com.donga.examples.boomin.Singleton.NoticeSingleton;
 import com.donga.examples.boomin.activity.Wisper_OkDialogActivity;
 import com.donga.examples.boomin.retrofit.retrofitCircleRead.Interface_circleRead;
@@ -98,6 +99,26 @@ public class Wisper_okAdapter extends RecyclerView.Adapter<Wisper_okAdapter.View
             holder.rLayout.setBackground(context.getResources().getDrawable(R.drawable.left_line2));
         }
 
+        final ArrayList<String> wisperAdapterArray = ChangeSingleton.getInstance().getWisperAdapterArray();
+        for(int i = 0; i<wisperAdapterArray.size(); i++){
+            if(Integer.parseInt(wisperAdapterArray.get(i))==(position)){
+                holder.checkBox.setChecked(true);
+            }
+        }
+
+        holder.checkBox.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(holder.checkBox.isChecked()){
+                    wisperAdapterArray.add(String.valueOf(position));
+                }else{
+                    wisperAdapterArray.remove(String.valueOf(position));
+                }
+                ChangeSingleton.getInstance().setWisperAdapterArray(wisperAdapterArray);
+                Log.i("inWisperOkAdapter", wisperAdapterArray.toString());
+            }
+        });
+
         holder.checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
@@ -108,6 +129,7 @@ public class Wisper_okAdapter extends RecyclerView.Adapter<Wisper_okAdapter.View
                     noticeIdArray.add(holder.none_id.getText().toString());
                 }
                 NoticeSingleton.getInstance().setOk_noticeIdArray(noticeIdArray);
+                Logger.d(noticeIdArray.toString());
             }
         });
 
