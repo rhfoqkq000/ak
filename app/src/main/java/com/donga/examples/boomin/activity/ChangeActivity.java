@@ -11,22 +11,19 @@ import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.CompoundButton;
 import android.widget.ListView;
-import android.widget.Switch;
 import android.widget.Toast;
 
 import com.donga.examples.boomin.AppendLog;
 import com.donga.examples.boomin.R;
 import com.donga.examples.boomin.Singleton.ChangeSingleton;
 import com.donga.examples.boomin.listviewAdapter.ChangeListViewAdapter;
-import com.donga.examples.boomin.listviewAdapter.NoticeListViewAdapter;
-import com.donga.examples.boomin.retrofit.retrofitChangePushPermit.Interface_changePushPermit;
 import com.donga.examples.boomin.retrofit.retrofitGetCircle.Interface_getCircle;
 import com.donga.examples.boomin.retrofit.retrofitGetCircle.Master;
 import com.jaredrummler.materialspinner.MaterialSpinner;
@@ -36,6 +33,7 @@ import java.util.ArrayList;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import cn.refactor.lib.colordialog.PromptDialog;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -82,8 +80,6 @@ public class ChangeActivity extends AppCompatActivity implements NavigationView.
 //      spinner 아이템채우기
         change_spinner.setItems("경영정보학과","국제관광학과","국제무역학과","경영학과","정치외교학과","행정학과","사회학과"
                 ,"사회복지학과","미디어커뮤니케이션학과","경제학과","금융학과");
-
-
 
         getCircle(change_spinner.getItems().get(0).toString());
 
@@ -201,6 +197,12 @@ public class ChangeActivity extends AppCompatActivity implements NavigationView.
                 t.printStackTrace();
             }
         });
+    }
+
+    @OnClick(R.id.change_ok_card_btn)
+    void changeClicked(){
+        Logger.d("onclicked");
+        Log.i("change_ok_card_btn", "Ddddd");
     }
 
     @Override

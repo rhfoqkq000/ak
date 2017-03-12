@@ -7,6 +7,7 @@ import android.util.Log;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.donga.examples.boomin.AppendLog;
 import com.donga.examples.boomin.R;
@@ -48,16 +49,18 @@ public class Wisper_OkDialogActivity extends Activity {
             public void onResponse(Call<com.donga.examples.boomin.retrofit.retrofitChange_att.Master> call,
                                    Response<com.donga.examples.boomin.retrofit.retrofitChange_att.Master> response) {
                 if(response.body().getResult_code() == 1){
-                    Log.i("WisperOKDialog", "to 2 change done");
+                    Toast.makeText(getApplicationContext(), "참석", Toast.LENGTH_SHORT).show();
                     finish();
                 }else{
                     log.appendLog("inWisper_OkDialog2change code not matched");
+                    Toast.makeText(getApplicationContext(), "통신 실패", Toast.LENGTH_SHORT).show();
                     finish();
                 }
             }
             @Override
             public void onFailure(Call<com.donga.examples.boomin.retrofit.retrofitChange_att.Master> call, Throwable t) {
                 t.printStackTrace();
+                Toast.makeText(getApplicationContext(), "통신 실패", Toast.LENGTH_SHORT).show();
                 log.appendLog("inWisper_OkDialog2change failure");
                 finish();
             }
@@ -104,10 +107,10 @@ public class Wisper_OkDialogActivity extends Activity {
 
         Intent i = getIntent();
         try{
-            send_content.setText(i.getExtras().getString("content"));
+            send_content.setText("내용 : "+i.getExtras().getString("content"));
             wisper_none_id_dialog.setText(i.getExtras().getString("circle_notis_id"));
-            wisper_ok_name.setText(i.getExtras().getString("name"));
-            wisper_ok_title.setText(i.getExtras().getString("title"));
+            wisper_ok_name.setText("보낸 이 : "+i.getExtras().getString("name"));
+            wisper_ok_title.setText("제목 : "+i.getExtras().getString("title"));
         }catch(Exception e){
             e.printStackTrace();
         }
