@@ -32,6 +32,7 @@ import java.util.Date;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import es.dmoral.toasty.Toasty;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -249,7 +250,7 @@ public class ResActivity extends AppCompatActivity
                     hideProgressDialog();
                 } else {
                     log.appendLog("inResActivity code not matched");
-                    Toast.makeText(getApplicationContext(), "불러오기 실패", Toast.LENGTH_SHORT).show();
+                    Toasty.error(getApplicationContext(), "불러오기 실패", Toast.LENGTH_SHORT).show();
                     hideProgressDialog();
                 }
             }
@@ -258,7 +259,7 @@ public class ResActivity extends AppCompatActivity
             public void onFailure(Call<Master3> call, Throwable t) {
                 log.appendLog("inResActivity failure");
                 hideProgressDialog();
-                Toast.makeText(getApplicationContext(), "불러오기 실패", Toast.LENGTH_SHORT).show();
+                Toasty.error(getApplicationContext(), "불러오기 실패", Toast.LENGTH_SHORT).show();
                 t.printStackTrace();
             }
         });

@@ -17,6 +17,7 @@ import com.donga.examples.boomin.retrofit.retrofitAuthLogin.Interface_authLogin;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import es.dmoral.toasty.Toasty;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -66,7 +67,7 @@ public class ManageLoginActivity extends AppCompatActivity {
                 }else {
                     try{
                         log.appendLog("inManageLoginActivity code not matched");
-                        Toast.makeText(getApplicationContext(), "로그인 실패", Toast.LENGTH_SHORT).show();
+                        Toasty.error(getApplicationContext(), "로그인 실패", Toast.LENGTH_SHORT).show();
                     }catch(Exception e){
                         e.printStackTrace();
                     }
@@ -78,7 +79,7 @@ public class ManageLoginActivity extends AppCompatActivity {
             public void onFailure(Call<com.donga.examples.boomin.retrofit.retrofitAuthLogin.Master> call, Throwable t) {
                 hideProgressDialog();
                 log.appendLog("inManageLoginActivity failure");
-                Toast.makeText(getApplicationContext(), "로그인 실패", Toast.LENGTH_SHORT).show();
+                Toasty.error(getApplicationContext(), "로그인 실패", Toast.LENGTH_SHORT).show();
                 t.printStackTrace();
             }
         });

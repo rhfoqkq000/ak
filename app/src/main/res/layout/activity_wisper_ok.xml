@@ -75,14 +75,14 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="5dp"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginRight="10dp"
-                    android:layout_marginTop="5dp"
+                    android:layout_marginBottom="8dp"
+                    android:layout_marginLeft="13dp"
+                    android:layout_marginRight="13dp"
+                    android:layout_marginTop="8dp"
                     android:background="#9bc2d4"
                     android:text="불참"
                     android:textColor="#fff"
-                    android:textSize="18dp" />
+                    android:textSize="20dp" />
                 <TextView
                     android:id="@+id/wisper_none_id_dialog"
                     android:visibility="gone"
@@ -104,18 +104,15 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="5dp"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginRight="10dp"
-                    android:layout_marginTop="5dp"
+                    android:layout_marginBottom="8dp"
+                    android:layout_marginLeft="13dp"
+                    android:layout_marginRight="13dp"
+                    android:layout_marginTop="8dp"
                     android:background="#9bc2d4"
                     android:text="참석"
                     android:textColor="#fff"
-                    android:textSize="18dp" />
+                    android:textSize="20dp" />
             </android.support.v7.widget.CardView>
         </LinearLayout>
-
-
-
     </RelativeLayout>
 </ScrollView>

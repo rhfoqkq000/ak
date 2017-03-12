@@ -29,6 +29,7 @@ import javax.crypto.Cipher;
 import javax.crypto.spec.IvParameterSpec;
 import javax.crypto.spec.SecretKeySpec;
 
+import es.dmoral.toasty.Toasty;
 import me.leolin.shortcutbadger.ShortcutBadger;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -194,13 +195,13 @@ public class FirstActivity extends AppCompatActivity {
         NetworkInfo wifi = manager.getNetworkInfo(ConnectivityManager.TYPE_WIFI);
 
         if(phone.isConnected()&&wifi.isConnected()){
-            Toast.makeText(getApplicationContext(), "wifi", Toast.LENGTH_SHORT).show();
+//            Toasty.normal(getApplicationContext(), "wifi", Toast.LENGTH_SHORT).show();
         }else if(phone.isConnected()&&!wifi.isConnected()){
-            Toast.makeText(getApplicationContext(), "data", Toast.LENGTH_SHORT).show();
+//            Toasty.normal(getApplicationContext(), "data", Toast.LENGTH_SHORT).show();
         }else if(!phone.isConnected()&&wifi.isConnected()){
-            Toast.makeText(getApplicationContext(), "wifi", Toast.LENGTH_SHORT).show();
+//            Toasty.normal(getApplicationContext(), "wifi", Toast.LENGTH_SHORT).show();
         }else if(!phone.isConnected()&&!wifi.isConnected()){
-            Toast.makeText(getApplicationContext(), "no internet", Toast.LENGTH_SHORT).show();
+//            Toasty.normal(getApplicationContext(), "no internet", Toast.LENGTH_SHORT).show();
         }
         return true;
     }

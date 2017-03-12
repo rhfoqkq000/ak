@@ -27,6 +27,7 @@ import com.orhanobut.logger.Logger;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import es.dmoral.toasty.Toasty;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -81,15 +82,15 @@ public class PushActivity extends AppCompatActivity implements NavigationView.On
                         if(response.body().getResult_code() == 1){
                             if(response.body().getResult_body() == 0){
                                 //푸쉬 허용
-                                Toast.makeText(getApplicationContext(), "푸쉬 알림이 허용되었습니다.", Toast.LENGTH_SHORT).show();
+                                Toasty.success(getApplicationContext(), "푸쉬 알림이 허용되었습니다.", Toast.LENGTH_SHORT).show();
                             }else if(response.body().getResult_body() == 1){
                                 //푸쉬 거부
-                                Toast.makeText(getApplicationContext(), "푸쉬 알림이 거부되었습니다.", Toast.LENGTH_SHORT).show();
+                                Toasty.warning(getApplicationContext(), "푸쉬 알림이 거부되었습니다.", Toast.LENGTH_SHORT).show();
                             }
                             hideProgressDialog();
                         }else{
                             log.appendLog("inPushActivity code not matched");
-                            Toast.makeText(getApplicationContext(), "통신 실패", Toast.LENGTH_SHORT).show();
+                            Toasty.error(getApplicationContext(), "통신 실패", Toast.LENGTH_SHORT).show();
                         }
                     }
 
@@ -97,7 +98,7 @@ public class PushActivity extends AppCompatActivity implements NavigationView.On
                     public void onFailure(Call<com.donga.examples.boomin.retrofit.retrofitChangePushPermit.Master> call, Throwable t) {
                         hideProgressDialog();
                         log.appendLog("inPushActivity failure");
-                        Toast.makeText(getApplicationContext(), "통신 실패", Toast.LENGTH_SHORT).show();
+                        Toasty.error(getApplicationContext(), "통신 실패", Toast.LENGTH_SHORT).show();
                         t.printStackTrace();
                     }
                 });

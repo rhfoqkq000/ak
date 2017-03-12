@@ -147,7 +147,7 @@ public class LoginActivity extends AppCompatActivity {
                                 log.appendLog("FirstLogin code not matched");
                                 hideProgressDialog();
 
-                                Toasty.warning(getApplicationContext(), "로그인 실패!", Toast.LENGTH_SHORT).show();
+                                Toasty.error(getApplicationContext(), "로그인 실패!", Toast.LENGTH_SHORT).show();
 
                             }
                         }
@@ -157,7 +157,7 @@ public class LoginActivity extends AppCompatActivity {
                             log.appendLog("FirstLogin onFailure");
                             hideProgressDialog();
 
-                            Toasty.warning(getApplicationContext(), "로그인 실패!", Toast.LENGTH_SHORT).show();
+                            Toasty.error(getApplicationContext(), "로그인 실패!", Toast.LENGTH_SHORT).show();
 
                             t.printStackTrace();
                         }
@@ -166,7 +166,7 @@ public class LoginActivity extends AppCompatActivity {
 
                 } else {
 
-                    Toasty.warning(getApplicationContext(), "로그인 실패!", Toast.LENGTH_SHORT).show();
+                    Toasty.error(getApplicationContext(), "로그인 실패!", Toast.LENGTH_SHORT).show();
 
                     log.appendLog("inLoginActivity Att2 code not matched");
                     hideProgressDialog();
@@ -177,7 +177,7 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onFailure(Call<Master> call, Throwable t) {
 
-                Toasty.warning(getApplicationContext(), "로그인 실패!", Toast.LENGTH_SHORT).show();
+                Toasty.error(getApplicationContext(), "로그인 실패!", Toast.LENGTH_SHORT).show();
                 log.appendLog("inLoginActivity login failure");
                 hideProgressDialog();
                 t.printStackTrace();
@@ -193,7 +193,7 @@ public class LoginActivity extends AppCompatActivity {
                     //권한 동의 버튼 선택
                     Log.i("requestPermissions", "done");
                 } else {
-                    Toast.makeText(this, "권한 사용에 동의해주셔야 이용이 가능합니다.", Toast.LENGTH_SHORT).show();
+                    Toasty.info(this, "권한 사용에 동의해주셔야 이용이 가능합니다.", Toast.LENGTH_SHORT).show();
 
                     log.appendLog("permission denied");
 
@@ -240,7 +240,7 @@ public class LoginActivity extends AppCompatActivity {
             intent.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
             startActivity(intent);
         } else {
-            Toast.makeText(getApplicationContext(), "로그인해주세요", Toast.LENGTH_SHORT).show();
+            Toasty.warning(getApplicationContext(), "로그인해주세요", Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -281,7 +281,7 @@ public class LoginActivity extends AppCompatActivity {
             super.onBackPressed();
         } else {
             backPressedTime = tempTime;
-            Toast.makeText(getApplicationContext(), "'뒤로'버튼을 한번 더 누르시면 종료됩니다.", Toast.LENGTH_SHORT).show();
+            Toasty.normal(getApplicationContext(), "'뒤로'버튼을 한번 더 누르시면 종료됩니다.", Toast.LENGTH_SHORT).show();
         }
 
     }

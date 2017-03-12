@@ -42,6 +42,7 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import es.dmoral.toasty.Toasty;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -202,7 +203,7 @@ public class EmptyActivity extends AppCompatActivity
                         hideProgressDialog();
                     }
                 } else {
-                    Toast.makeText(getApplicationContext(), "불러오기 실패", Toast.LENGTH_SHORT).show();
+                    Toasty.error(getApplicationContext(), "불러오기 실패", Toast.LENGTH_SHORT).show();
                     hideProgressDialog();
                     log.appendLog("inEmptyActivity code not matched");
                 }
@@ -212,7 +213,7 @@ public class EmptyActivity extends AppCompatActivity
             public void onFailure(Call<com.donga.examples.boomin.retrofit.retrofitEmpty.Master> call, Throwable t) {
                 hideProgressDialog();
                 log.appendLog("inEmptyActivity failure");
-                Toast.makeText(getApplicationContext(), "불러오기 실패", Toast.LENGTH_SHORT).show();
+                Toasty.error(getApplicationContext(), "불러오기 실패", Toast.LENGTH_SHORT).show();
                 t.printStackTrace();
             }
         });

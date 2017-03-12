@@ -19,6 +19,7 @@ import com.donga.examples.boomin.retrofit.retrofitAdminCircleNotis.Master;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import es.dmoral.toasty.Toasty;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -96,7 +97,7 @@ public class AttendActivity extends AppCompatActivity {
                 } else {
                     log.appendLog("inAttendActivity code not matched");
                     hideProgressDialog();
-                    Toast.makeText(getApplicationContext(), "불러오기 실패", Toast.LENGTH_SHORT).show();
+                    Toasty.error(getApplicationContext(), "불러오기 실패", Toast.LENGTH_SHORT).show();
                 }
             }
 
@@ -105,7 +106,7 @@ public class AttendActivity extends AppCompatActivity {
                 hideProgressDialog();
                 t.printStackTrace();
                 log.appendLog("inAttendActivity failure");
-                Toast.makeText(getApplicationContext(), "불러오기 실패", Toast.LENGTH_SHORT).show();
+                Toasty.error(getApplicationContext(), "불러오기 실패", Toast.LENGTH_SHORT).show();
             }
         });
     }
