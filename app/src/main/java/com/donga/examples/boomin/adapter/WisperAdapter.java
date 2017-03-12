@@ -2,20 +2,24 @@ package com.donga.examples.boomin.adapter;
 
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Resources;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.afollestad.materialdialogs.MaterialDialog;
 import com.donga.examples.boomin.AppendLog;
 import com.donga.examples.boomin.R;
 import com.donga.examples.boomin.Singleton.NoticeSingleton;
@@ -118,7 +122,6 @@ public class WisperAdapter extends RecyclerView.Adapter<WisperAdapter.ViewHolder
             @Override
             public void onClick(final View view) {
                 showProgressDialog();
-
                 if(getReadCheck.equals("0")){
                     int pushCount = sharedPreferences.getInt("pushCount", 0);
                     pushCount--;
@@ -137,20 +140,45 @@ public class WisperAdapter extends RecyclerView.Adapter<WisperAdapter.ViewHolder
                     public void onResponse(Call<com.donga.examples.boomin.retrofit.retrofitNormalRead.Master> call, Response<com.donga.examples.boomin.retrofit.retrofitNormalRead.Master> response) {
                         if(response.body().getResult_code() == 1){
                             holder.rLayout.setBackground(context.getResources().getDrawable(R.drawable.left_line));
+
+//                            boolean wrapInScrollView = false;
+//                            final MaterialDialog dialog = new MaterialDialog.Builder(context)
+//                                    .customView(R.layout.activity_wisper_notice, wrapInScrollView)
+//                                    .build();
+//                            View dialogView = dialog.getCustomView();
+//                            CardView wisper_cardview_ok = (CardView)dialogView.findViewById(R.id.wisper_notice_ok);
+//                            final TextView wisper_notice_name = (TextView)dialogView.findViewById(R.id.wisper_notice_name);
+//                            final TextView wisper_notice_title = (TextView)dialogView.findViewById(R.id.wisper_notice_title);
+//                            final TextView wisper_notice_content = (TextView)dialogView.findViewById(R.id.wisper_notice_content);
+//                            dialog.setOnShowListener(new DialogInterface.OnShowListener() {
+//                                @Override
+//                                public void onShow(DialogInterface dialog) {
+//                                    wisper_notice_name.setText(holder.nameText.getText().toString());
+//                                    wisper_notice_title.setText(holder.titleText.getText().toString());
+//                                    wisper_notice_content.setText(holder.contentText.getText().toString());
+//                                }
+//                            });
+//                            wisper_cardview_ok.setOnClickListener(new View.OnClickListener() {
+//                                @Override
+//                                public void onClick(View v) {
+//                                    dialog.dismiss();
+//                                }
+//                            });
+//                            hideProgressDialog();
+//                            dialog.show();
+
                             Intent intent = new Intent(view.getContext(), Wisper_NoticeDialogActivity.class);
                             intent.putExtra("content", holder.contentText.getText().toString());
                             intent.putExtra("title", holder.titleText.getText().toString());
                             intent.putExtra("name", holder.nameText.getText().toString());
                             hideProgressDialog();
                             view.getContext().startActivity(intent);
-
                         }else{
                             hideProgressDialog();
                             log.appendLog("inWisperAdapter code not matched");
                             Toast.makeText(context, "불러오기 실패", Toast.LENGTH_SHORT).show();
                         }
                     }
-
                     @Override
                     public void onFailure(Call<com.donga.examples.boomin.retrofit.retrofitNormalRead.Master> call, Throwable t) {
                         t.printStackTrace();

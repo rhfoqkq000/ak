@@ -141,7 +141,6 @@ public class Wisper_okAdapter extends RecyclerView.Adapter<Wisper_okAdapter.View
                             intent.putExtra("circle_notis_id", holder.none_id.getText().toString());
                             intent.putExtra("name", holder.nameText.getText().toString());
                             intent.putExtra("title", holder.titleText.getText().toString());
-                            Logger.d(holder.nameText.getText().toString());
                             hideProgressDialog();
                             view.getContext().startActivity(intent);
                         }else{
