@@ -38,8 +38,8 @@
 
     <android.support.v7.widget.CardView
         android:id="@+id/change_ok_card"
-        android:layout_width="66dp"
-        android:layout_height="40dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
         android:layout_marginBottom="5dp"
         app:cardBackgroundColor="@color/four"
@@ -48,12 +48,16 @@
 
         <Button
             android:id="@+id/change_ok_card_btn"
-            android:layout_width="60dp"
-            android:layout_height="30dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_gravity="center_vertical|center_horizontal"
             android:background="#000000FF"
             android:text="확인"
             android:textColor="#fff"
-            android:textSize="18dp" />
+            android:layout_marginBottom="8dp"
+            android:layout_marginLeft="13dp"
+            android:layout_marginRight="13dp"
+            android:layout_marginTop="8dp"
+            android:textSize="20dp" />
     </android.support.v7.widget.CardView>
 </LinearLayout>

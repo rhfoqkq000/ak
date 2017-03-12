@@ -38,6 +38,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import cn.refactor.lib.colordialog.PromptDialog;
+import es.dmoral.toasty.Toasty;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -194,7 +195,7 @@ public class ChangeActivity extends AppCompatActivity implements NavigationView.
                 }else{
                     log.appendLog("inChangeActivity code not matched");
                     hideProgressDialog();
-                    Toast.makeText(getApplicationContext(), "불러오기 실패", Toast.LENGTH_SHORT).show();
+                    Toasty.error(getApplicationContext(), "불러오기 실패", Toast.LENGTH_SHORT).show();
                 }
             }
 
@@ -202,7 +203,7 @@ public class ChangeActivity extends AppCompatActivity implements NavigationView.
             public void onFailure(Call<Master> call, Throwable t) {
                 log.appendLog("inChangeActivity failure");
                 hideProgressDialog();
-                Toast.makeText(getApplicationContext(), "불러오기 실패", Toast.LENGTH_SHORT).show();
+                Toasty.error(getApplicationContext(), "불러오기 실패", Toast.LENGTH_SHORT).show();
                 t.printStackTrace();
             }
         });
@@ -222,10 +223,10 @@ public class ChangeActivity extends AppCompatActivity implements NavigationView.
             public void onResponse(Call<com.donga.examples.boomin.retrofit.retrofitUpdateCircle.Master> call, Response<com.donga.examples.boomin.retrofit.retrofitUpdateCircle.Master> response) {
                 if(response.body().getResult_code() == 1){
                     hideProgressDialog();
-                    Toast.makeText(getApplicationContext(), "변경 완료되었습니다.", Toast.LENGTH_SHORT).show();
+                    Toasty.success(getApplicationContext(), "변경 완료되었습니다.", Toast.LENGTH_SHORT).show();
                 }else{
                     hideProgressDialog();
-                    Toast.makeText(getApplicationContext(), "동아리 변경 실패", Toast.LENGTH_SHORT).show();
+                    Toasty.error(getApplicationContext(), "동아리 변경 실패", Toast.LENGTH_SHORT).show();
                     log.appendLog("inChangeActivity code not matched");
                 }
             }
@@ -233,7 +234,7 @@ public class ChangeActivity extends AppCompatActivity implements NavigationView.
             @Override
             public void onFailure(Call<com.donga.examples.boomin.retrofit.retrofitUpdateCircle.Master> call, Throwable t) {
                 hideProgressDialog();
-                Toast.makeText(getApplicationContext(), "동아리 변경 실패", Toast.LENGTH_SHORT).show();
+                Toasty.error(getApplicationContext(), "동아리 변경 실패", Toast.LENGTH_SHORT).show();
                 log.appendLog("inChangeActivity failure");
                 t.printStackTrace();
             }
@@ -372,10 +373,11 @@ public class ChangeActivity extends AppCompatActivity implements NavigationView.
                         userCircleList.add(response.body().getResult_body().get(i).getName());
                     }
                     hideProgressDialog();
-                    Toast.makeText(getApplicationContext(), "현재의 동아리는 "+userCircleList.toString()+"입니다.", Toast.LENGTH_LONG).show();
+                    Toasty.info(getApplicationContext(), "불러오기 동아리는"+userCircleList.toString()+"입니다.", Toast.LENGTH_LONG).show();
+
                 }else{
                     hideProgressDialog();
-                    Toast.makeText(getApplicationContext(), "동아리 불러오기 실패", Toast.LENGTH_SHORT).show();
+                    Toasty.error(getApplicationContext(), "동아리 불러오기 실패", Toast.LENGTH_SHORT).show();
                     log.appendLog("inChangeActivity getUserCircle code not matched");
                 }
             }
@@ -384,7 +386,8 @@ public class ChangeActivity extends AppCompatActivity implements NavigationView.
             public void onFailure(Call<com.donga.examples.boomin.retrofit.retrofitGetUserCircle.Master> call, Throwable t) {
                 log.appendLog("inChangeActivity getUserCircle failure");
                 hideProgressDialog();
-                Toast.makeText(getApplicationContext(), "동아리 불러오기 실패", Toast.LENGTH_SHORT).show();
+                Toasty.error(getApplicationContext(), "동아리 불러오기 실패", Toast.LENGTH_SHORT).show();
+                Toasty.error(getApplicationContext(), "동아리 불러오기 실패", Toast.LENGTH_SHORT).show();
                 t.printStackTrace();
             }
         });

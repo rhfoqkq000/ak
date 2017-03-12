@@ -28,6 +28,7 @@ import com.donga.examples.boomin.retrofit.retrofitProfessor.Interface_professor;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import es.dmoral.toasty.Toasty;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -106,7 +107,7 @@ public class ProActivity extends AppCompatActivity implements NavigationView.OnN
                         } else {
                             hideProgressDialog();
                             log.appendLog("inProActivity code not matched");
-                            Toast.makeText(getApplicationContext(), "불러오기 실패", Toast.LENGTH_SHORT).show();
+                            Toasty.error(getApplicationContext(), "불러오기 실패", Toast.LENGTH_SHORT).show();
                         }
                     }
 
@@ -114,7 +115,7 @@ public class ProActivity extends AppCompatActivity implements NavigationView.OnN
                     public void onFailure(Call<com.donga.examples.boomin.retrofit.retrofitProfessor.Master> call, Throwable t) {
                         hideProgressDialog();
                         log.appendLog("inProActivity failure");
-                        Toast.makeText(getApplicationContext(), "불러오기 실패", Toast.LENGTH_SHORT).show();
+                        Toasty.error(getApplicationContext(), "불러오기 실패", Toast.LENGTH_SHORT).show();
                         t.printStackTrace();
                     }
                 });

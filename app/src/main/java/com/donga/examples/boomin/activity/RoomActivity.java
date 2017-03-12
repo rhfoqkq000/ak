@@ -33,6 +33,7 @@ import java.util.regex.Pattern;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import es.dmoral.toasty.Toasty;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -227,7 +228,7 @@ public class RoomActivity extends AppCompatActivity
                     }
                 } else {
                     log.appendLog("inRoomActivity code not matched");
-                    Toast.makeText(getApplicationContext(), "불러오기 실패", Toast.LENGTH_SHORT);
+                    Toasty.error(getApplicationContext(), "불러오기 실패", Toast.LENGTH_SHORT).show();
                     hideProgressDialog();
                 }
             }
@@ -235,7 +236,7 @@ public class RoomActivity extends AppCompatActivity
             @Override
             public void onFailure(Call<Master4> call, Throwable t) {
                 hideProgressDialog();
-                Toast.makeText(getApplicationContext(), "불러오기 실패", Toast.LENGTH_SHORT);
+                Toasty.error(getApplicationContext(), "불러오기 실패", Toast.LENGTH_SHORT).show();
                 log.appendLog("inRoomActivity failure");
                 t.printStackTrace();
             }

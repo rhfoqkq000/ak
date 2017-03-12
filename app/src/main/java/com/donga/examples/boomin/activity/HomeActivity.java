@@ -41,6 +41,7 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import es.dmoral.toasty.Toasty;
 import me.leolin.shortcutbadger.ShortcutBadger;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -197,7 +198,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
                                 }else{
                                     getCircle(String.valueOf(select_spinner.getSelectedIndex()));
                                     hideProgressDialog();
-                                    Toast.makeText(HomeActivity.this, "동아리 설정 실패", Toast.LENGTH_SHORT).show();
+                                    Toasty.error(HomeActivity.this, "동아리 설정 실패", Toast.LENGTH_SHORT).show();
                                     log.appendLog("inHomeActivity setCircle code not matched");
                                 }
                             }
@@ -205,7 +206,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
                             @Override
                             public void onFailure(Call<com.donga.examples.boomin.retrofit.retrofitSetCircle.Master> call, Throwable t) {
                                 hideProgressDialog();
-                                Toast.makeText(HomeActivity.this, "동아리 설정 실패", Toast.LENGTH_SHORT).show();
+                                Toasty.error(HomeActivity.this, "동아리 설정 실패", Toast.LENGTH_SHORT).show();
                                 log.appendLog("inHomeActivity setCircle failure");
                                 t.printStackTrace();
                             }
@@ -239,14 +240,14 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
                 }else{
                     hideProgressDialog();
                     log.appendLog("inSelectDialog code not matched");
-                    Toast.makeText(getApplicationContext(), "불러오기 실패", Toast.LENGTH_SHORT).show();
+                    Toasty.error(HomeActivity.this, "불러오기 실패", Toast.LENGTH_SHORT).show();
                 }
             }
             @Override
             public void onFailure(Call<Master> call, Throwable t) {
                 hideProgressDialog();
                 log.appendLog("inSelectDialog failure");
-                Toast.makeText(getApplicationContext(), "불러오기 실패", Toast.LENGTH_SHORT).show();
+                Toasty.error(HomeActivity.this, "불러오기 실패", Toast.LENGTH_SHORT).show();
                 t.printStackTrace();
             }
         });
@@ -266,7 +267,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
             } else    //종료
             {
                 backPressedTime = tempTime;
-                Toast.makeText(getApplicationContext(), "'뒤로'버튼을 한번 더 누르시면 종료됩니다.", Toast.LENGTH_SHORT).show();
+                Toasty.normal(getApplicationContext(), "'뒤로'버튼을 한번 더 누르시면 종료됩니다.", Toast.LENGTH_SHORT).show();
             }
         }
     }
