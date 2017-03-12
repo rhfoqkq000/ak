@@ -28,12 +28,15 @@ import com.donga.examples.boomin.retrofit.retrofitAchieveAll.Interface_achall;
 import com.donga.examples.boomin.retrofit.retrofitAchieveAll.Master;
 import com.donga.examples.boomin.retrofit.retrofitAchieveSep.Interface_achsep;
 import com.jaredrummler.materialspinner.MaterialSpinner;
+import com.orhanobut.logger.Logger;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Set;
 
 import javax.crypto.Cipher;
@@ -80,10 +83,14 @@ public class Stu_AchievFragment extends Fragment {
 //    TextView distin;
 //    @BindView(R.id.below2)
 //    ImageView below;
+//    @BindView(R.id.achiev_year)
+//    Spinner achieve_year;
+//    @BindView(R.id.achiev_side)
+//    Spinner achiev_side;
     @BindView(R.id.achiev_year)
-    Spinner achieve_year;
+    MaterialSpinner achieve_year;
     @BindView(R.id.achiev_side)
-    Spinner achiev_side;
+    MaterialSpinner achiev_side;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -129,21 +136,28 @@ public class Stu_AchievFragment extends Fragment {
 //            }
 //        });
 
+        achiev_all.setItems("전체학기성적", "일부학기성적");
         achiev_all.setOnItemSelectedListener(new MaterialSpinner.OnItemSelectedListener() {
             @Override
             public void onItemSelected(MaterialSpinner view, int position, long id, Object item) {
                 if (position == 0) {
                     all_ok_card.setVisibility(View.VISIBLE);
                     part_layout.setVisibility(View.GONE);
+                } else {
                     ArrayList<String> years = new ArrayList<String>();
-                    for (int i = Integer.parseInt(new SimpleDateFormat("yyyy").format(new Date(System.currentTimeMillis()))); i >= Integer.parseInt(InfoSingleton.getInstance().getYear()); i--) {
+                    for (int i = Integer.parseInt(new SimpleDateFormat("yyyy").format(new Date(System.currentTimeMillis())));
+                         i >= Integer.parseInt(InfoSingleton.getInstance().getYear()); i--) {
                         years.add(String.valueOf(i));
                     }
-                    ArrayAdapter adapter = new ArrayAdapter(getContext(), android.R.layout.simple_spinner_dropdown_item, years);
-                    achieve_year.setAdapter(adapter);
-                    ArrayAdapter adapter_side = new ArrayAdapter(getContext(), android.R.layout.simple_spinner_dropdown_item, keyList);
-                    achiev_side.setAdapter(adapter_side);
-                } else {
+                    Object[] objectList = years.toArray();
+                    String[] years2 =  Arrays.copyOf(objectList,objectList.length,String[].class);
+//                    ArrayAdapter adapter = new ArrayAdapter(getContext(), android.R.layout.simple_spinner_dropdown_item, years);
+//                    achieve_year.setAdapter(adapter);
+                    achieve_year.setItems(years2);
+//                    ArrayAdapter adapter_side = new ArrayAdapter(getContext(), android.R.layout.simple_spinner_dropdown_item, keyList);
+//                    achiev_side.setAdapter(adapter_side);
+                    achiev_side.setItems(keyList);
+
                     all_ok_card.setVisibility(View.GONE);
                     part_layout.setVisibility(View.VISIBLE);
                 }
@@ -225,7 +239,6 @@ public class Stu_AchievFragment extends Fragment {
 
     @OnClick(R.id.part_ok)
     void onPartOkClicked() {
-
         showProgressDialog();
 
         //retrofit 통신
@@ -234,8 +247,9 @@ public class Stu_AchievFragment extends Fragment {
         Interface_achsep ach = client.create(Interface_achsep.class);
         try {
             Call<com.donga.examples.boomin.retrofit.retrofitAchieveSep.Master> call = ach.getSepGrade(InfoSingleton.getInstance().getStuId(),
-                    Decrypt(InfoSingleton.getInstance().getStuPw(), getString(R.string.decrypt_key)), achieve_year.getSelectedItem().toString(), String.valueOf(hash.get(achiev_side.getSelectedItem().toString())));
-            Log.i("??", "year:" + achieve_year.getSelectedItem().toString() + ",side:" + String.valueOf(hash.get(achiev_side.getSelectedItem().toString())));
+                    Decrypt(InfoSingleton.getInstance().getStuPw(), getString(R.string.decrypt_key)),
+                    achieve_year.getItems().get(achieve_year.getSelectedIndex()).toString(),
+                    String.valueOf(hash.get(achiev_side.getItems().get(achiev_side.getSelectedIndex()).toString())));
             call.enqueue(new Callback<com.donga.examples.boomin.retrofit.retrofitAchieveSep.Master>() {
                 @Override
                 public void onResponse(Call<com.donga.examples.boomin.retrofit.retrofitAchieveSep.Master> call, Response<com.donga.examples.boomin.retrofit.retrofitAchieveSep.Master> response) {

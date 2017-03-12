@@ -72,7 +72,7 @@ public class ProActivity extends AppCompatActivity implements NavigationView.OnN
         adapter.addItem1("국제관광학과", getResources().getDrawable(R.drawable.right));
         adapter.addItem1("국제무역학과", getResources().getDrawable(R.drawable.right));
         adapter.addItem1("경영정보학과", getResources().getDrawable(R.drawable.right));
-        adapter.addItem1("", getResources().getDrawable(R.drawable.below));
+//        adapter.addItem1("", getResources().getDrawable(R.drawable.below));
         adapter.addItem("사회과학대학");
         adapter.addItem1("정치외교학과", getResources().getDrawable(R.drawable.right));
         adapter.addItem1("행정학과", getResources().getDrawable(R.drawable.right));
@@ -201,7 +201,8 @@ public class ProActivity extends AppCompatActivity implements NavigationView.OnN
             editor.clear();
             editor.commit();
             Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
-            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             startActivity(intent);
 
         } else if (id == R.id.nav_manage) {

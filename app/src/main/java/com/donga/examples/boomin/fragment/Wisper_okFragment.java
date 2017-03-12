@@ -16,13 +16,16 @@ import android.widget.Toast;
 
 import com.donga.examples.boomin.AppendLog;
 import com.donga.examples.boomin.R;
+import com.donga.examples.boomin.Singleton.ChangeSingleton;
 import com.donga.examples.boomin.Singleton.NoticeSingleton;
 import com.donga.examples.boomin.adapter.MyData_Wisper;
 import com.donga.examples.boomin.adapter.Wisper_okAdapter;
 import com.donga.examples.boomin.retrofit.retrofitGetcircleNotis.Interface_getCircleNotis;
 import com.donga.examples.boomin.retrofit.retrofitGetcircleNotis.Master;
+import com.donga.examples.boomin.retrofit.retrofitRemoveCircleNotis.Interface_removeCircleNotis;
 import com.donga.examples.boomin.retrofit.retrofitRemoveNormalNotis.Interface_removeNormalNotis;
 import com.donga.examples.boomin.retrofit.retrofitRemoveNormalNotis.JsonRequest;
+import com.orhanobut.logger.Logger;
 
 import java.util.ArrayList;
 
@@ -108,56 +111,57 @@ public class Wisper_okFragment extends Fragment {
     void onGarbageClicked(){
         //removeNormalNotis 말고 removeCircleNotis 필요
 
-//        AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
-//        builder.setTitle("삭제 확인 대화 상자")
-//                .setMessage("정말로 해당 쪽지를 삭제하시겠습니까?")
-//                .setCancelable(false)// 뒤로 버튼 클릭시 취소 가능 설정
-//                .setPositiveButton("확인", new DialogInterface.OnClickListener(){
-//                    // 확인 버튼 클릭시 설정
-//                    public void onClick(DialogInterface dialog, int whichButton){
-//                        noticeIdArray = NoticeSingleton.getInstance().getNoticeIdArray();
-//                        if(noticeIdArray.isEmpty()){
-//                            Toast.makeText(getContext(), "선택된 항목이 없습니다.", Toast.LENGTH_SHORT).show();
-//                        }else{
-//                            showProgressDialog();
-//                            //retrofit 통신
-//                            Retrofit client = new Retrofit.Builder().baseUrl(getString(R.string.retrofit_url))
-//                                    .addConverterFactory(GsonConverterFactory.create()).build();
-//                            Interface_removeNormalNotis remove = client.create(Interface_removeNormalNotis.class);
-//                            JsonRequest jsonRequest = new JsonRequest(NoticeSingleton.getInstance().getNoticeIdArray());
-//                            Call<com.donga.examples.boomin.retrofit.retrofitRemoveNormalNotis.Master> call = remove.removeNormalNotis("application/json",
-//                                    jsonRequest);
-//                            call.enqueue(new Callback<com.donga.examples.boomin.retrofit.retrofitRemoveNormalNotis.Master>() {
-//                                @Override
-//                                public void onResponse(Call<com.donga.examples.boomin.retrofit.retrofitRemoveNormalNotis.Master> call, Response<com.donga.examples.boomin.retrofit.retrofitRemoveNormalNotis.Master> response) {
-//                                    for(int i = 0; i<noticeIdArray.size(); i++){
-//                                        myDataset.remove(i);
-//                                    }
-//                                    mAdapter.notifyDataSetChanged();
-//                                    noticeIdArray.clear();
-//                                    NoticeSingleton.getInstance().setNoticeIdArray(noticeIdArray);
-//                                    hideProgressDialog();
-//                                }
-//
-//                                @Override
-//                                public void onFailure(Call<com.donga.examples.boomin.retrofit.retrofitRemoveNormalNotis.Master> call, Throwable t) {
-//                                    hideProgressDialog();
-//                                    t.printStackTrace();
-//                                }
-//                            });
-//                        }
-//                        dialog.dismiss();
-//                    }
-//                })
-//                .setNegativeButton("취소", new DialogInterface.OnClickListener(){
-//                    // 취소 버튼 클릭시 설정
-//                    public void onClick(DialogInterface dialog, int whichButton){
-//                        dialog.cancel();
-//                    }
-//                });
-//
-//        AlertDialog dialog = builder.create();
-//        dialog.show();
+        AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+        builder.setTitle("삭제 확인 대화 상자")
+                .setMessage("정말로 해당 쪽지를 삭제하시겠습니까?")
+                .setCancelable(false)// 뒤로 버튼 클릭시 취소 가능 설정
+                .setPositiveButton("확인", new DialogInterface.OnClickListener(){
+                    // 확인 버튼 클릭시 설정
+                    public void onClick(DialogInterface dialog, int whichButton){
+                        noticeIdArray = NoticeSingleton.getInstance().getOk_noticeIdArray();
+                        if(noticeIdArray.isEmpty()){
+                            Toast.makeText(getContext(), "선택된 항목이 없습니다.", Toast.LENGTH_SHORT).show();
+                        }else{
+                            showProgressDialog();
+                            //retrofit 통신
+                            Retrofit client = new Retrofit.Builder().baseUrl(getString(R.string.retrofit_url))
+                                    .addConverterFactory(GsonConverterFactory.create()).build();
+                            Interface_removeCircleNotis remove = client.create(Interface_removeCircleNotis.class);
+                            com.donga.examples.boomin.retrofit.retrofitRemoveCircleNotis.JsonRequest jsonRequest = new com.donga.examples.boomin.retrofit.retrofitRemoveCircleNotis.JsonRequest(NoticeSingleton.getInstance().getNoticeIdArray());
+                            Call<com.donga.examples.boomin.retrofit.retrofitRemoveCircleNotis.Master> call = remove.removeCircleNotis("application/json",
+                                    jsonRequest);
+                            call.enqueue(new Callback<com.donga.examples.boomin.retrofit.retrofitRemoveCircleNotis.Master>() {
+                                @Override
+                                public void onResponse(Call<com.donga.examples.boomin.retrofit.retrofitRemoveCircleNotis.Master> call,
+                                                       Response<com.donga.examples.boomin.retrofit.retrofitRemoveCircleNotis.Master> response) {
+                                    for(int i = 0; i<noticeIdArray.size(); i++){
+                                        myDataset.remove(i);
+                                    }
+                                    mAdapter.notifyDataSetChanged();
+                                    noticeIdArray.clear();
+                                    NoticeSingleton.getInstance().setNoticeIdArray(noticeIdArray);
+                                    hideProgressDialog();
+                                }
+
+                                @Override
+                                public void onFailure(Call<com.donga.examples.boomin.retrofit.retrofitRemoveCircleNotis.Master> call, Throwable t) {
+                                    hideProgressDialog();
+                                    t.printStackTrace();
+                                }
+                            });
+                        }
+                        dialog.dismiss();
+                    }
+                })
+                .setNegativeButton("취소", new DialogInterface.OnClickListener(){
+                    // 취소 버튼 클릭시 설정
+                    public void onClick(DialogInterface dialog, int whichButton){
+                        dialog.cancel();
+                    }
+                });
+
+        AlertDialog dialog = builder.create();
+        dialog.show();
     }
 
     private void showProgressDialog() {

@@ -335,9 +335,9 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
             editor.clear();
             editor.commit();
             Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
-            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             startActivity(intent);
-
         } else if (id == R.id.nav_manage) {
             Intent intent = new Intent(getApplicationContext(), ManageLoginActivity.class);
             startActivity(intent);

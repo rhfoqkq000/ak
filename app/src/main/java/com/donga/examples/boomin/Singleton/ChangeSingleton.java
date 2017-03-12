@@ -10,6 +10,8 @@ public class ChangeSingleton {
     private static ChangeSingleton mInstance = null;
     private ArrayList<String> mArray = new ArrayList<String>();
     private ArrayList<String> dialogArray = new ArrayList<String>();
+    private ArrayList<String> wisperAdapterArray = new ArrayList<String>();
+    private ArrayList<String> changeIdList = new ArrayList<String>();
 
     public static ChangeSingleton getInstance() {
         if(mInstance == null)
@@ -33,5 +35,21 @@ public class ChangeSingleton {
 
     public void setDialogArray(ArrayList<String> dialogArray) {
         this.dialogArray = dialogArray;
+    }
+
+    public ArrayList<String> getWisperAdapterArray() {
+        return wisperAdapterArray;
+    }
+
+    public void setWisperAdapterArray(ArrayList<String> wisperAdapterArray) {
+        this.wisperAdapterArray = wisperAdapterArray;
+    }
+
+    public ArrayList<String> getChangeIdList() {
+        return changeIdList;
+    }
+
+    public void setChangeIdList(ArrayList<String> changeIdList) {
+        this.changeIdList = changeIdList;
     }
 }

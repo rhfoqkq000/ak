@@ -11,24 +11,24 @@ import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.CompoundButton;
 import android.widget.ListView;
-import android.widget.Switch;
 import android.widget.Toast;
 
 import com.donga.examples.boomin.AppendLog;
 import com.donga.examples.boomin.R;
 import com.donga.examples.boomin.Singleton.ChangeSingleton;
 import com.donga.examples.boomin.listviewAdapter.ChangeListViewAdapter;
-import com.donga.examples.boomin.listviewAdapter.NoticeListViewAdapter;
-import com.donga.examples.boomin.retrofit.retrofitChangePushPermit.Interface_changePushPermit;
 import com.donga.examples.boomin.retrofit.retrofitGetCircle.Interface_getCircle;
 import com.donga.examples.boomin.retrofit.retrofitGetCircle.Master;
+import com.donga.examples.boomin.retrofit.retrofitGetUserCircle.Interface_getUserCircle;
+import com.donga.examples.boomin.retrofit.retrofitUpdateCircle.Interface_updateCircle;
+import com.donga.examples.boomin.retrofit.retrofitUpdateCircle.JsonRequest;
 import com.jaredrummler.materialspinner.MaterialSpinner;
 import com.orhanobut.logger.Logger;
 
@@ -36,6 +36,7 @@ import java.util.ArrayList;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import cn.refactor.lib.colordialog.PromptDialog;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -65,6 +66,8 @@ public class ChangeActivity extends AppCompatActivity implements NavigationView.
 
     ChangeListViewAdapter adapter;
 
+    SharedPreferences sharedPreferences;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -79,11 +82,25 @@ public class ChangeActivity extends AppCompatActivity implements NavigationView.
 
         navigationView.setNavigationItemSelectedListener(this);
 
+        //ColorDialog
+        new PromptDialog(this)
+                .setDialogType(PromptDialog.DIALOG_TYPE_INFO)
+                .setAnimationEnable(true)
+                .setTitleText("알림")
+                .setContentText("동아리를 변경하시는 경우, 기존에 선택하신 동아리 내역은 삭제됩니다.")
+                .setPositiveListener("확인", new PromptDialog.OnPositiveListener() {
+                    @Override
+                    public void onClick(PromptDialog dialog) {
+                        dialog.dismiss();
+                    }
+                }).show();
+
+        sharedPreferences = getSharedPreferences(getResources().getString(R.string.SFLAG), Context.MODE_PRIVATE);
+        getUserCircle(String.valueOf(sharedPreferences.getInt("ID", 0)));
+
 //      spinner 아이템채우기
         change_spinner.setItems("경영정보학과","국제관광학과","국제무역학과","경영학과","정치외교학과","행정학과","사회학과"
                 ,"사회복지학과","미디어커뮤니케이션학과","경제학과","금융학과");
-
-
 
         getCircle(change_spinner.getItems().get(0).toString());
 
@@ -159,18 +176,6 @@ public class ChangeActivity extends AppCompatActivity implements NavigationView.
         adapter = new ChangeListViewAdapter();
         listView.setAdapter(adapter);
 
-        //ColorDialog
-        new PromptDialog(this)
-                .setDialogType(PromptDialog.DIALOG_TYPE_INFO)
-                .setAnimationEnable(true)
-                .setTitleText("알림")
-                .setContentText("동아리 변경을 하실 경우에는 기존의 선택하신 동아리 내역이 삭제됩니다.")
-                .setPositiveListener("확인", new PromptDialog.OnPositiveListener() {
-                    @Override
-                    public void onClick(PromptDialog dialog) {
-                        dialog.dismiss();
-                    }
-                }).show();
         showProgressDialog();
         Retrofit client = new Retrofit.Builder().baseUrl(getString(R.string.retrofit_url))
                 .addConverterFactory(GsonConverterFactory.create()).build();
@@ -182,7 +187,7 @@ public class ChangeActivity extends AppCompatActivity implements NavigationView.
                 if(response.body().getResult_code() == 1){
                     int responseSize = response.body().getResult_body().size();
                     for(int i = 0; i<responseSize; i++){
-                        adapter.addItem(response.body().getResult_body().get(i).getName());
+                        adapter.addItem(response.body().getResult_body().get(i).getName(), response.body().getResult_body().get(i).getId());
                         adapter.notifyDataSetChanged();
                     }
                     hideProgressDialog();
@@ -198,6 +203,38 @@ public class ChangeActivity extends AppCompatActivity implements NavigationView.
                 log.appendLog("inChangeActivity failure");
                 hideProgressDialog();
                 Toast.makeText(getApplicationContext(), "불러오기 실패", Toast.LENGTH_SHORT).show();
+                t.printStackTrace();
+            }
+        });
+    }
+
+    @OnClick(R.id.change_ok_card_btn)
+    void changeClicked(){
+        showProgressDialog();
+        ArrayList<String> changeIdList = ChangeSingleton.getInstance().getChangeIdList();
+        Retrofit client = new Retrofit.Builder().baseUrl(getString(R.string.retrofit_url))
+                .addConverterFactory(GsonConverterFactory.create()).build();
+        Interface_updateCircle updateCircle = client.create(Interface_updateCircle.class);
+        JsonRequest jsonRequest = new JsonRequest(sharedPreferences.getInt("ID", 0), changeIdList);
+        Call<com.donga.examples.boomin.retrofit.retrofitUpdateCircle.Master> call = updateCircle.updateCircle("application/json", jsonRequest);
+        call.enqueue(new Callback<com.donga.examples.boomin.retrofit.retrofitUpdateCircle.Master>() {
+            @Override
+            public void onResponse(Call<com.donga.examples.boomin.retrofit.retrofitUpdateCircle.Master> call, Response<com.donga.examples.boomin.retrofit.retrofitUpdateCircle.Master> response) {
+                if(response.body().getResult_code() == 1){
+                    hideProgressDialog();
+                    Toast.makeText(getApplicationContext(), "변경 완료되었습니다.", Toast.LENGTH_SHORT).show();
+                }else{
+                    hideProgressDialog();
+                    Toast.makeText(getApplicationContext(), "동아리 변경 실패", Toast.LENGTH_SHORT).show();
+                    log.appendLog("inChangeActivity code not matched");
+                }
+            }
+
+            @Override
+            public void onFailure(Call<com.donga.examples.boomin.retrofit.retrofitUpdateCircle.Master> call, Throwable t) {
+                hideProgressDialog();
+                Toast.makeText(getApplicationContext(), "동아리 변경 실패", Toast.LENGTH_SHORT).show();
+                log.appendLog("inChangeActivity failure");
                 t.printStackTrace();
             }
         });
@@ -281,6 +318,8 @@ public class ChangeActivity extends AppCompatActivity implements NavigationView.
             editor.clear();
             editor.commit();
             Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             startActivity(intent);
         } else if (id == R.id.nav_manage) {
             Intent intent = new Intent(getApplicationContext(), ManageLoginActivity.class);
@@ -316,5 +355,38 @@ public class ChangeActivity extends AppCompatActivity implements NavigationView.
         changeArray.clear();
         ChangeSingleton.getInstance().setmArray(changeArray);
         super.onPause();
+    }
+
+    public void getUserCircle(String user_id){
+        showProgressDialog();
+        Retrofit client = new Retrofit.Builder().baseUrl(getString(R.string.retrofit_url))
+                .addConverterFactory(GsonConverterFactory.create()).build();
+        Interface_getUserCircle getCircle = client.create(Interface_getUserCircle.class);
+        Call<com.donga.examples.boomin.retrofit.retrofitGetUserCircle.Master> call = getCircle.getUserCircle(user_id);
+        call.enqueue(new Callback<com.donga.examples.boomin.retrofit.retrofitGetUserCircle.Master>() {
+            @Override
+            public void onResponse(Call<com.donga.examples.boomin.retrofit.retrofitGetUserCircle.Master> call, Response<com.donga.examples.boomin.retrofit.retrofitGetUserCircle.Master> response) {
+                if(response.body().getResult_code() == 1){
+                    ArrayList<String> userCircleList = new ArrayList<String>();
+                    for(int i = 0; i<response.body().getResult_body().size(); i++){
+                        userCircleList.add(response.body().getResult_body().get(i).getName());
+                    }
+                    hideProgressDialog();
+                    Toast.makeText(getApplicationContext(), "현재의 동아리는 "+userCircleList.toString()+"입니다.", Toast.LENGTH_LONG).show();
+                }else{
+                    hideProgressDialog();
+                    Toast.makeText(getApplicationContext(), "동아리 불러오기 실패", Toast.LENGTH_SHORT).show();
+                    log.appendLog("inChangeActivity getUserCircle code not matched");
+                }
+            }
+
+            @Override
+            public void onFailure(Call<com.donga.examples.boomin.retrofit.retrofitGetUserCircle.Master> call, Throwable t) {
+                log.appendLog("inChangeActivity getUserCircle failure");
+                hideProgressDialog();
+                Toast.makeText(getApplicationContext(), "동아리 불러오기 실패", Toast.LENGTH_SHORT).show();
+                t.printStackTrace();
+            }
+        });
     }
 }

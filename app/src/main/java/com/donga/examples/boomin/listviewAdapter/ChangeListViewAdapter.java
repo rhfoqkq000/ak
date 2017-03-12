@@ -60,6 +60,7 @@ public class ChangeListViewAdapter extends BaseAdapter {
 
             // 화면에 표시될 View(Layout이 inflate된)으로부터 위젯에 대한 참조 획득
             viewHolder.text_title = (TextView) convertView.findViewById(R.id.change_text);
+            viewHolder.change_none_id = (TextView) convertView.findViewById(R.id.change_none_id);
             viewHolder.checkBox = (CheckBox) convertView.findViewById(R.id.change_checkbox);
 
             // Data Set(listViewItemList)에서 position에 위치한 데이터 참조 획득
@@ -67,18 +68,22 @@ public class ChangeListViewAdapter extends BaseAdapter {
 
             // 아이템 내 각 위젯에 데이터 반영
             viewHolder.text_title.setText(listViewItem.getTitle());
+            viewHolder.change_none_id.setText(listViewItem.getCircle_id());
 
             viewHolder.checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
                 @Override
                 public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                     ArrayList<String> changeArray = ChangeSingleton.getInstance().getmArray();
+                    ArrayList<String> changeIdarray = ChangeSingleton.getInstance().getChangeIdList();
                     if(!isChecked){
                         changeArray.remove(viewHolder.text_title.getText().toString());
+                        changeIdarray.remove(viewHolder.change_none_id.getText().toString());
                     }else {
                         changeArray.add(viewHolder.text_title.getText().toString());
+                        changeIdarray.add(viewHolder.change_none_id.getText().toString());
                     }
                     ChangeSingleton.getInstance().setmArray(changeArray);
-                    Log.e("ChangeAdapter", changeArray.toString());
+                    Log.e("ChangeAdapter", changeArray.toString()+", "+changeIdarray.toString());
                 }
             });
 
@@ -107,16 +112,17 @@ public class ChangeListViewAdapter extends BaseAdapter {
     }
 
     // 아이템 데이터 추가를 위한 함수. 개발자가 원하는대로 작성 가능.
-    public void addItem(String title) {
+    public void addItem(String title, String circle_id) {
         ChangeListViewItem item = new ChangeListViewItem();
 
         item.setTitle(title);
+        item.setCircle_id(circle_id);
 
         listViewItemList.add(item);
     }
 
     class ViewHolder{
-        TextView text_title;
+        TextView text_title, change_none_id;
         CheckBox checkBox;
     }
 }
