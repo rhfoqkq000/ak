@@ -22,6 +22,7 @@ import android.widget.Toast;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.donga.examples.boomin.AppendLog;
 import com.donga.examples.boomin.R;
+import com.donga.examples.boomin.Singleton.ChangeSingleton;
 import com.donga.examples.boomin.Singleton.NoticeSingleton;
 import com.donga.examples.boomin.activity.Wisper_NoticeDialogActivity;
 import com.donga.examples.boomin.retrofit.retrofitNormalRead.Interface_normalRead;
@@ -103,6 +104,26 @@ public class WisperAdapter extends RecyclerView.Adapter<WisperAdapter.ViewHolder
             holder.rLayout.setBackground(context.getResources().getDrawable(R.drawable.left_line2));
         }
 
+        final ArrayList<String> wisperAdapterArray = ChangeSingleton.getInstance().getWisperAdapterArray();
+        for(int i = 0; i<wisperAdapterArray.size(); i++){
+            if(Integer.parseInt(wisperAdapterArray.get(i))==(position)){
+                holder.checkBox.setChecked(true);
+            }
+        }
+
+        holder.checkBox.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(holder.checkBox.isChecked()){
+                    wisperAdapterArray.add(String.valueOf(position));
+                }else{
+                    wisperAdapterArray.remove(String.valueOf(position));
+                }
+                ChangeSingleton.getInstance().setWisperAdapterArray(wisperAdapterArray);
+                Log.i("inWisperAdapter", wisperAdapterArray.toString());
+            }
+        });
+
         holder.checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
@@ -140,32 +161,6 @@ public class WisperAdapter extends RecyclerView.Adapter<WisperAdapter.ViewHolder
                     public void onResponse(Call<com.donga.examples.boomin.retrofit.retrofitNormalRead.Master> call, Response<com.donga.examples.boomin.retrofit.retrofitNormalRead.Master> response) {
                         if(response.body().getResult_code() == 1){
                             holder.rLayout.setBackground(context.getResources().getDrawable(R.drawable.left_line));
-
-//                            boolean wrapInScrollView = false;
-//                            final MaterialDialog dialog = new MaterialDialog.Builder(context)
-//                                    .customView(R.layout.activity_wisper_notice, wrapInScrollView)
-//                                    .build();
-//                            View dialogView = dialog.getCustomView();
-//                            CardView wisper_cardview_ok = (CardView)dialogView.findViewById(R.id.wisper_notice_ok);
-//                            final TextView wisper_notice_name = (TextView)dialogView.findViewById(R.id.wisper_notice_name);
-//                            final TextView wisper_notice_title = (TextView)dialogView.findViewById(R.id.wisper_notice_title);
-//                            final TextView wisper_notice_content = (TextView)dialogView.findViewById(R.id.wisper_notice_content);
-//                            dialog.setOnShowListener(new DialogInterface.OnShowListener() {
-//                                @Override
-//                                public void onShow(DialogInterface dialog) {
-//                                    wisper_notice_name.setText(holder.nameText.getText().toString());
-//                                    wisper_notice_title.setText(holder.titleText.getText().toString());
-//                                    wisper_notice_content.setText(holder.contentText.getText().toString());
-//                                }
-//                            });
-//                            wisper_cardview_ok.setOnClickListener(new View.OnClickListener() {
-//                                @Override
-//                                public void onClick(View v) {
-//                                    dialog.dismiss();
-//                                }
-//                            });
-//                            hideProgressDialog();
-//                            dialog.show();
 
                             Intent intent = new Intent(view.getContext(), Wisper_NoticeDialogActivity.class);
                             intent.putExtra("content", holder.contentText.getText().toString());

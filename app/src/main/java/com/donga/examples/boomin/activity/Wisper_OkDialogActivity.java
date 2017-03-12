@@ -49,7 +49,7 @@ public class Wisper_OkDialogActivity extends Activity {
             public void onResponse(Call<com.donga.examples.boomin.retrofit.retrofitChange_att.Master> call,
                                    Response<com.donga.examples.boomin.retrofit.retrofitChange_att.Master> response) {
                 if(response.body().getResult_code() == 1){
-                    Toast.makeText(getApplicationContext(), "참석", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), "불참 처리되었습니다.", Toast.LENGTH_SHORT).show();
                     finish();
                 }else{
                     log.appendLog("inWisper_OkDialog2change code not matched");
@@ -79,16 +79,18 @@ public class Wisper_OkDialogActivity extends Activity {
             public void onResponse(Call<com.donga.examples.boomin.retrofit.retrofitChange_att.Master> call,
                                    Response<com.donga.examples.boomin.retrofit.retrofitChange_att.Master> response) {
                 if(response.body().getResult_code() == 1){
-                    Log.i("WisperOKDialog", "1change done");
+                    Toast.makeText(getApplicationContext(), "참석 처리되었습니다.", Toast.LENGTH_SHORT).show();
                     finish();
                 }else{
                     log.appendLog("inWisper_OkDialog1change code not matched, "+response.body().getResult_code());
+                    Toast.makeText(getApplicationContext(), "통신 실패", Toast.LENGTH_SHORT).show();
                     finish();
                 }
             }
             @Override
             public void onFailure(Call<com.donga.examples.boomin.retrofit.retrofitChange_att.Master> call, Throwable t) {
                 t.printStackTrace();
+                Toast.makeText(getApplicationContext(), "통신 실패", Toast.LENGTH_SHORT).show();
                 log.appendLog("inWisper_OkDialog1change failure");
                 finish();
             }
@@ -98,9 +100,6 @@ public class Wisper_OkDialogActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-//        requestWindowFeature(Window.FEATURE_NO_TITLE);
-//        getWindow().clearFlags(WindowManager.LayoutParams.FLAG_DIM_BEHIND);
 
         setContentView(R.layout.activity_wisper_ok);
         ButterKnife.bind(this);
