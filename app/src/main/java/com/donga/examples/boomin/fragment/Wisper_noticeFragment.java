@@ -33,6 +33,7 @@ import java.util.ArrayList;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import es.dmoral.toasty.Toasty;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -61,7 +62,6 @@ public class Wisper_noticeFragment extends Fragment {
         ButterKnife.bind(this,rootview);
 
         mRecyclerView.setHasFixedSize(true);
-//        mRecyclerView.getRecycledViewPool().setMaxRecycledViews(, 0);
 
         mLayoutManager = new LinearLayoutManager(getActivity());
         mRecyclerView.setLayoutManager(mLayoutManager);
@@ -76,9 +76,6 @@ public class Wisper_noticeFragment extends Fragment {
         retrofit();
 
 //        myDataset.add(new MyData_Wisper("날짜","망아지","공지 알림","공지내용"));
-//        myDataset.add(new MyData_Wisper("2017.02.02","망아지","공지 알림","공지내용"));
-//        myDataset.add(new MyData_Wisper("2017.02.02","망아지","공지 알림","공지내용"));
-//        myDataset.add(new MyData_Wisper("2017.02.02","망아지","공지 알림","공지내용"));
 //        myDataset.add(new MyData_Wisper("2017.02.02","망아지","공지 알림","공지내용"));
 
         return rootview;
@@ -122,6 +119,8 @@ public class Wisper_noticeFragment extends Fragment {
 
                                 @Override
                                 public void onFailure(Call<com.donga.examples.boomin.retrofit.retrofitRemoveNormalNotis.Master> call, Throwable t) {
+                                    Toasty.error(getContext(), "불러오기 실패", Toast.LENGTH_SHORT).show();
+                                    log.appendLog("inWisperNoticeFragment failure");
                                     hideProgressDialog();
                                     t.printStackTrace();
                                 }
@@ -178,14 +177,14 @@ public class Wisper_noticeFragment extends Fragment {
                     }
                 }else{
                     log.appendLog("inWisperActivity code not matched");
-                    Toast.makeText(getContext(), "불러오기 실패", Toast.LENGTH_SHORT).show();
+                    Toasty.error(getContext(), "불러오기 실패", Toast.LENGTH_SHORT).show();
                 }
                 hideProgressDialog();
             }
             @Override
             public void onFailure(Call<com.donga.examples.boomin.retrofit.retrofitNormalNotis.Master> call, Throwable t) {
                 log.appendLog("inWisperActivity failure");
-                Toast.makeText(getContext(), "불러오기 실패", Toast.LENGTH_SHORT).show();
+                Toasty.error(getContext(), "불러오기 실패", Toast.LENGTH_SHORT).show();
                 hideProgressDialog();
                 t.printStackTrace();
             }

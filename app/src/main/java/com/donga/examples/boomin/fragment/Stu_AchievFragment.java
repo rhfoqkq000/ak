@@ -46,6 +46,7 @@ import javax.crypto.spec.SecretKeySpec;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import es.dmoral.toasty.Toasty;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -60,11 +61,8 @@ public class Stu_AchievFragment extends Fragment {
 
     private FragmentManager fm;
     private ProgressDialog mProgressDialog;
-    AppendLog appendLog = new AppendLog();
     HashMap<String, Integer> hash;
 
-//    @BindView(R.id.achiev_all)
-//    Spinner achiev_all;
     @BindView(R.id.achiev_all)
     MaterialSpinner achiev_all;
     @BindView(R.id.part_layout)
@@ -77,16 +75,6 @@ public class Stu_AchievFragment extends Fragment {
     Button all_ok;
     @BindView(R.id.part_ok)
     Button part_ok;
-//    @BindView(R.id.achiev_bottom)
-//    LinearLayout achiev_bottom;
-//    @BindView(R.id.distin)
-//    TextView distin;
-//    @BindView(R.id.below2)
-//    ImageView below;
-//    @BindView(R.id.achiev_year)
-//    Spinner achieve_year;
-//    @BindView(R.id.achiev_side)
-//    Spinner achiev_side;
     @BindView(R.id.achiev_year)
     MaterialSpinner achieve_year;
     @BindView(R.id.achiev_side)
@@ -151,11 +139,7 @@ public class Stu_AchievFragment extends Fragment {
                     }
                     Object[] objectList = years.toArray();
                     String[] years2 =  Arrays.copyOf(objectList,objectList.length,String[].class);
-//                    ArrayAdapter adapter = new ArrayAdapter(getContext(), android.R.layout.simple_spinner_dropdown_item, years);
-//                    achieve_year.setAdapter(adapter);
                     achieve_year.setItems(years2);
-//                    ArrayAdapter adapter_side = new ArrayAdapter(getContext(), android.R.layout.simple_spinner_dropdown_item, keyList);
-//                    achiev_side.setAdapter(adapter_side);
                     achiev_side.setItems(keyList);
 
                     all_ok_card.setVisibility(View.GONE);
@@ -165,31 +149,6 @@ public class Stu_AchievFragment extends Fragment {
 
 
         });
-//        achiev_all.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-//            @Override
-//            public void onItemSelected(AdapterView<?> adapterView, View view, int position, long l) {
-//                if (position == 0) {
-//                    all_ok_card.setVisibility(View.VISIBLE);
-//                    part_layout.setVisibility(View.GONE);
-//                    ArrayList<String> years = new ArrayList<String>();
-//                    for (int i = Integer.parseInt(new SimpleDateFormat("yyyy").format(new Date(System.currentTimeMillis()))); i >= Integer.parseInt(InfoSingleton.getInstance().getYear()); i--) {
-//                        years.add(String.valueOf(i));
-//                    }
-//                    ArrayAdapter adapter = new ArrayAdapter(getContext(), android.R.layout.simple_spinner_dropdown_item, years);
-//                    achieve_year.setAdapter(adapter);
-//                    ArrayAdapter adapter_side = new ArrayAdapter(getContext(), android.R.layout.simple_spinner_dropdown_item, keyList);
-//                    achiev_side.setAdapter(adapter_side);
-//                } else {
-//                    all_ok_card.setVisibility(View.GONE);
-//                    part_layout.setVisibility(View.VISIBLE);
-//                }
-//            }
-//
-//            @Override
-//            public void onNothingSelected(AdapterView<?> adapterView) {
-//                Toast.makeText(getActivity(), "메뉴를 선택해주세요.", Toast.LENGTH_LONG).show();
-//            }
-//        });
         return rootview;
     }
 
@@ -220,7 +179,7 @@ public class Stu_AchievFragment extends Fragment {
                     } else {
                         hideProgressDialog();
                         log.appendLog("inStu_AchievFragment code not matched");
-                        Toast.makeText(getContext(), "불러오기 실패", Toast.LENGTH_SHORT);
+                        Toasty.error(getContext(), "불러오기 실패", Toast.LENGTH_SHORT).show();
                     }
                 }
 
@@ -228,8 +187,8 @@ public class Stu_AchievFragment extends Fragment {
                 public void onFailure(Call<Master> call, Throwable t) {
                     hideProgressDialog();
                     t.printStackTrace();
-                    Toast.makeText(getContext(), "불러오기 실패", Toast.LENGTH_SHORT);
-                    appendLog.appendLog("inStu_AchievFragment failure");
+                    Toasty.error(getContext(), "불러오기 실패", Toast.LENGTH_SHORT).show();
+                    log.appendLog("inStu_AchievFragment failure");
                 }
             });
         } catch (Exception e) {
@@ -256,10 +215,9 @@ public class Stu_AchievFragment extends Fragment {
                     if (response.body().getResult_code() == 0 || response.body().getResult_code() == 500) {
                         hideProgressDialog();
                         log.appendLog("inStu_AchievFragment code not matched");
-                        Toast.makeText(getContext(), "조회 실패하였습니다.", Toast.LENGTH_SHORT).show();
+                        Toasty.error(getContext(), "조회 실패하였습니다.", Toast.LENGTH_SHORT).show();
                     } else {
                         Log.i("ACHIEVE_SEP onResponse", response.body().getResult_body().getAllGrade());
-                        hideProgressDialog();
                         GradeSingleton.getInstance().setPartGrade(response.body().getResult_body().getAllGrade());
                         GradeSingleton.getInstance().setPartAvg(response.body().getResult_body().getAvgGrade());
                         GradeSingleton.getInstance().setDetail2(response.body().getResult_body().getDetail());
@@ -267,6 +225,7 @@ public class Stu_AchievFragment extends Fragment {
                         hide.setVisibility(View.VISIBLE);
                         FragmentTransaction ft = fm.beginTransaction();
                         Stu_Achiev_Part_Fragment achiev_part_fragment = new Stu_Achiev_Part_Fragment();
+                        hideProgressDialog();
                         ft.replace(R.id.frag_change, achiev_part_fragment);
                         ft.commit();
                     }
@@ -276,8 +235,8 @@ public class Stu_AchievFragment extends Fragment {
                 public void onFailure(Call<com.donga.examples.boomin.retrofit.retrofitAchieveSep.Master> call, Throwable t) {
                     hideProgressDialog();
                     t.printStackTrace();
-                    Toast.makeText(getContext(), "조회 실패하였습니다.", Toast.LENGTH_SHORT).show();
-                    appendLog.appendLog("inStu_AchievFragment failure");
+                    Toasty.error(getContext(), "조회 실패하였습니다.", Toast.LENGTH_SHORT).show();
+                    log.appendLog("inStu_AchievFragment failure");
                 }
             });
         } catch (Exception e) {

@@ -216,7 +216,11 @@ public class ChangeActivity extends AppCompatActivity implements NavigationView.
         Retrofit client = new Retrofit.Builder().baseUrl(getString(R.string.retrofit_url))
                 .addConverterFactory(GsonConverterFactory.create()).build();
         Interface_updateCircle updateCircle = client.create(Interface_updateCircle.class);
+        if(changeIdList.isEmpty()){
+            changeIdList.add("1");
+        }
         JsonRequest jsonRequest = new JsonRequest(sharedPreferences.getInt("ID", 0), changeIdList);
+
         Call<com.donga.examples.boomin.retrofit.retrofitUpdateCircle.Master> call = updateCircle.updateCircle("application/json", jsonRequest);
         call.enqueue(new Callback<com.donga.examples.boomin.retrofit.retrofitUpdateCircle.Master>() {
             @Override
@@ -373,7 +377,7 @@ public class ChangeActivity extends AppCompatActivity implements NavigationView.
                         userCircleList.add(response.body().getResult_body().get(i).getName());
                     }
                     hideProgressDialog();
-                    Toasty.info(getApplicationContext(), "불러오기 동아리는"+userCircleList.toString()+"입니다.", Toast.LENGTH_LONG).show();
+                    Toasty.info(getApplicationContext(), "선택된 동아리는 "+userCircleList.toString()+"입니다.", Toast.LENGTH_LONG).show();
 
                 }else{
                     hideProgressDialog();
@@ -386,7 +390,6 @@ public class ChangeActivity extends AppCompatActivity implements NavigationView.
             public void onFailure(Call<com.donga.examples.boomin.retrofit.retrofitGetUserCircle.Master> call, Throwable t) {
                 log.appendLog("inChangeActivity getUserCircle failure");
                 hideProgressDialog();
-                Toasty.error(getApplicationContext(), "동아리 불러오기 실패", Toast.LENGTH_SHORT).show();
                 Toasty.error(getApplicationContext(), "동아리 불러오기 실패", Toast.LENGTH_SHORT).show();
                 t.printStackTrace();
             }

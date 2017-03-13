@@ -27,6 +27,7 @@ import javax.crypto.spec.SecretKeySpec;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import es.dmoral.toasty.Toasty;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -119,9 +120,6 @@ public class Stu_GrageFragment extends Fragment {
 
         showProgressDialog();
 
-        final long start = System.currentTimeMillis();
-
-
         //retrofit 통신
         Retrofit client = new Retrofit.Builder().baseUrl(getString(R.string.retrofit_url))
                 .addConverterFactory(GsonConverterFactory.create()).build();
@@ -134,9 +132,6 @@ public class Stu_GrageFragment extends Fragment {
                 @Override
                 public void onResponse(Call<com.donga.examples.boomin.retrofit.retrofitGrad.Master> call, Response<Master> response) {
                     if (response.body().getResult_code() == 1) {
-
-                        long end = System.currentTimeMillis();
-                        Log.i("Stu_GradeFragment", "retrofit시간:"+(end-start)/1000.0);
 
                         tv_multi.setText(response.body().getResult_body().getInfo().getMulti());
                         tv_sub.setText(response.body().getResult_body().getInfo().getSub());
@@ -208,14 +203,14 @@ public class Stu_GrageFragment extends Fragment {
                     } else {
                         hideProgressDialog();
                         log.appendLog("inStu_GradeFragment code not matched");
-                        Toast.makeText(getContext(), "불러오기 실패", Toast.LENGTH_SHORT).show();
+                        Toasty.error(getContext(), "불러오기 실패", Toast.LENGTH_SHORT).show();
                     }
                 }
 
                 @Override
                 public void onFailure(Call<com.donga.examples.boomin.retrofit.retrofitGrad.Master> call, Throwable t) {
                     hideProgressDialog();
-                    Toast.makeText(getContext(), "불러오기 실패", Toast.LENGTH_SHORT).show();
+                    Toasty.error(getContext(), "불러오기 실패", Toast.LENGTH_SHORT).show();
                     log.appendLog("inStu_GradeFragment failure");
                     t.printStackTrace();
                 }
@@ -257,11 +252,5 @@ public class Stu_GrageFragment extends Fragment {
         cipher.init(Cipher.DECRYPT_MODE, keySpec, ivSpec);
         byte[] results = cipher.doFinal(Base64.decode(text, 0));
         return new String(results, "UTF-8");
-    }
-
-    public static boolean validateEmail(String emailStr) {
-        final Pattern VALID_PERCENT_REGEX = Pattern.compile("-\\d+%");
-        Matcher matcher = VALID_PERCENT_REGEX.matcher(emailStr);
-        return matcher.find();
     }
 }

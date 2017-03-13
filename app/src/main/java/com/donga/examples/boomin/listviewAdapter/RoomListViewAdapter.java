@@ -80,14 +80,11 @@ public class RoomListViewAdapter extends BaseAdapter {
 
 
             if (Float.parseFloat(listViewItem.getTitle5()) == 100.0) {
-                Log.i("validated100" + pos, viewHolder.text_room5.getText().toString());
                 viewHolder.text_room5.setTextColor(Color.RED);
 
             } else if(50.1 <= Float.parseFloat(listViewItem.getTitle5()) && Float.parseFloat(listViewItem.getTitle5()) <= 99.9){
-                Log.i("validated99" + pos, viewHolder.text_room5.getText().toString());
                 viewHolder.text_room5.setTextColor(Color.parseColor("#baba00"));
             } else{
-                Log.i("validated49" + pos, viewHolder.text_room5.getText().toString());
                 viewHolder.text_room5.setTextColor(Color.parseColor("#128c00"));
             }
         }else{

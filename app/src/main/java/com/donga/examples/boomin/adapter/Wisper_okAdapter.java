@@ -27,6 +27,7 @@ import com.orhanobut.logger.Logger;
 
 import java.util.ArrayList;
 
+import es.dmoral.toasty.Toasty;
 import me.leolin.shortcutbadger.ShortcutBadger;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -168,7 +169,7 @@ public class Wisper_okAdapter extends RecyclerView.Adapter<Wisper_okAdapter.View
                         }else{
                             log.appendLog("inWisper_okAdapter code not matched");
                             hideProgressDialog();
-                            Toast.makeText(context, "불러오기 실패", Toast.LENGTH_SHORT).show();
+                            Toasty.error(context, "불러오기 실패", Toast.LENGTH_SHORT).show();
                         }
                     }
 
@@ -177,7 +178,7 @@ public class Wisper_okAdapter extends RecyclerView.Adapter<Wisper_okAdapter.View
                         t.printStackTrace();
                         log.appendLog("inWisper_okAdapter failure");
                         hideProgressDialog();
-                        Toast.makeText(context, "불러오기 실패", Toast.LENGTH_SHORT).show();
+                        Toasty.error(context, "불러오기 실패", Toast.LENGTH_SHORT).show();
                     }
                 });
             }

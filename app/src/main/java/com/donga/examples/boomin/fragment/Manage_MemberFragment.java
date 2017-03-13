@@ -23,6 +23,7 @@ import com.donga.examples.boomin.retrofit.retrofitGetMembers.Master;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import es.dmoral.toasty.Toasty;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -44,8 +45,6 @@ public class Manage_MemberFragment extends Fragment {
     CardView manage_member_select;
     @BindView(R.id.garbage)
     ImageView garbage;
-//    @BindView(R.id.manage_member_check)
-//    CheckBox manage_member_check;
 
     private MemberListViewAdapter adapter;
 
@@ -54,7 +53,7 @@ public class Manage_MemberFragment extends Fragment {
         final View rootview = inflater.inflate(R.layout.fragment_manage_member, container, false);
         ButterKnife.bind(this, rootview);
 
-//        showProgressDialog();
+        showProgressDialog();
 
         adapter = new MemberListViewAdapter();
         list_member.setAdapter(adapter);
@@ -71,19 +70,19 @@ public class Manage_MemberFragment extends Fragment {
                         adapter.addItem1(response.body().getResult_body().get(i).getStuId(), response.body().getResult_body().get(i).getName());
                         adapter.notifyDataSetChanged();
                     }
-//                    hideProgressDialog();
+                    hideProgressDialog();
                 } else {
-//                    hideProgressDialog();
+                    hideProgressDialog();
                     log.appendLog("inMemberFragment code not matched");
-                    Toast.makeText(getContext(), "불러오기 실패", Toast.LENGTH_SHORT);
+                    Toasty.error(getContext(), "회원목록 불러오기 실패", Toast.LENGTH_SHORT).show();
                 }
             }
 
             @Override
             public void onFailure(Call<Master> call, Throwable t) {
-//                hideProgressDialog();
+                hideProgressDialog();
                 log.appendLog("inMemberFragment failure");
-                Toast.makeText(getContext(), "불러오기 실패", Toast.LENGTH_SHORT);
+                Toasty.error(getContext(), "불러오기 실패", Toast.LENGTH_SHORT).show();
                 t.printStackTrace();
             }
         });
@@ -101,12 +100,6 @@ public class Manage_MemberFragment extends Fragment {
             }
         }
     }
-
-//    @OnClick(R.id.garbage)
-//    void onDeleteClicked(){
-//        manage_member_select.setVisibility(View.VISIBLE);
-//        list_member.findViewById(R.id.manage_member_check).setVisibility(View.VISIBLE);
-//    }
 
     private void showProgressDialog() {
         if (mProgressDialog == null) {
