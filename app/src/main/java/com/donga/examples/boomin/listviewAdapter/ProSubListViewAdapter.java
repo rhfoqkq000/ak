@@ -19,6 +19,8 @@ import com.donga.examples.boomin.R;
 
 import java.util.ArrayList;
 
+import es.dmoral.toasty.Toasty;
+
 /**
  * Created by nature on 16. 7. 19.
  */
@@ -74,7 +76,7 @@ public class ProSubListViewAdapter extends BaseAdapter {
             @Override
             public void onClick(View v) {
                 if (pro_call_gone.getText().toString().equals(".")) {
-                    Toast.makeText(context, "등록된 전화번호가 없습니다.", Toast.LENGTH_SHORT);
+                    Toasty.error(context, "등록된 전화번호가 없습니다.", Toast.LENGTH_SHORT).show();
                 } else {
 
                     String pro_tel = pro_call_gone.getText().toString();
@@ -89,7 +91,7 @@ public class ProSubListViewAdapter extends BaseAdapter {
             @Override
             public boolean onLongClick(View v) {
                 if (pro_call_gone.getText().toString().equals(".")) {
-                    Toast.makeText(context, "등록된 전화번호가 없습니다.", Toast.LENGTH_SHORT);
+                    Toasty.error(context, "등록된 전화번호가 없습니다.", Toast.LENGTH_SHORT).show();
                     return false;
                 } else {
                     ClipboardManager clipboardManager = (ClipboardManager) context.getSystemService(context.CLIPBOARD_SERVICE);
@@ -104,7 +106,7 @@ public class ProSubListViewAdapter extends BaseAdapter {
             @Override
             public void onClick(View v) {
                 if (pro_mail_gone.getText().toString().equals(".")) {
-                    Toast.makeText(context, "등록된 이메일이 없습니다.", Toast.LENGTH_SHORT);
+                    Toasty.error(context, "등록된 이메일이 없습니다.", Toast.LENGTH_SHORT).show();
                 } else {
                     Intent it = new Intent(Intent.ACTION_SEND);
                     String[] mailaddr = {pro_mail_gone.getText().toString()};
@@ -119,7 +121,7 @@ public class ProSubListViewAdapter extends BaseAdapter {
             @Override
             public boolean onLongClick(View v) {
                 if (pro_mail_gone.getText().toString().equals(".")) {
-                    Toast.makeText(context, "등록된 이메일이 없습니다.", Toast.LENGTH_SHORT);
+                    Toasty.error(context, "등록된 이메일이 없습니다.", Toast.LENGTH_SHORT).show();
                     return false;
                 } else {
 

@@ -33,6 +33,7 @@ import butterknife.ButterKnife;
 public class Stu_Achiev_All_Fragment extends Fragment {
     AppendLog log = new AppendLog();
     private ProgressDialog mProgressDialog;
+
     @BindView(R.id.list_all)
     ListView list_all;
     @BindView(R.id.tv_getAllGrade)
@@ -62,6 +63,7 @@ public class Stu_Achiev_All_Fragment extends Fragment {
                 achiev_bottom.setVisibility(View.GONE);
             }
         });
+
 //        showProgressDialog();
 
         adapter = new PartListViewAdapter();

@@ -32,6 +32,7 @@ import java.util.ArrayList;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import es.dmoral.toasty.Toasty;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -88,7 +89,7 @@ public class Wisper_okFragment extends Fragment {
                 }else{
                     log.appendLog("inOkFragment code not matched");
                     hideProgressDialog();
-                    Toast.makeText(getContext(), "불러오기 실패", Toast.LENGTH_SHORT).show();
+                    Toasty.error(getContext(), "불러오기 실패", Toast.LENGTH_SHORT).show();
                 }
             }
 
@@ -96,7 +97,7 @@ public class Wisper_okFragment extends Fragment {
             public void onFailure(Call<Master> call, Throwable t) {
                 log.appendLog("inOkFragment getCircleNotice failure");
                 hideProgressDialog();
-                Toast.makeText(getContext(), "불러오기 실패", Toast.LENGTH_SHORT).show();
+                Toasty.error(getContext(), "불러오기 실패", Toast.LENGTH_SHORT).show();
                 t.printStackTrace();
             }
         });
@@ -145,7 +146,9 @@ public class Wisper_okFragment extends Fragment {
 
                                 @Override
                                 public void onFailure(Call<com.donga.examples.boomin.retrofit.retrofitRemoveCircleNotis.Master> call, Throwable t) {
+                                    log.appendLog("inWisperOkFragment failure");
                                     hideProgressDialog();
+                                    Toasty.error(getContext(), "불러오기 실패", Toast.LENGTH_SHORT).show();
                                     t.printStackTrace();
                                 }
                             });

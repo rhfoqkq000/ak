@@ -74,10 +74,8 @@ public class SelectListViewAdapter extends BaseAdapter {
                 public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                     ArrayList<String> changeArray = ChangeSingleton.getInstance().getDialogArray();
                     if(!isChecked){
-//                        changeArray.remove(viewHolder.text_title.getText().toString());
                         changeArray.remove(viewHolder.text_none_id.getText().toString());
                     }else {
-//                        changeArray.add(viewHolder.text_title.getText().toString());
                         changeArray.add(viewHolder.text_none_id.getText().toString());
                     }
                     ChangeSingleton.getInstance().setDialogArray(changeArray);

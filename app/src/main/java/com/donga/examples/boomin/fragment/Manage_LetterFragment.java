@@ -1,6 +1,7 @@
 package com.donga.examples.boomin.fragment;
 
 
+import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.CardView;
@@ -25,6 +26,7 @@ import com.orhanobut.logger.Logger;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import es.dmoral.toasty.Toasty;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -46,6 +48,7 @@ public class Manage_LetterFragment extends Fragment {
     @BindView(R.id.manage_letter_send)
     CardView manage_letter_send;
 
+    private ProgressDialog mProgressDialog;
     AppendLog log = new AppendLog();
 
     @Override
@@ -58,6 +61,7 @@ public class Manage_LetterFragment extends Fragment {
 
     @OnClick(R.id.manage_letter_send)
     void onSendClick(){
+        showProgressDialog();
         if(manage_letter_spinner.getSelectedItemPosition() == 0){
             //일반 공지 보낼 시
             Logger.d("일반");
@@ -69,24 +73,24 @@ public class Manage_LetterFragment extends Fragment {
                     manage_letter_name.getText().toString(), manage_letter_content.getText().toString());
             Call<com.donga.examples.boomin.retrofit.retrofitNormalFcm.Master> call = fcm.sendFcm("bearer "+ManageSingleton.getInstance().getToken(),
                     "application/json", new JsonRequest(jsonRequest2));
-
             call.enqueue(new Callback<com.donga.examples.boomin.retrofit.retrofitNormalFcm.Master>() {
                 @Override
                 public void onResponse(Call<com.donga.examples.boomin.retrofit.retrofitNormalFcm.Master> call, Response<com.donga.examples.boomin.retrofit.retrofitNormalFcm.Master> response) {
-                    Log.i("onresponse", "done");
-                    Toast.makeText(getContext(), "전송 완료!", Toast.LENGTH_SHORT).show();
-
+                    hideProgressDialog();
+                    Toasty.success(getContext(), "전송 완료!", Toast.LENGTH_SHORT).show();
                 }
 
                 @Override
                 public void onFailure(Call<com.donga.examples.boomin.retrofit.retrofitNormalFcm.Master> call, Throwable t) {
-                    Toast.makeText(getContext(), "전송 실패!", Toast.LENGTH_SHORT).show();
-
+                    hideProgressDialog();
+                    Toasty.error(getContext(), "전송 실패!", Toast.LENGTH_SHORT).show();
+                    log.appendLog("inManageLetterFragment failure");
                     t.printStackTrace();
                 }
             });
         } else{
             //행사참여여부 공지 보낼 시
+            showProgressDialog();
             //retrofit 통신
             Retrofit client = new Retrofit.Builder().baseUrl(getString(R.string.retrofit_url))
                     .addConverterFactory(GsonConverterFactory.create()).build();
@@ -97,21 +101,40 @@ public class Manage_LetterFragment extends Fragment {
                 @Override
                 public void onResponse(Call<Master> call, Response<Master> response) {
                     if(response.body().getSuccess().equals("HTTP 요청 처리 완료")){
-                        Toast.makeText(getContext(), "전송 완료", Toast.LENGTH_SHORT).show();
+                        hideProgressDialog();
+                        Toasty.success(getContext(), "전송 완료", Toast.LENGTH_SHORT).show();
                     }else{
+                        hideProgressDialog();
                         log.appendLog("inLetterFragment code not matched");
-                        Toast.makeText(getContext(), "전송 실패", Toast.LENGTH_SHORT).show();
+                        Toasty.error(getContext(), "전송 실패", Toast.LENGTH_SHORT).show();
                     }
                 }
 
                 @Override
                 public void onFailure(Call<Master> call, Throwable t) {
+                    hideProgressDialog();
                     t.printStackTrace();
                     log.appendLog("inLetterFragment failure");
-                    Toast.makeText(getContext(), "전송 실패", Toast.LENGTH_SHORT).show();
+                    Toasty.error(getContext(), "전송 실패", Toast.LENGTH_SHORT).show();
                 }
             });
         }
 
+    }
+
+    private void showProgressDialog() {
+        if (mProgressDialog == null) {
+            mProgressDialog = new ProgressDialog(getContext());
+            mProgressDialog.setMessage(getString(R.string.loading));
+            mProgressDialog.setIndeterminate(true);
+        }
+
+        mProgressDialog.show();
+    }
+
+    private void hideProgressDialog() {
+        if (mProgressDialog != null && mProgressDialog.isShowing()) {
+            mProgressDialog.hide();
+        }
     }
 }

@@ -39,8 +39,6 @@ public class AlertDialogActivity extends Activity {
         send = bun.getString("send");
         title = bun.getString("title");
 
-        Log.i("inAlertDialog", "제목:"+title+",발신자:"+send);
-
         setContentView(R.layout.activity_alert_dialog);
         ButterKnife.bind(this);
 

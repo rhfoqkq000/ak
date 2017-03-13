@@ -141,17 +141,6 @@ public class PartListViewAdapter extends BaseAdapter {
         listViewItemList.add(item);
     }
 
-//    // 세 번째 아이템 추가를 위한 함수.
-//    public void addItem2(String subject, String grade) {
-//        PartListViewItem item = new PartListViewItem() ;
-//
-//        item.setType(ITEM_VIEW_TYPE_CONTENT) ;
-//        item.setContent_subject(subject);
-//        item.setContent_grade(grade);
-//
-//        listViewItemList.add(item);
-//    }
-
     // 세 번째 아이템 추가를 위한 함수.
     public void addItem2(String none, String subject, String grade, String distin, String grade_number) {
         PartListViewItem item = new PartListViewItem() ;
@@ -161,9 +150,7 @@ public class PartListViewAdapter extends BaseAdapter {
         item.setContent_subject(subject);
         item.setContent_grade(grade);
         item.setDistin(distin);
-//        Log.i("setDistin", distin);
         item.setGrade_number(grade_number);
-//        Log.i("setGrade_number", grade_number);
 
         listViewItemList.add(item);
     }

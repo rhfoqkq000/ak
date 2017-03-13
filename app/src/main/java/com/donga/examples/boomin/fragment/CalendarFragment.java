@@ -20,6 +20,7 @@ import com.donga.examples.boomin.retrofit.retrofitMeal.Master3;
 
 import java.util.Calendar;
 
+import es.dmoral.toasty.Toasty;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -107,14 +108,14 @@ public class CalendarFragment extends DialogFragment implements DatePickerDialog
                 } else {
                     hideProgressDialog();
                     log.appendLog("inCalFragment code not matched");
-                    Toast.makeText(getContext(), "불러오기 실패", Toast.LENGTH_SHORT);
+                    Toasty.error(getContext(), "불러오기 실패", Toast.LENGTH_SHORT).show();
                 }
             }
 
             @Override
             public void onFailure(Call<Master3> call, Throwable t) {
                 hideProgressDialog();
-                Toast.makeText(getContext(), "불러오기 실패", Toast.LENGTH_SHORT);
+                Toasty.error(getContext(), "불러오기 실패", Toast.LENGTH_SHORT).show();
                 log.appendLog("inCalFragment failure");
                 t.printStackTrace();
             }
