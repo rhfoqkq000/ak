@@ -1,21 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.donga.examples.boomin.CheckableLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<com.donga.examples.boomin.CheckableLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/check_area"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_gravity="center_vertical">
+
     <CheckBox
         android:id="@+id/manage_member_check"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginRight="10dp"/>
+        android:layout_marginRight="10dp" />
+
     <TextView
         android:id="@+id/manage_member_id"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="1419142"
-        android:layout_marginRight="10dp"/>
+        android:layout_marginRight="10dp"
+        android:text="1419142" />
+
     <TextView
         android:id="@+id/manage_member_name"
         android:layout_width="wrap_content"

@@ -1,141 +1,154 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    app:layout_behavior="@string/appbar_scrolling_view_behavior"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:paddingTop="16dp"
-    android:paddingRight="20dp"
-    android:paddingLeft="20dp"
+    android:background="#FFF"
     android:paddingBottom="30dp"
-    android:background="#FFF">
+    android:paddingLeft="20dp"
+    android:paddingRight="20dp"
+    android:paddingTop="16dp"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical">
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:gravity="center_horizontal">
+            android:gravity="center_horizontal"
+            android:orientation="horizontal">
+
             <ImageView
+                android:id="@+id/pre_res"
                 android:layout_width="20dp"
                 android:layout_height="20dp"
-                android:id="@+id/pre_res"
-                android:src="@drawable/left_arrow"
                 android:layout_marginRight="10dp"
-                android:scaleType="fitXY"/>
+                android:scaleType="fitXY"
+                android:src="@drawable/left_arrow" />
+
             <TextView
+                android:id="@+id/date_text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/date_text"
                 android:text="날짜"
                 android:textSize="20dp"
-                android:textStyle="bold"
-                />
+                android:textStyle="bold" />
+
             <ImageView
+                android:id="@+id/next_res"
                 android:layout_width="20dp"
                 android:layout_height="20dp"
-                android:id="@+id/next_res"
-                android:src="@drawable/right_arrow"
                 android:layout_marginLeft="10dp"
-                android:scaleType="fitXY"/>
+                android:scaleType="fitXY"
+                android:src="@drawable/right_arrow" />
         </LinearLayout>
+
         <android.support.v7.widget.CardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:cardElevation="2dp"
-            app:cardCornerRadius="5dp"
-            app:cardBackgroundColor="#ccc"
-            android:layout_marginTop="20dp">
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="vertical"
-                android:background="#F2F2F2">
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="국제회관 기숙사"
-                    android:textSize="19dp"
-                    android:textStyle="bold"
-                    android:background="@color/two"
-                    android:textColor="#5a5a5a"
-                    android:gravity="center"
-                    android:padding="10dp"
-                    />
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/guk"
-                    android:text="국제회관 기숙사"
-                    android:padding="20dp"
-                    android:gravity="center_horizontal|center_vertical"/>
-            </LinearLayout>
-        </android.support.v7.widget.CardView>
-        <android.support.v7.widget.CardView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:cardElevation="2dp"
-            app:cardCornerRadius="5dp"
-            app:cardBackgroundColor="#ccc"
-            android:layout_marginTop="20dp">
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="vertical"
-                android:background="#F2F2F2">
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="부민(교직원)"
-                    android:textSize="19dp"
-                    android:textStyle="bold"
-                    android:background="@color/two"
-                    android:textColor="#5a5a5a"
-                    android:gravity="center"
-                    android:padding="10dp"
-                    />
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/bumin"
-                    android:text="부민(교직원)"
-                    android:padding="20dp"
-                    android:gravity="center_horizontal|center_vertical"/>
-            </LinearLayout>
-        </android.support.v7.widget.CardView>
-        <android.support.v7.widget.CardView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:cardElevation="2dp"
-            app:cardCornerRadius="5dp"
-            app:cardBackgroundColor="#ccc"
             android:layout_marginTop="20dp"
-            android:layout_marginBottom="50dp">
+            app:cardBackgroundColor="#ccc"
+            app:cardCornerRadius="5dp"
+            app:cardElevation="2dp">
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:orientation="vertical"
-                android:background="#F2F2F2">
+                android:background="#F2F2F2"
+                android:orientation="vertical">
+
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="강의동학생회관"
-                    android:textSize="19dp"
-                    android:textStyle="bold"
                     android:background="@color/two"
-                    android:textColor="#5a5a5a"
                     android:gravity="center"
                     android:padding="10dp"
-                    />
+                    android:text="국제회관 기숙사"
+                    android:textColor="#5a5a5a"
+                    android:textSize="19dp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/guk"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_horizontal|center_vertical"
+                    android:padding="20dp"
+                    android:text="국제회관 기숙사" />
+            </LinearLayout>
+        </android.support.v7.widget.CardView>
+
+        <android.support.v7.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            app:cardBackgroundColor="#ccc"
+            app:cardCornerRadius="5dp"
+            app:cardElevation="2dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="#F2F2F2"
+                android:orientation="vertical">
+
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:id="@+id/gang"
-                    android:text="강의동학생회관"
+                    android:background="@color/two"
+                    android:gravity="center"
+                    android:padding="10dp"
+                    android:text="부민(교직원)"
+                    android:textColor="#5a5a5a"
+                    android:textSize="19dp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/bumin"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_horizontal|center_vertical"
                     android:padding="20dp"
-                    android:gravity="center_horizontal|center_vertical"/>
+                    android:text="부민(교직원)" />
+            </LinearLayout>
+        </android.support.v7.widget.CardView>
+
+        <android.support.v7.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="50dp"
+            android:layout_marginTop="20dp"
+            app:cardBackgroundColor="#ccc"
+            app:cardCornerRadius="5dp"
+            app:cardElevation="2dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="#F2F2F2"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/two"
+                    android:gravity="center"
+                    android:padding="10dp"
+                    android:text="강의동학생회관"
+                    android:textColor="#5a5a5a"
+                    android:textSize="19dp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/gang"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_horizontal|center_vertical"
+                    android:padding="20dp"
+                    android:text="강의동학생회관" />
             </LinearLayout>
         </android.support.v7.widget.CardView>
     </LinearLayout>

@@ -24,12 +24,13 @@
                 android:layout_width="match_parent"
                 android:layout_height="?attr/actionBarSize"
                 app:popupTheme="@style/AppTheme.PopupOverlay">
+
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="푸쉬알림"
-                    android:textSize="20dp"
                     android:textColor="@color/four"
+                    android:textSize="20dp"
                     android:textStyle="bold" />
 
             </android.support.v7.widget.Toolbar>
@@ -40,13 +41,17 @@
 
     </android.support.design.widget.CoordinatorLayout>
 
-    <android.support.design.widget.NavigationView
+    <com.rom4ek.arcnavigationview.ArcNavigationView
         android:id="@+id/nav_view_push"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:layout_gravity="start"
+        android:background="@android:color/white"
         android:fitsSystemWindows="true"
+        app:arc_cropDirection="cropInside"
+        app:arc_width="96dp"
         app:headerLayout="@layout/nav_header_main"
+        app:itemBackground="@android:color/white"
         app:menu="@menu/activity_main_drawer" />
 
 </android.support.v4.widget.DrawerLayout>

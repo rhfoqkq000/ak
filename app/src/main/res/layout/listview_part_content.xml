@@ -1,40 +1,46 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="horizontal" android:layout_width="match_parent"
+    android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:weightSum="10"
+    android:orientation="horizontal"
+    android:paddingBottom="10dp"
     android:paddingTop="10dp"
-    android:paddingBottom="10dp">
+    android:weightSum="10">
+
     <TextView
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
         android:id="@+id/part_content_none"
-        android:layout_weight="0.1"
-        android:visibility="gone"/>
-    <TextView
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_weight="0.1"
+        android:visibility="gone" />
+
+    <TextView
         android:id="@+id/part_content_distin_none"
-        android:layout_weight="0.1"
-        android:visibility="gone"/>
-    <TextView
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_weight="0.1"
+        android:visibility="gone" />
+
+    <TextView
         android:id="@+id/part_content_grade_number_none"
-        android:layout_weight="0.1"
-        android:visibility="gone"/>
-    <TextView
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:id="@+id/part_content_subject"
-        android:text="교과목명"
-        android:layout_weight="8"
-        android:gravity="center_horizontal"/>
+        android:layout_weight="0.1"
+        android:visibility="gone" />
+
     <TextView
+        android:id="@+id/part_content_subject"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="8"
+        android:gravity="center_horizontal"
+        android:text="교과목명" />
+
+    <TextView
+        android:id="@+id/part_content_grade"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/part_content_grade"
         android:layout_weight="2"
-        android:text="성적"
-        android:gravity="center_horizontal"/>
+        android:gravity="center_horizontal"
+        android:text="성적" />
 </LinearLayout>

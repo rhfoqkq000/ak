@@ -1,125 +1,142 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingTop="16dp"
+    android:background="#FFF"
+    android:orientation="vertical"
     android:paddingBottom="16dp"
-    android:background="#FFF">
+    android:paddingTop="16dp"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
     <LinearLayout
+        android:id="@+id/linear"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/linear"
-        android:orientation="horizontal"
+        android:layout_marginBottom="10dp"
         android:gravity="center_horizontal"
-        android:layout_marginBottom="10dp">
+        android:orientation="horizontal">
+
         <TextView
             android:layout_width="20dp"
             android:layout_height="20dp"
-            android:background="#128c00"
-            android:layout_marginRight="10dp"/>
+            android:layout_marginRight="10dp"
+            android:background="#128c00" />
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="0 ~ 50%"
-            android:layout_marginRight="20dp"/>
+            android:layout_marginRight="20dp"
+            android:text="0 ~ 50%" />
+
         <TextView
             android:layout_width="20dp"
             android:layout_height="20dp"
-            android:background="#baba00"
-            android:layout_marginRight="10dp"/>
+            android:layout_marginRight="10dp"
+            android:background="#baba00" />
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="51% ~ 99%"
-            android:layout_marginRight="20dp"/>
+            android:layout_marginRight="20dp"
+            android:text="51% ~ 99%" />
+
         <TextView
             android:layout_width="20dp"
             android:layout_height="20dp"
-            android:background="#ff0000"
-            android:layout_marginRight="10dp"/>
+            android:layout_marginRight="10dp"
+            android:background="#ff0000" />
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="100%" />
     </LinearLayout>
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:padding="16dp"
         android:weightSum="10">
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="열람실 명"
-            android:textStyle="bold"
-            android:textColor="#797979"
-            android:textSize="17dp"
             android:layout_weight="6.8"
-            android:gravity="center_horizontal"/>
+            android:gravity="center_horizontal"
+            android:text="열람실 명"
+            android:textColor="#797979"
+            android:textSize="17dp"
+            android:textStyle="bold" />
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_weight="0.8"
+            android:gravity="center_horizontal"
             android:text="좌석수"
-            android:textStyle="bold"
             android:textColor="#797979"
             android:textSize="17dp"
-            android:layout_weight="0.8"
-            android:gravity="center_horizontal"/>
+            android:textStyle="bold" />
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_weight="0.8"
+            android:gravity="center_horizontal"
             android:text="이용자"
-            android:textStyle="bold"
             android:textColor="#797979"
             android:textSize="17dp"
-            android:layout_weight="0.8"
-            android:gravity="center_horizontal"/>
+            android:textStyle="bold" />
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_weight="0.8"
+            android:gravity="center_horizontal"
             android:text="잔여수"
-            android:textStyle="bold"
             android:textColor="#797979"
             android:textSize="17dp"
-            android:layout_weight="0.8"
-            android:gravity="center_horizontal"/>
+            android:textStyle="bold" />
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_weight="0.8"
+            android:gravity="center_horizontal"
             android:text="이용률"
-            android:textStyle="bold"
             android:textColor="#797979"
             android:textSize="17dp"
-            android:layout_weight="0.8"
-            android:gravity="center_horizontal"/>
+            android:textStyle="bold" />
     </LinearLayout>
+
     <View
         android:layout_width="match_parent"
         android:layout_height="1dp"
-        android:background="#797979"
         android:layout_marginLeft="16dp"
-        android:layout_marginRight="16dp"/>
+        android:layout_marginRight="16dp"
+        android:background="#797979" />
+
     <View
         android:layout_width="match_parent"
         android:layout_height="1dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
         android:layout_marginTop="2dp"
-        android:background="#797979"
-        android:layout_marginLeft="16dp"
-        android:layout_marginRight="16dp" />
+        android:background="#797979" />
+
     <android.support.v4.widget.SwipeRefreshLayout
         android:id="@+id/swiper"
-        android:layout_marginTop="12dp"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
-    <ListView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/list_room">
+        android:layout_height="match_parent"
+        android:layout_marginTop="12dp">
 
-    </ListView>
+        <ListView
+            android:id="@+id/list_room"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+        </ListView>
     </android.support.v4.widget.SwipeRefreshLayout>
 </LinearLayout>
