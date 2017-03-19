@@ -24,8 +24,8 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginRight="10dp"
             android:layout_gravity="center_vertical"
+            android:layout_marginRight="10dp"
             android:text="요일" />
 
         <android.support.v7.widget.CardView
@@ -60,8 +60,8 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginRight="10dp"
             android:layout_gravity="center_vertical"
+            android:layout_marginRight="10dp"
             android:text="시간" />
 
         <android.support.v7.widget.CardView

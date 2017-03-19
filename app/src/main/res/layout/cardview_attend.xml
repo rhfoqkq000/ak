@@ -26,10 +26,10 @@
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="10dp"
                 android:background="#3f6779"
-                android:paddingTop="10dp"
                 android:paddingBottom="10dp"
                 android:paddingLeft="16dp"
                 android:paddingRight="16dp"
+                android:paddingTop="10dp"
                 android:text="등록일자"
                 android:textColor="#fff"
                 android:textSize="20dp"
@@ -37,29 +37,29 @@
 
             <TextView
                 android:id="@+id/manage_attend_none_pcnotis_id"
-                android:visibility="gone"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="10dp"
                 android:background="#3f6779"
-                android:paddingTop="10dp"
                 android:paddingBottom="10dp"
                 android:paddingLeft="16dp"
                 android:paddingRight="16dp"
+                android:paddingTop="10dp"
                 android:text=""
                 android:textColor="#fff"
                 android:textSize="20dp"
-                android:textStyle="bold" />
+                android:textStyle="bold"
+                android:visibility="gone" />
 
             <TextView
                 android:id="@+id/manage_attend_title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="제목"
-                android:textColor="#000"
+                android:paddingBottom="10dp"
                 android:paddingLeft="16dp"
                 android:paddingRight="16dp"
-                android:paddingBottom="10dp"
+                android:text="제목"
+                android:textColor="#000"
                 android:textSize="20dp"
                 android:textStyle="bold" />
         </LinearLayout>

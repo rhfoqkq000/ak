@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!-- 푸쉬메세지 참석여부-->
+<?xml version="1.0" encoding="utf-8"?><!-- 푸쉬메세지 참석여부-->
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/activity_alert_dialog"
@@ -60,14 +59,14 @@
 
         <TextView
             android:id="@+id/wisper_none_id_dialog"
-            android:visibility="gone"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="0.5"
             android:gravity="center_horizontal|center_vertical"
             android:text=""
             android:textColor="#fff"
-            android:textSize="20dp" />
+            android:textSize="20dp"
+            android:visibility="gone" />
 
         <View
             android:layout_width="1dp"

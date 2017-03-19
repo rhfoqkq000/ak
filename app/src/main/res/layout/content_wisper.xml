@@ -1,10 +1,10 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    app:layout_behavior="@string/appbar_scrolling_view_behavior"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:background="#FFF"
     android:orientation="vertical"
-    android:background="#FFF">
+    app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
     <android.support.design.widget.TabLayout
         android:id="@+id/tabLayout_wisper"
@@ -13,10 +13,10 @@
         android:background="@color/one"
         android:minHeight="?attr/actionBarSize"
         android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
-        app:tabTextColor="#000"
         app:tabIndicatorColor="#106d78"
         app:tabSelectedTextColor="#106d78"
-        app:tabTextAppearance="@style/MyTabLayoutTextAppearance"/>
+        app:tabTextAppearance="@style/MyTabLayoutTextAppearance"
+        app:tabTextColor="#000" />
 
     <android.support.v4.view.ViewPager
         android:id="@+id/pager_wisper"

@@ -24,12 +24,13 @@
                 android:layout_width="match_parent"
                 android:layout_height="?attr/actionBarSize"
                 app:popupTheme="@style/AppTheme.PopupOverlay">
+
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="빈강"
-                    android:textSize="20dp"
                     android:textColor="@color/four"
+                    android:textSize="20dp"
                     android:textStyle="bold" />
             </android.support.v7.widget.Toolbar>
 
@@ -43,22 +44,26 @@
             android:id="@+id/fab_empty"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/bo"
-            android:layout_marginRight="16dp"
-            android:layout_marginEnd="16dp"
             android:layout_marginBottom="16dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginRight="16dp"
+            android:src="@drawable/bo"
             app:layout_anchor="@+id/bottom"
-            app:layout_anchorGravity="top|right"/>
+            app:layout_anchorGravity="top|right" />
 
     </android.support.design.widget.CoordinatorLayout>
 
-    <android.support.design.widget.NavigationView
+    <com.rom4ek.arcnavigationview.ArcNavigationView
         android:id="@+id/nav_view_empty"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:layout_gravity="start"
+        android:background="@android:color/white"
         android:fitsSystemWindows="true"
+        app:arc_cropDirection="cropInside"
+        app:arc_width="96dp"
         app:headerLayout="@layout/nav_header_main"
+        app:itemBackground="@android:color/white"
         app:menu="@menu/activity_main_drawer" />
 
 </android.support.v4.widget.DrawerLayout>

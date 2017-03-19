@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:card_view="http://schemas.android.com/apk/res-auto"
     android:background="#fff"
     android:paddingTop="16dp">
 
@@ -32,7 +32,6 @@
 
     <LinearLayout
         android:id="@+id/achiev_bottom"
-        android:visibility="gone"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
@@ -42,7 +41,8 @@
         android:paddingBottom="5dp"
         android:paddingLeft="10dp"
         android:paddingRight="10dp"
-        android:paddingTop="5dp">
+        android:paddingTop="5dp"
+        android:visibility="gone">
 
         <TextView
             android:layout_width="wrap_content"
@@ -83,9 +83,9 @@
             android:layout_width="40dp"
             android:layout_height="40dp"
             android:layout_gravity="right"
+            android:layout_weight="0"
             card_view:cardBackgroundColor="@color/three"
             card_view:cardCornerRadius="5dp"
-            android:layout_weight="0"
             card_view:cardElevation="2dp">
 
             <ImageButton

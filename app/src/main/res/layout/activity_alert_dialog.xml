@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!-- 푸쉬메세지 공지사항-->
+<?xml version="1.0" encoding="utf-8"?><!-- 푸쉬메세지 공지사항-->
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/activity_alert_dialog"
@@ -14,12 +13,13 @@
         android:id="@+id/tv_send"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_margin="16dp"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
+        android:layout_margin="16dp"
         android:text="TextView"
         android:textColor="#fff"
         android:textSize="20dp" />
+
     <TextView
         android:id="@+id/tv_title"
         android:layout_width="wrap_content"

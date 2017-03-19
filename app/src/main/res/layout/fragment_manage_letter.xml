@@ -32,8 +32,7 @@
             android:id="@+id/manage_letter_name_card"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/manage_letter_spinner_card"
-            >
+            android:layout_below="@+id/manage_letter_spinner_card">
 
             <EditText
                 android:id="@+id/manage_letter_name"
@@ -52,14 +51,13 @@
             android:layout_width="match_parent"
             android:layout_height="1dp"
             android:layout_below="@+id/manage_letter_name_card"
-            android:background="#ececec"/>
+            android:background="#ececec" />
 
         <LinearLayout
             android:id="@+id/manage_letter_title_card"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/name_view"
-            >
+            android:layout_below="@+id/name_view">
 
             <EditText
                 android:id="@+id/manage_letter_title"
@@ -79,7 +77,7 @@
             android:layout_width="match_parent"
             android:layout_height="1dp"
             android:layout_below="@+id/manage_letter_title_card"
-            android:background="#ececec"/>
+            android:background="#ececec" />
 
         <LinearLayout
             android:id="@+id/manage_letter_content_card"

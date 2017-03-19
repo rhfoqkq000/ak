@@ -4,15 +4,15 @@
     android:layout_height="match_parent"
     android:background="@drawable/gra"
     android:cacheColorHint="#00000000"
-    android:orientation="vertical"
-    android:gravity="center_vertical">
+    android:gravity="center_vertical"
+    android:orientation="vertical">
 
     <ImageView
         android:layout_width="186dp"
         android:layout_height="70dp"
-        android:src="@drawable/login"
         android:layout_gravity="center_horizontal"
-        android:layout_marginBottom="50dp"/>
+        android:layout_marginBottom="50dp"
+        android:src="@drawable/login" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -57,11 +57,11 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="40dp"
         android:layout_marginRight="40dp"
+        android:background="@drawable/round"
         android:paddingBottom="10dp"
         android:paddingTop="10dp"
-        android:background="@drawable/round"
+        android:text="관리자 로그인"
         android:textColor="@color/four"
-        android:textStyle="bold"
-        android:text="관리자 로그인" />
+        android:textStyle="bold" />
 
 </LinearLayout>
