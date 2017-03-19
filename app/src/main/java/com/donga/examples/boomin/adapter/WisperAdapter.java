@@ -91,12 +91,13 @@ public class WisperAdapter extends RecyclerView.Adapter<WisperAdapter.ViewHolder
     public void onBindViewHolder(final ViewHolder holder, final int position) {
         // - get element from your dataset at this position
         // - replace the contents of the view with that element
-        holder.dateText.setText(mDataset.get(position).date);
-        holder.nameText.setText(mDataset.get(position).name);
-        holder.titleText.setText(mDataset.get(position).title);
-        holder.contentText.setText(mDataset.get(position).content);
-        holder.read_check.setText(mDataset.get(position).read_check);
-        holder.none_id.setText(mDataset.get(position).none_id);
+        MyData_Wisper myDataWisper = mDataset.get(position);
+        holder.dateText.setText(myDataWisper.date);
+        holder.nameText.setText(myDataWisper.name);
+        holder.titleText.setText(myDataWisper.title);
+        holder.contentText.setText(myDataWisper.content);
+        holder.read_check.setText(myDataWisper.read_check);
+        holder.none_id.setText(myDataWisper.none_id);
         holder.checkBox.setChecked(false);
 
         final String getReadCheck = mDataset.get(position).read_check;

@@ -32,6 +32,7 @@ import android.widget.Toast;
 import com.donga.examples.boomin.AppendLog;
 import com.donga.examples.boomin.R;
 import com.donga.examples.boomin.listviewAdapter.EmptyListViewAdapter;
+import com.donga.examples.boomin.retrofit.retrofitEmpty.Empty;
 import com.donga.examples.boomin.retrofit.retrofitEmpty.Interface_Empty;
 
 import java.util.ArrayList;
@@ -142,13 +143,14 @@ public class EmptyActivity extends AppCompatActivity
             public void onClick(View v) {
                 if (behavior.getState() == BottomSheetBehavior.STATE_HIDDEN) {
                     behavior.setState(BottomSheetBehavior.STATE_EXPANDED);
+                    fab.setImageResource(R.drawable.bo);
                 } else {
                     behavior.setState(BottomSheetBehavior.STATE_HIDDEN);
+                    fab.setImageResource(R.drawable.uup);
                 }
             }
         });
-        fab.setBackgroundTintList(ColorStateList.valueOf(Color
-                .parseColor("#A2D4AB")));
+        fab.setBackgroundTintList(ColorStateList.valueOf(Color.parseColor("#A2D4AB")));
     }
 
     @OnClick(R.id.fab_empty)
@@ -196,10 +198,11 @@ public class EmptyActivity extends AppCompatActivity
             @Override
             public void onResponse(Call<com.donga.examples.boomin.retrofit.retrofitEmpty.Master> call, Response<com.donga.examples.boomin.retrofit.retrofitEmpty.Master> response) {
                 if (response.body().getResult_code() == 1) {
+                    ArrayList<Empty> getResultBody = response.body().getResult_body();
                     adapter = new EmptyListViewAdapter();
                     listview.setAdapter(adapter);
-                    for (int i = 0; i < response.body().getResult_body().size(); i++) {
-                        adapter.addItem(response.body().getResult_body().get(i).getRoom_no());
+                    for (int i = 0; i < getResultBody.size(); i++) {
+                        adapter.addItem(getResultBody.get(i).getRoom_no());
                         hideProgressDialog();
                     }
                 } else {

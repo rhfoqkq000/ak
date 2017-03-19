@@ -19,14 +19,14 @@ import butterknife.OnClick;
 public class SendDialogActivity extends Activity {
 
     //    private String notiMessage;
-    @BindView(R.id.dialog_send_date)
+    @BindView(R.id.wisper_notice_name)
     TextView send_date;
-    @BindView(R.id.dialog_send_title)
+    @BindView(R.id.wisper_notice_title)
     TextView send_title;
-    @BindView(R.id.dialog_send_content)
+    @BindView(R.id.wisper_notice_content)
     TextView send_content;
 
-    @OnClick(R.id.popup_close)
+    @OnClick(R.id.wisper_notice_ok)
     void close(){
         finish();
     }
@@ -38,13 +38,14 @@ public class SendDialogActivity extends Activity {
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         getWindow().clearFlags(WindowManager.LayoutParams.FLAG_DIM_BEHIND);
 
-        setContentView(R.layout.activity_send_dialog);
+//        setContentView(R.layout.activity_send_dialog);
+        setContentView(R.layout.activity_wisper_notice);
         ButterKnife.bind(this);
 
         Intent i = getIntent();
-        send_date.setText(i.getExtras().getString("date"));
-        send_title.setText(i.getExtras().getString("title"));
-        send_content.setText(i.getExtras().getString("content"));
+        send_date.setText("날짜 : "+i.getExtras().getString("date"));
+        send_title.setText("제목 : "+i.getExtras().getString("title"));
+        send_content.setText("내용 : "+i.getExtras().getString("content"));
 
     }
 }

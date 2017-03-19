@@ -11,11 +11,15 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.donga.examples.boomin.AppendLog;
+import com.donga.examples.boomin.ProgressDialogController;
 import com.donga.examples.boomin.R;
 import com.donga.examples.boomin.Singleton.ManageSingleton;
 import com.donga.examples.boomin.listviewAdapter.AttendListViewAdapter;
+import com.donga.examples.boomin.retrofit.retrofitAdminCircleNotis.Att2;
 import com.donga.examples.boomin.retrofit.retrofitAdminCircleNotis.Interface_adminCircleNotis;
 import com.donga.examples.boomin.retrofit.retrofitAdminCircleNotis.Master;
+
+import java.util.ArrayList;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -32,6 +36,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class AttendActivity extends AppCompatActivity {
     AppendLog log = new AppendLog();
     private ProgressDialog mProgressDialog;
+//    ProgressDialogController pdc = new ProgressDialogController(AttendActivity.this);
 
     int attend;
     String attend2;
@@ -40,13 +45,11 @@ public class AttendActivity extends AppCompatActivity {
     @BindView(R.id.list_attend)
     ListView listView;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_attend);
         ButterKnife.bind(this);
-
 
         final AttendListViewAdapter adapter = new AttendListViewAdapter();
         listView.setAdapter(adapter);
@@ -63,8 +66,9 @@ public class AttendActivity extends AppCompatActivity {
             public void onResponse(Call<Master> call, Response<Master> response) {
                 if (response.body().getResult_code() == 1) {
                     int bodySize = response.body().getResult_body().size();
+                    ArrayList<Att2> getResultBody = response.body().getResult_body();
                     for (int i = 0; i < bodySize; i++) {
-                        attend = response.body().getResult_body().get(i).getAtt();
+                        attend = getResultBody.get(i).getAtt();
                         switch (attend) {
                             case 0:
                                 attend2 = "무응답";
@@ -82,7 +86,7 @@ public class AttendActivity extends AppCompatActivity {
                                 Log.i("불참", String.valueOf(no));
                                 break;
                         }
-                        adapter.addItem(response.body().getResult_body().get(i).getStuId(), response.body().getResult_body().get(i).getName(), attend2);
+                        adapter.addItem(getResultBody.get(i).getStuId(), getResultBody.get(i).getName(), attend2);
                         adapter.notifyDataSetChanged();
                         hideProgressDialog();
                     }

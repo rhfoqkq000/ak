@@ -14,12 +14,12 @@
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp">
 
-            <com.jaredrummler.materialspinner.MaterialSpinner
-                android:id="@+id/achiev_all"
-                android:layout_width="175dp"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                app:ms_background_color="#f2f2f2"/>
+        <com.jaredrummler.materialspinner.MaterialSpinner
+            android:id="@+id/achiev_all"
+            android:layout_width="175dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            app:ms_background_color="#f2f2f2"/>
 
         <android.support.v7.widget.CardView
             android:id="@+id/all_ok_card"

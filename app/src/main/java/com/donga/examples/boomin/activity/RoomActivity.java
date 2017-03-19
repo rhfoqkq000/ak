@@ -221,7 +221,6 @@ public class RoomActivity extends AppCompatActivity
                         if (validateEmail(response.body().getResult_body().get(i).getUtil())) {
                             header = getLayoutInflater().inflate(R.layout.listview_room, null, false);
                             tv_room5 = (TextView) header.findViewById(R.id.text_room5);
-                            Log.i("100%", "100%");
                             tv_room5.setTextColor(Color.RED);
                         }
                         hideProgressDialog();

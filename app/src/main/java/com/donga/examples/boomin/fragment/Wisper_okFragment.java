@@ -121,7 +121,7 @@ public class Wisper_okFragment extends Fragment {
                     public void onClick(DialogInterface dialog, int whichButton){
                         noticeIdArray = NoticeSingleton.getInstance().getOk_noticeIdArray();
                         if(noticeIdArray.isEmpty()){
-                            Toast.makeText(getContext(), "선택된 항목이 없습니다.", Toast.LENGTH_SHORT).show();
+                            Toasty.error(getContext(), "선택된 항목이 없습니다.", Toast.LENGTH_SHORT).show();
                         }else{
                             showProgressDialog();
                             //retrofit 통신

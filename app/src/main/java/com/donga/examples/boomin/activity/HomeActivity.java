@@ -1,10 +1,13 @@
 package com.donga.examples.boomin.activity;
 
 import android.app.ActivityManager;
+import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
@@ -12,7 +15,6 @@ import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.CardView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
@@ -24,9 +26,10 @@ import android.widget.Toast;
 
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.donga.examples.boomin.AppendLog;
+import com.donga.examples.boomin.MarketVersionChecker;
 import com.donga.examples.boomin.R;
 import com.donga.examples.boomin.Singleton.ChangeSingleton;
-import com.donga.examples.boomin.Singleton.PushSingleton;
+import com.donga.examples.boomin.Singleton.InfoSingleton;
 import com.donga.examples.boomin.listviewAdapter.SelectListViewAdapter;
 import com.donga.examples.boomin.retrofit.retrofitGetCircle.Interface_getCircle;
 import com.donga.examples.boomin.retrofit.retrofitGetCircle.Master;
@@ -59,6 +62,8 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
     Bundle bundle = null;
     AppendLog log = new AppendLog();
     private ProgressDialog mProgressDialog;
+
+    String device_version, store_version = null;
 
     ArrayList<String> circleIds = null;
     SelectListViewAdapter adapter;
@@ -121,12 +126,55 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
 
         navigationView.setNavigationItemSelectedListener(this);
 
+        Thread t = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                store_version = MarketVersionChecker.getMarketVersion(getPackageName());
+                InfoSingleton.getInstance().setStore_version(store_version);
+                try{
+                    device_version = getPackageManager().getPackageInfo(getPackageName(), 0).versionName;
+                    InfoSingleton.getInstance().setDevice_version(device_version);
+                } catch(Exception e){
+                    e.printStackTrace();
+                }
+            }
+        });
+        t.start();
+
+        try {
+            t.join();
+
+            if(store_version.compareTo(device_version)>0){
+                AlertDialog.Builder alert_confirm = new AlertDialog.Builder(this);
+                alert_confirm.setMessage("새 버전이 출시되었습니다. 업데이트 하시겠습니까?").setCancelable(false).setPositiveButton("확인",
+                        new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                // 'YES'
+                                startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=" + getPackageName())));
+                            }
+                        }).setNegativeButton("취소",
+                        new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                // 'No'
+                                return;
+                            }
+                        });
+                AlertDialog alert = alert_confirm.create();
+                alert.show();
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+
         ActivityManager am = (ActivityManager)getApplicationContext().getSystemService(Context.ACTIVITY_SERVICE);
         List<ActivityManager.RunningTaskInfo> taskList = am.getRunningTasks(100);
         for( int i=0; i < taskList.size(); i++){
             Log.d("INFO","base="+taskList.get(i).baseActivity.getPackageName()+",top="+taskList.get(i).topActivity.getPackageName());
             Log.d("INFO","base="+taskList.get(i).baseActivity.getClassName()+",top="+taskList.get(i).topActivity.getClassName());
-            }
+        }
 
         try {
             bundle = getIntent().getExtras();

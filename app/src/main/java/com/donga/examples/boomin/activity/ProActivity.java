@@ -25,6 +25,7 @@ import com.donga.examples.boomin.Singleton.ProSingleton;
 import com.donga.examples.boomin.listviewAdapter.ProListViewAdapter;
 import com.donga.examples.boomin.listviewItem.ProListViewItem;
 import com.donga.examples.boomin.retrofit.retrofitProfessor.Interface_professor;
+import com.orhanobut.logger.Logger;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -85,39 +86,40 @@ public class ProActivity extends AppCompatActivity implements NavigationView.OnN
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
-
                 final ProListViewItem item = (ProListViewItem) adapterView.getItemAtPosition(position);
-                showProgressDialog();
-                //retrofit 통신
-                Retrofit client = new Retrofit.Builder().baseUrl(getString(R.string.retrofit_url))
-                        .addConverterFactory(GsonConverterFactory.create()).build();
-                Interface_professor pro = client.create(Interface_professor.class);
-                Call<com.donga.examples.boomin.retrofit.retrofitProfessor.Master> call = pro.getPro(item.getPro_main_name());
-                call.enqueue(new Callback<com.donga.examples.boomin.retrofit.retrofitProfessor.Master>() {
-                    @Override
-                    public void onResponse(Call<com.donga.examples.boomin.retrofit.retrofitProfessor.Master> call, Response<com.donga.examples.boomin.retrofit.retrofitProfessor.Master> response) {
-                        if (response.body().getResult_code() == 1) {
-                            ProSingleton.getInstance().setProfessorArrayList(response.body().getResult_body());
+                if(item.getPro_main_title()==null) {
+                    showProgressDialog();
+                    //retrofit 통신
+                    Retrofit client = new Retrofit.Builder().baseUrl(getString(R.string.retrofit_url))
+                            .addConverterFactory(GsonConverterFactory.create()).build();
+                    Interface_professor pro = client.create(Interface_professor.class);
+                    Call<com.donga.examples.boomin.retrofit.retrofitProfessor.Master> call = pro.getPro(item.getPro_main_name());
+                    call.enqueue(new Callback<com.donga.examples.boomin.retrofit.retrofitProfessor.Master>() {
+                        @Override
+                        public void onResponse(Call<com.donga.examples.boomin.retrofit.retrofitProfessor.Master> call, Response<com.donga.examples.boomin.retrofit.retrofitProfessor.Master> response) {
+                            if (response.body().getResult_code() == 1) {
+                                ProSingleton.getInstance().setProfessorArrayList(response.body().getResult_body());
 
-                            Intent intent = new Intent(getApplicationContext(), ProSubActivity.class);
-                            intent.putExtra("name", item.getPro_main_name());
-                            hideProgressDialog();
-                            startActivity(intent);
-                        } else {
-                            hideProgressDialog();
-                            log.appendLog("inProActivity code not matched");
-                            Toasty.error(getApplicationContext(), "불러오기 실패", Toast.LENGTH_SHORT).show();
+                                Intent intent = new Intent(getApplicationContext(), ProSubActivity.class);
+                                intent.putExtra("name", item.getPro_main_name());
+                                hideProgressDialog();
+                                startActivity(intent);
+                            } else {
+                                hideProgressDialog();
+                                log.appendLog("inProActivity code not matched");
+                                Toasty.error(getApplicationContext(), "불러오기 실패", Toast.LENGTH_SHORT).show();
+                            }
                         }
-                    }
 
-                    @Override
-                    public void onFailure(Call<com.donga.examples.boomin.retrofit.retrofitProfessor.Master> call, Throwable t) {
-                        hideProgressDialog();
-                        log.appendLog("inProActivity failure");
-                        Toasty.error(getApplicationContext(), "불러오기 실패", Toast.LENGTH_SHORT).show();
-                        t.printStackTrace();
-                    }
-                });
+                        @Override
+                        public void onFailure(Call<com.donga.examples.boomin.retrofit.retrofitProfessor.Master> call, Throwable t) {
+                            hideProgressDialog();
+                            log.appendLog("inProActivity failure");
+                            Toasty.error(getApplicationContext(), "불러오기 실패", Toast.LENGTH_SHORT).show();
+                            t.printStackTrace();
+                        }
+                    });
+                }
             }
         });
     }

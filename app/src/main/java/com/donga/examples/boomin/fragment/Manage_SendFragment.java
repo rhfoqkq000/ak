@@ -48,7 +48,7 @@ public class Manage_SendFragment extends Fragment {
         mRecyclerView.setLayoutManager(mLayoutManager);
 
         myDataset = new ArrayList<>();
-        mAdapter = new SendAdapter(myDataset);
+        mAdapter = new SendAdapter(myDataset, getContext());
         mRecyclerView.setAdapter(mAdapter);
 
         Retrofit client = new Retrofit.Builder().baseUrl(getString(R.string.retrofit_url))

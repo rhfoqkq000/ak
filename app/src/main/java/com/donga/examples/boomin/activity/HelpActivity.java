@@ -68,7 +68,7 @@ public class HelpActivity extends AppCompatActivity implements NavigationView.On
         adapter.addItem("푸쉬알림", getResources().getDrawable(R.drawable.arrow));
         adapter.addItem("약관 및 정책", getResources().getDrawable(R.drawable.arrow));
         adapter.addItem("오픈소스", getResources().getDrawable(R.drawable.arrow));
-        adapter.addItem("앱정보", getResources().getDrawable(R.drawable.arrow));
+        adapter.addItem("앱 정보", getResources().getDrawable(R.drawable.arrow));
 
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -79,7 +79,7 @@ public class HelpActivity extends AppCompatActivity implements NavigationView.On
                         Logger.d("문의하기");
                         Intent it = new Intent(Intent.ACTION_SEND);
                         String[] mailaddr = {"npe.dongauniv@gmail.com"};
-                        it.setType("plaine/text");
+                        it.setType("plain/text");
                         it.putExtra(Intent.EXTRA_EMAIL, mailaddr);
                         startActivity(it);
                         break;
@@ -97,7 +97,8 @@ public class HelpActivity extends AppCompatActivity implements NavigationView.On
                         Logger.d("오픈소스");
                         break;
                     case 4:
-                        Logger.d("앱정보");
+                        Intent i = new Intent(getApplicationContext(), AppInfoActivity.class);
+                        startActivity(i);
                         break;
                     default:
                         Logger.e("오류 빽");
