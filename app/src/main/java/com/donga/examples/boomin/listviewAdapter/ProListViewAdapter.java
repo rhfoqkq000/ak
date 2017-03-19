@@ -59,10 +59,10 @@ public class ProListViewAdapter extends BaseAdapter {
 
             switch (viewType) {
                 case ITEM_VIEW_TYPE_TITLE:
-                    convertView = inflater.inflate(R.layout.listview_pro_main_title,
-                            parent, false);
+                    convertView = inflater.inflate(R.layout.listview_pro_main_title, parent, false);
+//                    convertView = inflater.inflate(R.layout.listview_pro_main_name, parent, false);
                     TextView pro_main_title = (TextView) convertView.findViewById(R.id.pro_main_title);
-
+//                    TextView pro_main_title = (TextView) convertView.findViewById(R.id.pro_main_name);
                     pro_main_title.setText(listViewItem.getPro_main_title());
 
                     break;
@@ -99,6 +99,8 @@ public class ProListViewAdapter extends BaseAdapter {
 
         item.setType(ITEM_VIEW_TYPE_TITLE);
         item.setPro_main_title(title);
+//        item.setType(ITEM_VIEW_TYPE_NAME);
+//        item.setPro_main_name(title);
 
         listViewItemList.add(item);
     }

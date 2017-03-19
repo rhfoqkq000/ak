@@ -19,7 +19,7 @@
             android:layout_width="175dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
-            app:ms_background_color="#f2f2f2" />
+            app:ms_background_color="#f2f2f2"/>
 
         <android.support.v7.widget.CardView
             android:id="@+id/all_ok_card"

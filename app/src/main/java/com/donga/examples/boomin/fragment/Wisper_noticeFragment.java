@@ -9,12 +9,9 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.CheckBox;
-import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.donga.examples.boomin.AppendLog;
@@ -26,7 +23,6 @@ import com.donga.examples.boomin.retrofit.retrofitNormalNotis.Interface_getNorma
 import com.donga.examples.boomin.retrofit.retrofitNormalNotis.Master;
 import com.donga.examples.boomin.retrofit.retrofitRemoveNormalNotis.Interface_removeNormalNotis;
 import com.donga.examples.boomin.retrofit.retrofitRemoveNormalNotis.JsonRequest;
-import com.orhanobut.logger.Logger;
 
 import java.util.ArrayList;
 
@@ -94,7 +90,7 @@ public class Wisper_noticeFragment extends Fragment {
                     public void onClick(DialogInterface dialog, int whichButton){
                         noticeIdArray = NoticeSingleton.getInstance().getNoticeIdArray();
                         if(noticeIdArray.isEmpty()){
-                            Toast.makeText(getContext(), "선택된 항목이 없습니다.", Toast.LENGTH_SHORT).show();
+                            Toasty.error(getContext(), "선택된 항목이 없습니다.", Toast.LENGTH_SHORT).show();
                         }else{
                             showProgressDialog();
                             //retrofit 통신

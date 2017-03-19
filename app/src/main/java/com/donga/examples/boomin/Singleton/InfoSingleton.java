@@ -5,7 +5,7 @@ package com.donga.examples.boomin.Singleton;
  */
 public class InfoSingleton {
     private static InfoSingleton mInstance = null;
-    private String stuId, stuPw, year, id, fromGetCircleNoticeID;
+    private String stuId, stuPw, year, id, fromGetCircleNoticeID, device_version, store_version;
 
     public static InfoSingleton getInstance() {
         if(mInstance == null)
@@ -53,5 +53,21 @@ public class InfoSingleton {
 
     public void setFromGetCircleNoticeID(String fromGetCircleNoticeID) {
         this.fromGetCircleNoticeID = fromGetCircleNoticeID;
+    }
+
+    public String getDevice_version() {
+        return device_version;
+    }
+
+    public void setDevice_version(String device_version) {
+        this.device_version = device_version;
+    }
+
+    public String getStore_version() {
+        return store_version;
+    }
+
+    public void setStore_version(String store_version) {
+        this.store_version = store_version;
     }
 }

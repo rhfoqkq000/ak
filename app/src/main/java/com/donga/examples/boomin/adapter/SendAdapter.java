@@ -1,5 +1,6 @@
 package com.donga.examples.boomin.adapter;
 
+import android.content.Context;
 import android.content.Intent;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
@@ -8,8 +9,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.afollestad.materialdialogs.MaterialDialog;
 import com.donga.examples.boomin.R;
 import com.donga.examples.boomin.activity.SendDialogActivity;
+import com.donga.examples.boomin.activity.Wisper_NoticeDialogActivity;
+import com.orhanobut.logger.Logger;
 
 import java.util.ArrayList;
 
@@ -18,6 +22,7 @@ import java.util.ArrayList;
  */
 public class SendAdapter extends RecyclerView.Adapter<SendAdapter.ViewHolder> {
 
+    Context context;
     private ArrayList<MyData_Send> mDataset;
     // Provide a reference to the views for each data item
     // Complex data items may need more than one view per item, and
@@ -37,8 +42,9 @@ public class SendAdapter extends RecyclerView.Adapter<SendAdapter.ViewHolder> {
     }
 
     // Provide a suitable constructor (depends on the kind of dataset)
-    public SendAdapter(ArrayList<MyData_Send> myDataset) {
+    public SendAdapter(ArrayList<MyData_Send> myDataset, Context context) {
         mDataset = myDataset;
+        this.context = context;
     }
 
     // Create new views (invoked by the layout manager)
@@ -65,10 +71,15 @@ public class SendAdapter extends RecyclerView.Adapter<SendAdapter.ViewHolder> {
         holder.cardview.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+//                Intent intent = new Intent(view.getContext(), Wisper_Notice.class);
+//                intent.putExtra("date", holder.dateText.getText().toString());
+//                intent.putExtra("title", holder.titleText.getText().toString());
+//                intent.putExtra("content", holder.contentText.getText().toString());
+//                view.getContext().startActivity(intent);
                 Intent intent = new Intent(view.getContext(), SendDialogActivity.class);
-                intent.putExtra("date", holder.dateText.getText().toString());
-                intent.putExtra("title", holder.titleText.getText().toString());
                 intent.putExtra("content", holder.contentText.getText().toString());
+                intent.putExtra("title", holder.titleText.getText().toString());
+                intent.putExtra("date", holder.dateText.getText().toString());
                 view.getContext().startActivity(intent);
             }
         });

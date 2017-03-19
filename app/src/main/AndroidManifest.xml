@@ -82,10 +82,12 @@
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name="com.donga.examples.boomin.activity.SendDialogActivity"
-            android:theme="@android:style/Theme.Panel"/>
+            android:theme="@style/AppTheme.NoActionBar"/>
         <activity
             android:name="com.donga.examples.boomin.activity.AlertDialogActivity"
             android:theme="@android:style/Theme.Panel" />
+        <activity android:name="com.donga.examples.boomin.activity.AppInfoActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
 
         <!-- [START firebase_service] -->
         <service

@@ -24,6 +24,7 @@ import com.donga.examples.boomin.AppendLog;
 import com.donga.examples.boomin.R;
 import com.donga.examples.boomin.Singleton.ChangeSingleton;
 import com.donga.examples.boomin.listviewAdapter.ChangeListViewAdapter;
+import com.donga.examples.boomin.retrofit.retrofitGetCircle.GetCircle;
 import com.donga.examples.boomin.retrofit.retrofitGetCircle.Interface_getCircle;
 import com.donga.examples.boomin.retrofit.retrofitGetCircle.Master;
 import com.donga.examples.boomin.retrofit.retrofitGetUserCircle.Interface_getUserCircle;
@@ -108,60 +109,61 @@ public class ChangeActivity extends AppCompatActivity implements NavigationView.
         change_spinner.setOnItemSelectedListener(new MaterialSpinner.OnItemSelectedListener() {
             @Override
             public void onItemSelected(MaterialSpinner view, int position, long id, Object item) {
+                String selectedItem = change_spinner.getItems().get(position).toString();
                 switch (position){
                     case 0:
-                        Logger.d(change_spinner.getItems().get(position).toString());
+                        Logger.d(selectedItem);
                         listView.setVisibility(View.VISIBLE);
-                        getCircle(change_spinner.getItems().get(position).toString());
+                        getCircle(selectedItem);
                         break;
                     case 1:
                         Logger.d("국제관광학과");
-                        getCircle(change_spinner.getItems().get(position).toString());
+                        getCircle(selectedItem);
 
                         break;
                     case 2:
                         Logger.d("국제무역학과");
-                        getCircle(change_spinner.getItems().get(position).toString());
+                        getCircle(selectedItem);
 
                         break;
                     case 3:
                         Logger.d("경영학과");
-                        getCircle(change_spinner.getItems().get(position).toString());
+                        getCircle(selectedItem);
 
                         break;
                     case 4:
                         Logger.d("정치외교학과");
-                        getCircle(change_spinner.getItems().get(position).toString());
+                        getCircle(selectedItem);
 
                         break;
                     case 5:
                         Logger.d("행정학과");
-                        getCircle(change_spinner.getItems().get(position).toString());
+                        getCircle(selectedItem);
 
                         break;
                     case 6:
                         Logger.d("사회학과");
-                        getCircle(change_spinner.getItems().get(position).toString());
+                        getCircle(selectedItem);
 
                         break;
                     case 7:
                         Logger.d("사회복지학과");
-                        getCircle(change_spinner.getItems().get(position).toString());
+                        getCircle(selectedItem);
 
                         break;
                     case 8:
                         Logger.d("미디어커뮤니케이션학과");
-                        getCircle(change_spinner.getItems().get(position).toString());
+                        getCircle(selectedItem);
 
                         break;
                     case 9:
                         Logger.d("경제학과");
-                        getCircle(change_spinner.getItems().get(position).toString());
+                        getCircle(selectedItem);
 
                         break;
                     case 10:
                         Logger.d("금융학과");
-                        getCircle(change_spinner.getItems().get(position).toString());
+                        getCircle(selectedItem);
 
                         break;
                     default:
@@ -187,8 +189,9 @@ public class ChangeActivity extends AppCompatActivity implements NavigationView.
             public void onResponse(Call<Master> call, Response<Master> response) {
                 if(response.body().getResult_code() == 1){
                     int responseSize = response.body().getResult_body().size();
+                    ArrayList<GetCircle> getResultBody = response.body().getResult_body();
                     for(int i = 0; i<responseSize; i++){
-                        adapter.addItem(response.body().getResult_body().get(i).getName(), response.body().getResult_body().get(i).getId());
+                        adapter.addItem(getResultBody.get(i).getName(), getResultBody.get(i).getId());
                         adapter.notifyDataSetChanged();
                     }
                     hideProgressDialog();

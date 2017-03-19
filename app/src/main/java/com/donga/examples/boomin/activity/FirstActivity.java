@@ -60,7 +60,6 @@ public class FirstActivity extends AppCompatActivity {
             editor.commit();
         }
 
-
         networkCheck();
 
         super.onStart();
