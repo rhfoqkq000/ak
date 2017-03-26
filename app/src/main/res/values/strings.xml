@@ -54,6 +54,23 @@
         <item>포미스</item>
         <item>없음</item>
     </string-array>
+    <string-array name="colorArray">
+        <item>#f9c8c0</item>
+        <item>#c1e4da</item>
+        <item>#fee798</item>
+        <item>#fddcc2</item>
+        <item>#CFE1F5</item>
+        <item>#F4CEEB</item>
+        <item>#D1F5CF</item>
+        <item>#E1CFF5</item>
+        <item>#BCBCBC</item>
+        <item>#F8ACCC</item>
+        <item>#E7FF7E</item>
+        <item>#AAF7EE</item>
+        <item>#DAC996</item>
+        <item>#B9B19C</item>
+        <item>#C1A3AD</item>
+    </string-array>
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>

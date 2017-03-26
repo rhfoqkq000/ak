@@ -3,15 +3,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#FFF">
-    <!--<TextView-->
-    <!--android:layout_width="wrap_content"-->
-    <!--android:layout_height="wrap_content"-->
-    <!--android:text="준비 중입니다."-->
-    <!--android:layout_centerVertical="true"-->
-    <!--android:layout_centerHorizontal="true"-->
-    <!--android:textSize="20dp"-->
-    <!--android:textStyle="bold"/>-->
-
 
     <!--시간-->
     <LinearLayout
@@ -145,7 +136,7 @@
                 android:layout_height="0dp"
                 android:layout_weight="0.5"
                 android:text=""
-                android:textSize="12dp"
+                android:textSize="11dp"
                 android:textStyle="bold" />
 
             <TextView
@@ -154,7 +145,7 @@
                 android:layout_height="0dp"
                 android:layout_weight="0.5"
                 android:text=""
-                android:textSize="12dp"
+                android:textSize="11dp"
                 android:textStyle="bold" />
 
             <TextView
@@ -163,7 +154,7 @@
                 android:layout_height="0dp"
                 android:layout_weight="0.5"
                 android:text=""
-                android:textSize="12dp"
+                android:textSize="11dp"
                 android:textStyle="bold" />
 
             <TextView
@@ -172,7 +163,7 @@
                 android:layout_height="0dp"
                 android:layout_weight="0.5"
                 android:text=""
-                android:textSize="12dp"
+                android:textSize="11dp"
                 android:textStyle="bold" />
 
             <TextView
@@ -181,7 +172,7 @@
                 android:layout_height="0dp"
                 android:layout_weight="0.5"
                 android:text=""
-                android:textSize="12dp"
+                android:textSize="11dp"
                 android:textStyle="bold" />
 
             <TextView
@@ -190,7 +181,7 @@
                 android:layout_height="0dp"
                 android:layout_weight="0.5"
                 android:text=""
-                android:textSize="12dp"
+                android:textSize="11dp"
                 android:textStyle="bold" />
 
             <TextView
@@ -199,7 +190,7 @@
                 android:layout_height="0dp"
                 android:layout_weight="0.5"
                 android:text=""
-                android:textSize="12dp"
+                android:textSize="11dp"
                 android:textStyle="bold" />
 
             <TextView
@@ -208,7 +199,7 @@
                 android:layout_height="0dp"
                 android:layout_weight="0.5"
                 android:text=""
-                android:textSize="12dp"
+                android:textSize="11dp"
                 android:textStyle="bold" />
 
             <TextView
@@ -217,7 +208,7 @@
                 android:layout_height="0dp"
                 android:layout_weight="0.5"
                 android:text=""
-                android:textSize="12dp"
+                android:textSize="11dp"
                 android:textStyle="bold" />
 
             <TextView
@@ -225,9 +216,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_weight="0.5"
-                android:background="#f9c8c0"
-                android:text="BB-0704"
-                android:textSize="12dp"
+                android:text=""
+                android:textSize="11dp"
                 android:textStyle="bold" />
 
             <TextView
@@ -235,9 +225,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_weight="0.5"
-                android:background="#f9c8c0"
-                android:text="인터넷비즈니스"
-                android:textSize="12dp"
+                android:text=""
+                android:textSize="11dp"
                 android:textStyle="bold" />
 
             <TextView
@@ -245,9 +234,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_weight="0.5"
-                android:background="#f9c8c0"
                 android:text=""
-                android:textSize="12dp"
+                android:textSize="11dp"
                 android:textStyle="bold" />
 
             <TextView
@@ -256,7 +244,7 @@
                 android:layout_height="0dp"
                 android:layout_weight="0.5"
                 android:text=""
-                android:textSize="12dp"
+                android:textSize="11dp"
                 android:textStyle="bold" />
 
             <TextView
@@ -265,7 +253,7 @@
                 android:layout_height="0dp"
                 android:layout_weight="0.5"
                 android:text=""
-                android:textSize="12dp"
+                android:textSize="11dp"
                 android:textStyle="bold" />
 
             <TextView
@@ -274,7 +262,7 @@
                 android:layout_height="0dp"
                 android:layout_weight="0.5"
                 android:text=""
-                android:textSize="12dp"
+                android:textSize="11dp"
                 android:textStyle="bold" />
 
             <TextView
@@ -282,9 +270,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_weight="0.5"
-                android:background="#c1e4da"
-                android:text="BB-0303"
-                android:textSize="12dp"
+                android:text=""
+                android:textSize="11dp"
                 android:textStyle="bold" />
 
             <TextView
@@ -292,9 +279,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_weight="0.5"
-                android:background="#c1e4da"
-                android:text="데이터마이닝"
-                android:textSize="12dp"
+                android:text=""
+                android:textSize="11dp"
                 android:textStyle="bold" />
 
             <TextView
@@ -302,9 +288,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_weight="0.5"
-                android:background="#c1e4da"
                 android:text=""
-                android:textSize="12dp"
+                android:textSize="11dp"
                 android:textStyle="bold" />
         </LinearLayout>
     </LinearLayout>
@@ -336,7 +321,7 @@
                 android:layout_height="0dp"
                 android:layout_weight="0.5"
                 android:text=""
-                android:textSize="12dp"
+                android:textSize="11dp"
                 android:textStyle="bold" />
 
             <TextView
@@ -345,7 +330,7 @@
                 android:layout_height="0dp"
                 android:layout_weight="0.5"
                 android:text=""
-                android:textSize="12dp"
+                android:textSize="11dp"
                 android:textStyle="bold" />
 
             <TextView
@@ -354,7 +339,7 @@
                 android:layout_height="0dp"
                 android:layout_weight="0.5"
                 android:text=""
-                android:textSize="12dp"
+                android:textSize="11dp"
                 android:textStyle="bold" />
 
             <TextView
@@ -363,7 +348,7 @@
                 android:layout_height="0dp"
                 android:layout_weight="0.5"
                 android:text=""
-                android:textSize="12dp"
+                android:textSize="11dp"
                 android:textStyle="bold" />
 
             <TextView
@@ -372,7 +357,7 @@
                 android:layout_height="0dp"
                 android:layout_weight="0.5"
                 android:text=""
-                android:textSize="12dp"
+                android:textSize="11dp"
                 android:textStyle="bold" />
 
             <TextView
@@ -381,7 +366,7 @@
                 android:layout_height="0dp"
                 android:layout_weight="0.5"
                 android:text=""
-                android:textSize="12dp"
+                android:textSize="11dp"
                 android:textStyle="bold" />
 
             <TextView
@@ -389,9 +374,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_weight="0.5"
-                android:background="#f9c8c0"
-                android:text="BB-0704"
-                android:textSize="12dp"
+                android:text=""
+                android:textSize="11dp"
                 android:textStyle="bold" />
 
             <TextView
@@ -399,9 +383,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_weight="0.5"
-                android:background="#f9c8c0"
-                android:text="인터넷비즈니스"
-                android:textSize="12dp"
+                android:text=""
+                android:textSize="11dp"
                 android:textStyle="bold" />
 
             <TextView
@@ -409,9 +392,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_weight="0.5"
-                android:background="#f9c8c0"
                 android:text=""
-                android:textSize="12dp"
+                android:textSize="11dp"
                 android:textStyle="bold" />
 
             <TextView
@@ -420,7 +402,7 @@
                 android:layout_height="0dp"
                 android:layout_weight="0.5"
                 android:text=""
-                android:textSize="12dp"
+                android:textSize="11dp"
                 android:textStyle="bold" />
 
             <TextView
@@ -429,7 +411,7 @@
                 android:layout_height="0dp"
                 android:layout_weight="0.5"
                 android:text=""
-                android:textSize="12dp"
+                android:textSize="11dp"
                 android:textStyle="bold" />
 
             <TextView
@@ -438,7 +420,7 @@
                 android:layout_height="0dp"
                 android:layout_weight="0.5"
                 android:text=""
-                android:textSize="12dp"
+                android:textSize="11dp"
                 android:textStyle="bold" />
 
             <TextView
@@ -447,7 +429,7 @@
                 android:layout_height="0dp"
                 android:layout_weight="0.5"
                 android:text=""
-                android:textSize="12dp"
+                android:textSize="11dp"
                 android:textStyle="bold" />
 
             <TextView
@@ -456,7 +438,7 @@
                 android:layout_height="0dp"
                 android:layout_weight="0.5"
                 android:text=""
-                android:textSize="12dp"
+                android:textSize="11dp"
                 android:textStyle="bold" />
 
             <TextView
@@ -465,7 +447,7 @@
                 android:layout_height="0dp"
                 android:layout_weight="0.5"
                 android:text=""
-                android:textSize="12dp"
+                android:textSize="11dp"
                 android:textStyle="bold" />
 
             <TextView
@@ -474,7 +456,7 @@
                 android:layout_height="0dp"
                 android:layout_weight="0.5"
                 android:text=""
-                android:textSize="12dp"
+                android:textSize="11dp"
                 android:textStyle="bold" />
 
             <TextView
@@ -483,7 +465,7 @@
                 android:layout_height="0dp"
                 android:layout_weight="0.5"
                 android:text=""
-                android:textSize="12dp"
+                android:textSize="11dp"
                 android:textStyle="bold" />
 
             <TextView
@@ -492,7 +474,7 @@
                 android:layout_height="0dp"
                 android:layout_weight="0.5"
                 android:text=""
-                android:textSize="12dp"
+                android:textSize="11dp"
                 android:textStyle="bold" />
         </LinearLayout>
     </LinearLayout>
@@ -524,7 +506,7 @@
                 android:layout_height="0dp"
                 android:layout_weight="0.5"
                 android:text=""
-                android:textSize="12dp"
+                android:textSize="11dp"
                 android:textStyle="bold" />
 
             <TextView
@@ -533,7 +515,7 @@
                 android:layout_height="0dp"
                 android:layout_weight="0.5"
                 android:text=""
-                android:textSize="12dp"
+                android:textSize="11dp"
                 android:textStyle="bold" />
 
             <TextView
@@ -542,7 +524,7 @@
                 android:layout_height="0dp"
                 android:layout_weight="0.5"
                 android:text=""
-                android:textSize="12dp"
+                android:textSize="11dp"
                 android:textStyle="bold" />
 
             <TextView
@@ -551,7 +533,7 @@
                 android:layout_height="0dp"
                 android:layout_weight="0.5"
                 android:text=""
-                android:textSize="12dp"
+                android:textSize="11dp"
                 android:textStyle="bold" />
 
             <TextView
@@ -560,7 +542,7 @@
                 android:layout_height="0dp"
                 android:layout_weight="0.5"
                 android:text=""
-                android:textSize="12dp"
+                android:textSize="11dp"
                 android:textStyle="bold" />
 
             <TextView
@@ -569,7 +551,7 @@
                 android:layout_height="0dp"
                 android:layout_weight="0.5"
                 android:text=""
-                android:textSize="12dp"
+                android:textSize="11dp"
                 android:textStyle="bold" />
 
             <TextView
@@ -578,7 +560,7 @@
                 android:layout_height="0dp"
                 android:layout_weight="0.5"
                 android:text=""
-                android:textSize="12dp"
+                android:textSize="11dp"
                 android:textStyle="bold" />
 
             <TextView
@@ -587,7 +569,7 @@
                 android:layout_height="0dp"
                 android:layout_weight="0.5"
                 android:text=""
-                android:textSize="12dp"
+                android:textSize="11dp"
                 android:textStyle="bold" />
 
             <TextView
@@ -596,7 +578,7 @@
                 android:layout_height="0dp"
                 android:layout_weight="0.5"
                 android:text=""
-                android:textSize="12dp"
+                android:textSize="11dp"
                 android:textStyle="bold" />
 
             <TextView
@@ -605,7 +587,7 @@
                 android:layout_height="0dp"
                 android:layout_weight="0.5"
                 android:text=""
-                android:textSize="12dp"
+                android:textSize="11dp"
                 android:textStyle="bold" />
 
             <TextView
@@ -614,7 +596,7 @@
                 android:layout_height="0dp"
                 android:layout_weight="0.5"
                 android:text=""
-                android:textSize="12dp"
+                android:textSize="11dp"
                 android:textStyle="bold" />
 
             <TextView
@@ -623,7 +605,7 @@
                 android:layout_height="0dp"
                 android:layout_weight="0.5"
                 android:text=""
-                android:textSize="12dp"
+                android:textSize="11dp"
                 android:textStyle="bold" />
 
             <TextView
@@ -632,7 +614,7 @@
                 android:layout_height="0dp"
                 android:layout_weight="0.5"
                 android:text=""
-                android:textSize="12dp"
+                android:textSize="11dp"
                 android:textStyle="bold" />
 
             <TextView
@@ -641,7 +623,7 @@
                 android:layout_height="0dp"
                 android:layout_weight="0.5"
                 android:text=""
-                android:textSize="12dp"
+                android:textSize="11dp"
                 android:textStyle="bold" />
 
             <TextView
@@ -650,7 +632,7 @@
                 android:layout_height="0dp"
                 android:layout_weight="0.5"
                 android:text=""
-                android:textSize="13dp"
+                android:textSize="11dp"
                 android:textStyle="bold" />
 
             <TextView
@@ -659,7 +641,7 @@
                 android:layout_height="0dp"
                 android:layout_weight="0.5"
                 android:text=""
-                android:textSize="12dp"
+                android:textSize="11dp"
                 android:textStyle="bold" />
 
             <TextView
@@ -668,7 +650,7 @@
                 android:layout_height="0dp"
                 android:layout_weight="0.5"
                 android:text=""
-                android:textSize="12dp"
+                android:textSize="11dp"
                 android:textStyle="bold" />
 
             <TextView
@@ -677,7 +659,7 @@
                 android:layout_height="0dp"
                 android:layout_weight="0.5"
                 android:text=""
-                android:textSize="12dp"
+                android:textSize="11dp"
                 android:textStyle="bold" />
         </LinearLayout>
     </LinearLayout>
@@ -709,7 +691,7 @@
                 android:layout_height="0dp"
                 android:layout_weight="0.5"
                 android:text=""
-                android:textSize="12dp"
+                android:textSize="11dp"
                 android:textStyle="bold" />
 
             <TextView
@@ -718,7 +700,7 @@
                 android:layout_height="0dp"
                 android:layout_weight="0.5"
                 android:text=""
-                android:textSize="12dp"
+                android:textSize="11dp"
                 android:textStyle="bold" />
 
             <TextView
@@ -727,7 +709,7 @@
                 android:layout_height="0dp"
                 android:layout_weight="0.5"
                 android:text=""
-                android:textSize="12dp"
+                android:textSize="11dp"
                 android:textStyle="bold" />
 
             <TextView
@@ -736,7 +718,7 @@
                 android:layout_height="0dp"
                 android:layout_weight="0.5"
                 android:text=""
-                android:textSize="12dp"
+                android:textSize="11dp"
                 android:textStyle="bold" />
 
             <TextView
@@ -745,7 +727,7 @@
                 android:layout_height="0dp"
                 android:layout_weight="0.5"
                 android:text=""
-                android:textSize="12dp"
+                android:textSize="11dp"
                 android:textStyle="bold" />
 
             <TextView
@@ -754,7 +736,7 @@
                 android:layout_height="0dp"
                 android:layout_weight="0.5"
                 android:text=""
-                android:textSize="12dp"
+                android:textSize="11dp"
                 android:textStyle="bold" />
 
             <TextView
@@ -762,9 +744,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_weight="0.5"
-                android:background="#c1e4da"
-                android:text="BB-0303"
-                android:textSize="12dp"
+                android:text=""
+                android:textSize="11dp"
                 android:textStyle="bold" />
 
             <TextView
@@ -772,9 +753,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_weight="0.5"
-                android:background="#c1e4da"
-                android:text="데이터마이닝"
-                android:textSize="12dp"
+                android:text=""
+                android:textSize="11dp"
                 android:textStyle="bold" />
 
             <TextView
@@ -782,9 +762,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_weight="0.5"
-                android:background="#c1e4da"
                 android:text=""
-                android:textSize="12dp"
+                android:textSize="11dp"
                 android:textStyle="bold" />
 
             <TextView
@@ -792,9 +771,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_weight="0.5"
-                android:background="#fee798"
-                android:text="BB-0403"
-                android:textSize="12dp"
+                android:text=""
+                android:textSize="11dp"
                 android:textStyle="bold" />
 
             <TextView
@@ -802,9 +780,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_weight="0.5"
-                android:background="#fee798"
-                android:text="최신정보기술응용2"
-                android:textSize="12dp"
+                android:text=""
+                android:textSize="11dp"
                 android:textStyle="bold" />
 
             <TextView
@@ -812,9 +789,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_weight="0.5"
-                android:background="#fee798"
                 android:text=""
-                android:textSize="12dp"
+                android:textSize="11dp"
                 android:textStyle="bold" />
 
             <TextView
@@ -822,9 +798,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_weight="0.5"
-                android:background="#fddcc2"
-                android:text="BB-0403"
-                android:textSize="12dp"
+                android:text=""
+                android:textSize="11dp"
                 android:textStyle="bold" />
 
             <TextView
@@ -832,9 +807,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_weight="0.5"
-                android:background="#fddcc2"
-                android:text="기술경영"
-                android:textSize="12dp"
+                android:text=""
+                android:textSize="11dp"
                 android:textStyle="bold" />
 
             <TextView
@@ -842,9 +816,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_weight="0.5"
-                android:background="#fddcc2"
                 android:text=""
-                android:textSize="12dp"
+                android:textSize="11dp"
                 android:textStyle="bold" />
 
             <TextView
@@ -853,7 +826,7 @@
                 android:layout_height="0dp"
                 android:layout_weight="0.5"
                 android:text=""
-                android:textSize="12dp"
+                android:textSize="11dp"
                 android:textStyle="bold" />
 
             <TextView
@@ -862,7 +835,7 @@
                 android:layout_height="0dp"
                 android:layout_weight="0.5"
                 android:text=""
-                android:textSize="12dp"
+                android:textSize="11dp"
                 android:textStyle="bold" />
 
             <TextView
@@ -871,7 +844,7 @@
                 android:layout_height="0dp"
                 android:layout_weight="0.5"
                 android:text=""
-                android:textSize="12dp"
+                android:textSize="11dp"
                 android:textStyle="bold" />
         </LinearLayout>
     </LinearLayout>
@@ -903,7 +876,7 @@
                 android:layout_height="0dp"
                 android:layout_weight="0.5"
                 android:text=""
-                android:textSize="12dp"
+                android:textSize="11dp"
                 android:textStyle="bold" />
 
             <TextView
@@ -912,7 +885,7 @@
                 android:layout_height="0dp"
                 android:layout_weight="0.5"
                 android:text=""
-                android:textSize="12dp"
+                android:textSize="11dp"
                 android:textStyle="bold" />
 
             <TextView
@@ -920,9 +893,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_weight="0.5"
-                android:background="#d0e1f4"
-                android:text="BA-0303"
-                android:textSize="12dp"
+                android:text=""
+                android:textSize="11dp"
                 android:textStyle="bold" />
 
             <TextView
@@ -930,9 +902,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_weight="0.5"
-                android:background="#d0e1f4"
-                android:text="교양독서"
-                android:textSize="12dp"
+                android:text=""
+                android:textSize="11dp"
                 android:textStyle="bold" />
 
             <TextView
@@ -940,9 +911,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_weight="0.5"
-                android:background="#d0e1f4"
                 android:text=""
-                android:textSize="12dp"
+                android:textSize="11dp"
                 android:textStyle="bold" />
 
             <TextView
@@ -950,9 +920,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_weight="0.5"
-                android:background="#d0e1f4"
                 android:text=""
-                android:textSize="12dp"
+                android:textSize="11dp"
                 android:textStyle="bold" />
 
             <TextView
@@ -961,7 +930,7 @@
                 android:layout_height="0dp"
                 android:layout_weight="0.5"
                 android:text=""
-                android:textSize="12dp"
+                android:textSize="11dp"
                 android:textStyle="bold" />
 
             <TextView
@@ -970,7 +939,7 @@
                 android:layout_height="0dp"
                 android:layout_weight="0.5"
                 android:text=""
-                android:textSize="12dp"
+                android:textSize="11dp"
                 android:textStyle="bold" />
 
             <TextView
@@ -979,7 +948,7 @@
                 android:layout_height="0dp"
                 android:layout_weight="0.5"
                 android:text=""
-                android:textSize="12dp"
+                android:textSize="11dp"
                 android:textStyle="bold" />
 
             <TextView
@@ -987,9 +956,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_weight="0.5"
-                android:background="#fddcc2"
-                android:text="BB-0305"
-                android:textSize="12dp"
+                android:text=""
+                android:textSize="11dp"
                 android:textStyle="bold" />
 
             <TextView
@@ -997,9 +965,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_weight="0.5"
-                android:background="#fddcc2"
-                android:text="기술경영"
-                android:textSize="12dp"
+                android:text=""
+                android:textSize="11dp"
                 android:textStyle="bold" />
 
             <TextView
@@ -1007,9 +974,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_weight="0.5"
-                android:background="#fddcc2"
                 android:text=""
-                android:textSize="12dp"
+                android:textSize="11dp"
                 android:textStyle="bold" />
 
             <TextView
@@ -1017,9 +983,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_weight="0.5"
-                android:background="#fee798"
-                android:text="BB-0403"
-                android:textSize="12dp"
+                android:text=""
+                android:textSize="11dp"
                 android:textStyle="bold" />
 
             <TextView
@@ -1027,9 +992,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_weight="0.5"
-                android:background="#fee798"
-                android:text="최신정보기술응용2"
-                android:textSize="12dp"
+                android:text=""
+                android:textSize="11dp"
                 android:textStyle="bold" />
 
             <TextView
@@ -1037,9 +1001,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_weight="0.5"
-                android:background="#fee798"
                 android:text=""
-                android:textSize="12dp"
+                android:textSize="11dp"
                 android:textStyle="bold" />
 
             <TextView
@@ -1048,7 +1011,7 @@
                 android:layout_height="0dp"
                 android:layout_weight="0.5"
                 android:text=""
-                android:textSize="12dp"
+                android:textSize="11dp"
                 android:textStyle="bold" />
 
             <TextView
@@ -1057,7 +1020,7 @@
                 android:layout_height="0dp"
                 android:layout_weight="0.5"
                 android:text=""
-                android:textSize="12dp"
+                android:textSize="11dp"
                 android:textStyle="bold" />
 
             <TextView
@@ -1066,7 +1029,7 @@
                 android:layout_height="0dp"
                 android:layout_weight="0.5"
                 android:text=""
-                android:textSize="12dp"
+                android:textSize="11dp"
                 android:textStyle="bold" />
         </LinearLayout>
     </LinearLayout>
