@@ -14,6 +14,7 @@ import android.widget.Toast;
 import com.donga.examples.boomin.AppendLog;
 import com.donga.examples.boomin.R;
 import com.donga.examples.boomin.Singleton.InfoSingleton;
+import com.donga.examples.boomin.Singleton.ScheduleSingleton;
 import com.donga.examples.boomin.retrofit.retrofitSchedule.Interface_sche;
 import com.donga.examples.boomin.retrofit.retrofitSchedule.Master;
 import com.orhanobut.logger.Logger;
@@ -343,6 +344,8 @@ public class Stu_ScheFragment extends Fragment {
             call.enqueue(new Callback<Master>() {
                 @Override
                 public void onResponse(Call<Master> call, Response<Master> response) {
+                    int currentMinTime = 20;
+                    int currentMaxTime = 0;
                     if(response.body().getResult_code() == 1){
                         ArrayList<String> codeArray = new ArrayList<String>();
                         String[] colorArray = getResources().getStringArray(R.array.colorArray);
@@ -354,6 +357,14 @@ public class Stu_ScheFragment extends Fragment {
                             if(!get5string.equals("")){
                                 if(!codeArray.contains(resultBody.get(i).get(0))){
                                     codeArray.add(resultBody.get(i).get(0));
+                                }
+                                if(Integer.parseInt(get5string.substring(1, get5string.indexOf("-")))<currentMinTime){
+                                    currentMinTime = Integer.parseInt(get5string.substring(1, get5string.indexOf("-")));
+                                    ScheduleSingleton.getInstance().setCurrentMinTime(currentMinTime);
+                                }
+                                if(Integer.parseInt(get5string.substring(get5string.indexOf("-")+1, get5string.indexOf("(")))>currentMaxTime){
+                                    currentMaxTime = Integer.parseInt(get5string.substring(get5string.indexOf("-")+1, get5string.indexOf("(")));
+                                    ScheduleSingleton.getInstance().setCurrentMaxTime(currentMaxTime);
                                 }
 
                                 switch (get5string.substring(0, 1)){
@@ -383,6 +394,15 @@ public class Stu_ScheFragment extends Fragment {
                                 }
                             }
                         }
+
+
+
+                        // ScheduleSingleton에서 값을 꺼내서 쓸 때는 이렇게 쓰자 ^^(어디서든 ㄱㅊ)
+                        Logger.d(ScheduleSingleton.getInstance().getCurrentMinTime()+", "+ScheduleSingleton.getInstance().getCurrentMaxTime());
+                        // ScheduleSingleton에서 값을 꺼내서 쓸 때는 이렇게 쓰자 ^^(어디서든 ㄱㅊ)
+
+
+
                         hideProgressDialog();
                     }else{
                         hideProgressDialog();
