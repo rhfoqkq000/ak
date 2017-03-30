@@ -24,6 +24,12 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import com.afollestad.materialdialogs.MaterialDialog;
+import com.couchbase.lite.CouchbaseLiteException;
+import com.couchbase.lite.Database;
+import com.couchbase.lite.DatabaseOptions;
+import com.couchbase.lite.Document;
+import com.couchbase.lite.Manager;
+import com.couchbase.lite.android.AndroidContext;
 import com.donga.examples.boomin.AppendLog;
 import com.donga.examples.boomin.MarketVersionChecker;
 import com.donga.examples.boomin.R;
@@ -37,8 +43,11 @@ import com.donga.examples.boomin.retrofit.retrofitSetCircle.JsonRequest;
 import com.jaredrummler.materialspinner.MaterialSpinner;
 import com.orhanobut.logger.Logger;
 
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -167,7 +176,20 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         }
 
 
-        ActivityManager am = (ActivityManager)getApplicationContext().getSystemService(Context.ACTIVITY_SERVICE);
+
+
+
+
+
+
+
+
+
+
+
+
+
+                ActivityManager am = (ActivityManager)getApplicationContext().getSystemService(Context.ACTIVITY_SERVICE);
         List<ActivityManager.RunningTaskInfo> taskList = am.getRunningTasks(100);
         for( int i=0; i < taskList.size(); i++){
             Log.d("INFO","base="+taskList.get(i).baseActivity.getPackageName()+",top="+taskList.get(i).topActivity.getPackageName());

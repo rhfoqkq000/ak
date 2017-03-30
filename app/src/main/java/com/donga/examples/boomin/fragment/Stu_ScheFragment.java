@@ -8,6 +8,7 @@ import android.util.Base64;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -41,6 +42,49 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class Stu_ScheFragment extends Fragment {
     private ProgressDialog mProgressDialog;
     AppendLog log = new AppendLog();
+
+    @BindView(R.id.dayLinear)
+    LinearLayout dayLinear;
+    @BindView(R.id.dayTimeLinear)
+    LinearLayout dayTimeLinear;
+    @BindView(R.id.dayMonLinear)
+    LinearLayout dayMonLinear;
+    @BindView(R.id.dayTueLinear)
+    LinearLayout dayTueLinear;
+    @BindView(R.id.dayWedLinear)
+    LinearLayout dayWedLinear;
+    @BindView(R.id.dayThuLinear)
+    LinearLayout dayThuLinear;
+    @BindView(R.id.dayFriLinear)
+    LinearLayout dayFriLinear;
+
+    @BindView(R.id.bigLinear)
+    LinearLayout nightLinear;
+    @BindView(R.id.timeLinear)
+    LinearLayout timeLinear;
+    @BindView(R.id.monLinear)
+    LinearLayout monLinear;
+    @BindView(R.id.tueLinear)
+    LinearLayout tueLinear;
+    @BindView(R.id.wedLinear)
+    LinearLayout wedLinear;
+    @BindView(R.id.thuLinear)
+    LinearLayout thuLinear;
+    @BindView(R.id.friLinear)
+    LinearLayout friLinear;
+
+    @BindView(R.id.timeNight)
+    TextView timeNight;
+    @BindView(R.id.monNight)
+    TextView monNight;
+    @BindView(R.id.tueNight)
+    TextView tueNight;
+    @BindView(R.id.wedNight)
+    TextView wedNight;
+    @BindView(R.id.thuNight)
+    TextView thuNight;
+    @BindView(R.id.friNight)
+    TextView friNight;
 
     @BindView(R.id.mon1)
     TextView mon1;
@@ -79,6 +123,27 @@ public class Stu_ScheFragment extends Fragment {
     @BindView(R.id.mon18)
     TextView mon18;
 
+    @BindView(R.id.night_mon1)
+    TextView night_mon1;
+    @BindView(R.id.night_mon2)
+    TextView night_mon2;
+    @BindView(R.id.night_mon3)
+    TextView night_mon3;
+    @BindView(R.id.night_mon4)
+    TextView night_mon4;
+    @BindView(R.id.night_mon5)
+    TextView night_mon5;
+    @BindView(R.id.night_mon6)
+    TextView night_mon6;
+    @BindView(R.id.night_mon7)
+    TextView night_mon7;
+    @BindView(R.id.night_mon8)
+    TextView night_mon8;
+    @BindView(R.id.night_mon9)
+    TextView night_mon9;
+    @BindView(R.id.night_mon10)
+    TextView night_mon10;
+
     @BindView(R.id.tue1)
     TextView tue1;
     @BindView(R.id.tue2)
@@ -115,6 +180,27 @@ public class Stu_ScheFragment extends Fragment {
     TextView tue17;
     @BindView(R.id.tue18)
     TextView tue18;
+
+    @BindView(R.id.night_tue1)
+    TextView night_tue1;
+    @BindView(R.id.night_tue2)
+    TextView night_tue2;
+    @BindView(R.id.night_tue3)
+    TextView night_tue3;
+    @BindView(R.id.night_tue4)
+    TextView night_tue4;
+    @BindView(R.id.night_tue5)
+    TextView night_tue5;
+    @BindView(R.id.night_tue6)
+    TextView night_tue6;
+    @BindView(R.id.night_tue7)
+    TextView night_tue7;
+    @BindView(R.id.night_tue8)
+    TextView night_tue8;
+    @BindView(R.id.night_tue9)
+    TextView night_tue9;
+    @BindView(R.id.night_tue10)
+    TextView night_tue10;
 
     @BindView(R.id.wed1)
     TextView wed1;
@@ -153,6 +239,27 @@ public class Stu_ScheFragment extends Fragment {
     @BindView(R.id.wed18)
     TextView wed18;
 
+    @BindView(R.id.night_wed1)
+    TextView night_wed1;
+    @BindView(R.id.night_wed2)
+    TextView night_wed2;
+    @BindView(R.id.night_wed3)
+    TextView night_wed3;
+    @BindView(R.id.night_wed4)
+    TextView night_wed4;
+    @BindView(R.id.night_wed5)
+    TextView night_wed5;
+    @BindView(R.id.night_wed6)
+    TextView night_wed6;
+    @BindView(R.id.night_wed7)
+    TextView night_wed7;
+    @BindView(R.id.night_wed8)
+    TextView night_wed8;
+    @BindView(R.id.night_wed9)
+    TextView night_wed9;
+    @BindView(R.id.night_wed10)
+    TextView night_wed10;
+
     @BindView(R.id.thu1)
     TextView thu1;
     @BindView(R.id.thu2)
@@ -189,6 +296,27 @@ public class Stu_ScheFragment extends Fragment {
     TextView thu17;
     @BindView(R.id.thu18)
     TextView thu18;
+
+    @BindView(R.id.night_thu1)
+    TextView night_thu1;
+    @BindView(R.id.night_thu2)
+    TextView night_thu2;
+    @BindView(R.id.night_thu3)
+    TextView night_thu3;
+    @BindView(R.id.night_thu4)
+    TextView night_thu4;
+    @BindView(R.id.night_thu5)
+    TextView night_thu5;
+    @BindView(R.id.night_thu6)
+    TextView night_thu6;
+    @BindView(R.id.night_thu7)
+    TextView night_thu7;
+    @BindView(R.id.night_thu8)
+    TextView night_thu8;
+    @BindView(R.id.night_thu9)
+    TextView night_thu9;
+    @BindView(R.id.night_thu10)
+    TextView night_thu10;
 
     @BindView(R.id.fri1)
     TextView fri1;
@@ -227,6 +355,27 @@ public class Stu_ScheFragment extends Fragment {
     @BindView(R.id.fri18)
     TextView fri18;
 
+    @BindView(R.id.night_fri1)
+    TextView night_fri1;
+    @BindView(R.id.night_fri2)
+    TextView night_fri2;
+    @BindView(R.id.night_fri3)
+    TextView night_fri3;
+    @BindView(R.id.night_fri4)
+    TextView night_fri4;
+    @BindView(R.id.night_fri5)
+    TextView night_fri5;
+    @BindView(R.id.night_fri6)
+    TextView night_fri6;
+    @BindView(R.id.night_fri7)
+    TextView night_fri7;
+    @BindView(R.id.night_fri8)
+    TextView night_fri8;
+    @BindView(R.id.night_fri9)
+    TextView night_fri9;
+    @BindView(R.id.night_fri10)
+    TextView night_fri10;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         final View rootview = inflater.inflate(R.layout.fragment_sche, container, false);
@@ -253,6 +402,16 @@ public class Stu_ScheFragment extends Fragment {
         monTvArray.add(mon16);
         monTvArray.add(mon17);
         monTvArray.add(mon18);
+        monTvArray.add(night_mon1);
+        monTvArray.add(night_mon2);
+        monTvArray.add(night_mon3);
+        monTvArray.add(night_mon4);
+        monTvArray.add(night_mon5);
+        monTvArray.add(night_mon6);
+        monTvArray.add(night_mon7);
+        monTvArray.add(night_mon8);
+        monTvArray.add(night_mon9);
+        monTvArray.add(night_mon10);
 
         final ArrayList<TextView> tueTvArray = new ArrayList<>();
         tueTvArray.add(tue1);
@@ -273,6 +432,16 @@ public class Stu_ScheFragment extends Fragment {
         tueTvArray.add(tue16);
         tueTvArray.add(tue17);
         tueTvArray.add(tue18);
+        tueTvArray.add(night_tue1);
+        tueTvArray.add(night_tue2);
+        tueTvArray.add(night_tue3);
+        tueTvArray.add(night_tue4);
+        tueTvArray.add(night_tue5);
+        tueTvArray.add(night_tue6);
+        tueTvArray.add(night_tue7);
+        tueTvArray.add(night_tue8);
+        tueTvArray.add(night_tue9);
+        tueTvArray.add(night_tue10);
 
         final ArrayList<TextView> wedTvArray = new ArrayList<>();
         wedTvArray.add(wed1);
@@ -293,6 +462,16 @@ public class Stu_ScheFragment extends Fragment {
         wedTvArray.add(wed16);
         wedTvArray.add(wed17);
         wedTvArray.add(wed18);
+        wedTvArray.add(night_wed1);
+        wedTvArray.add(night_wed2);
+        wedTvArray.add(night_wed3);
+        wedTvArray.add(night_wed4);
+        wedTvArray.add(night_wed5);
+        wedTvArray.add(night_wed6);
+        wedTvArray.add(night_wed7);
+        wedTvArray.add(night_wed8);
+        wedTvArray.add(night_wed9);
+        wedTvArray.add(night_wed10);
 
         final ArrayList<TextView> thuTvArray = new ArrayList<>();
         thuTvArray.add(thu1);
@@ -313,6 +492,16 @@ public class Stu_ScheFragment extends Fragment {
         thuTvArray.add(thu16);
         thuTvArray.add(thu17);
         thuTvArray.add(thu18);
+        thuTvArray.add(night_thu1);
+        thuTvArray.add(night_thu2);
+        thuTvArray.add(night_thu3);
+        thuTvArray.add(night_thu4);
+        thuTvArray.add(night_thu5);
+        thuTvArray.add(night_thu6);
+        thuTvArray.add(night_thu7);
+        thuTvArray.add(night_thu8);
+        thuTvArray.add(night_thu9);
+        thuTvArray.add(night_thu10);
 
         final ArrayList<TextView> friTvArray = new ArrayList<>();
         friTvArray.add(fri1);
@@ -333,6 +522,16 @@ public class Stu_ScheFragment extends Fragment {
         friTvArray.add(fri16);
         friTvArray.add(fri17);
         friTvArray.add(fri18);
+        friTvArray.add(night_fri1);
+        friTvArray.add(night_fri2);
+        friTvArray.add(night_fri3);
+        friTvArray.add(night_fri4);
+        friTvArray.add(night_fri5);
+        friTvArray.add(night_fri6);
+        friTvArray.add(night_fri7);
+        friTvArray.add(night_fri8);
+        friTvArray.add(night_fri9);
+        friTvArray.add(night_fri10);
 
         //retrofit 통신
         Retrofit client = new Retrofit.Builder().baseUrl(getString(R.string.retrofit_url))
@@ -344,13 +543,27 @@ public class Stu_ScheFragment extends Fragment {
             call.enqueue(new Callback<Master>() {
                 @Override
                 public void onResponse(Call<Master> call, Response<Master> response) {
-                    int currentMinTime = 20;
+                    int currentMinTime = 21;
                     int currentMaxTime = 0;
                     if(response.body().getResult_code() == 1){
                         ArrayList<String> codeArray = new ArrayList<String>();
                         String[] colorArray = getResources().getStringArray(R.array.colorArray);
                         ArrayList<String> colorArray2 = new ArrayList(Arrays.asList(colorArray));
                         ArrayList<ArrayList<String>> resultBody = response.body().getResult_body();
+//                        ArrayList<ArrayList<String>> resultBody = new ArrayList<ArrayList<String>>();
+//                        ArrayList<String> testArray = new ArrayList<String>();
+//                        testArray.add("MIS666");
+//                        testArray.add("03");
+//                        testArray.add("야간수업임");
+//                        testArray.add("3");
+//                        testArray.add("강사");
+//                        testArray.add("수21-24(BB-0704 부민)");
+//                        testArray.add("  \r\n\t\t\t\t\t\t      \r\n\t\t\t\t\t\t ");
+//                        testArray.add("확정");
+//                        testArray.add("");
+//                        testArray.add("자유선택");
+//                        resultBody.add(testArray);
+
                         for(int i = 0; i < resultBody.size(); i++){
                             String get5string = resultBody.get(i).get(5);
 //                            String get5string = "수21-24(BC-0106 부민)";
@@ -395,13 +608,30 @@ public class Stu_ScheFragment extends Fragment {
                             }
                         }
 
-
-
-                        // ScheduleSingleton에서 값을 꺼내서 쓸 때는 이렇게 쓰자 ^^(어디서든 ㄱㅊ)
-                        Logger.d(ScheduleSingleton.getInstance().getCurrentMinTime()+", "+ScheduleSingleton.getInstance().getCurrentMaxTime());
-                        // ScheduleSingleton에서 값을 꺼내서 쓸 때는 이렇게 쓰자 ^^(어디서든 ㄱㅊ)
-
-
+                        if(2<currentMinTime && currentMaxTime<21){
+                            //주간
+                            Logger.d("이것은 주간");
+                            nightLinear.setVisibility(View.GONE);
+                            timeLinear.setVisibility(View.GONE);
+                            monLinear.setVisibility(View.GONE);
+                            tueLinear.setVisibility(View.GONE);
+                            wedLinear.setVisibility(View.GONE);
+                            thuLinear.setVisibility(View.GONE);
+                            friLinear.setVisibility(View.GONE);
+                        }else if(20<currentMinTime){
+                            //야간
+                            Logger.d("이것은 야간, "+currentMinTime);
+                            dayLinear.setVisibility(View.GONE);
+                            timeNight.setVisibility(View.VISIBLE);
+                            monNight.setVisibility(View.VISIBLE);
+                            tueNight.setVisibility(View.VISIBLE);
+                            wedNight.setVisibility(View.VISIBLE);
+                            thuNight.setVisibility(View.VISIBLE);
+                            friNight.setVisibility(View.VISIBLE);
+                        }else {
+                            //주야간
+                            Logger.d("이것은 주간야간, "+currentMinTime);
+                        }
 
                         hideProgressDialog();
                     }else{
