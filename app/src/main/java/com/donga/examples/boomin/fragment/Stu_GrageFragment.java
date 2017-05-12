@@ -1,6 +1,8 @@
 package com.donga.examples.boomin.fragment;
 
 import android.app.ProgressDialog;
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.Base64;
@@ -11,13 +13,22 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.couchbase.lite.Database;
+import com.couchbase.lite.Document;
+import com.couchbase.lite.Manager;
+import com.couchbase.lite.android.AndroidContext;
 import com.donga.examples.boomin.AppendLog;
 import com.donga.examples.boomin.R;
 import com.donga.examples.boomin.Singleton.InfoSingleton;
 import com.donga.examples.boomin.retrofit.retrofitGrad.Interface_grad;
 import com.donga.examples.boomin.retrofit.retrofitGrad.Master;
+import com.donga.examples.boomin.retrofit.retrofitGrad.Result_body;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.orhanobut.logger.Logger;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -39,6 +50,15 @@ import retrofit2.converter.gson.GsonConverterFactory;
  */
 public class Stu_GrageFragment extends Fragment {
     AppendLog log = new AppendLog();
+
+    SharedPreferences sharedPreferences;
+    SharedPreferences.Editor editor;
+
+    Document document;
+    Manager manager;
+    Database database;
+
+    public static final String DB_NAME = "app";
 
     @BindView(R.id.tv_multi)
     TextView tv_multi;
@@ -120,105 +140,63 @@ public class Stu_GrageFragment extends Fragment {
 
         showProgressDialog();
 
-        //retrofit 통신
-        Retrofit client = new Retrofit.Builder().baseUrl(getString(R.string.retrofit_url))
-                .addConverterFactory(GsonConverterFactory.create()).build();
-        Interface_grad sche = client.create(Interface_grad.class);
+        manager = null;
+        database = null;
         try {
-            String decryptedStuPw = Decrypt(InfoSingleton.getInstance().getStuPw(), getString(R.string.decrypt_key));
-            Call<Master> call =
-                    sche.getSchedule(InfoSingleton.getInstance().getStuId(), decryptedStuPw);
-            call.enqueue(new Callback<Master>() {
-                @Override
-                public void onResponse(Call<com.donga.examples.boomin.retrofit.retrofitGrad.Master> call, Response<Master> response) {
-                    if (response.body().getResult_code() == 1) {
-
-                        tv_multi.setText(response.body().getResult_body().getInfo().getMulti());
-                        tv_sub.setText(response.body().getResult_body().getInfo().getSub());
-                        tv_year.setText(response.body().getResult_body().getInfo().getYear());
-                        InfoSingleton.getInstance().setYear(response.body().getResult_body().getInfo().getYear());
-                        tv_avgGrade.setText(response.body().getResult_body().getInfo().getAvgGrade());
-                        tv_early.setText(response.body().getResult_body().getInfo().getEarly());
-                        tv_smart.setText(response.body().getResult_body().getInfo().getSmart());
-
-                        ArrayList<String> title = response.body().getResult_body().getTitle2();
-                        kyo_02.setText(title.get(0).split("교양")[0]);
-                        kyo_03.setText(title.get(1).split("교양")[0]);
-                        kyo_04.setText(title.get(2).split("교양")[0]);
-                        kyo_05.setText(title.get(3).split("교양")[0]);
-
-                        kyo_11.setText(response.body().getResult_body().getNeed().get(1));
-                        kyo_12.setText(response.body().getResult_body().getNeed().get(2));
-                        kyo_13.setText(response.body().getResult_body().getNeed().get(3));
-                        kyo_14.setText(response.body().getResult_body().getNeed().get(4));
-
-                        kyo_21.setText(response.body().getResult_body().getGet().get(1));
-                        kyo_22.setText(response.body().getResult_body().getGet().get(2));
-                        kyo_23.setText(response.body().getResult_body().getGet().get(3));
-                        kyo_24.setText(response.body().getResult_body().getGet().get(4));
-
-                        kyo_31.setText(response.body().getResult_body().getPm().get(1));
-                        if (0 > Integer.parseInt(response.body().getResult_body().getPm().get(1))) {
-                            kyo_31.setTextColor(getResources().getColor(R.color.Red));
-                        }
-                        kyo_32.setText(response.body().getResult_body().getPm().get(2));
-                        if (0 > Integer.parseInt(response.body().getResult_body().getPm().get(2))) {
-                            kyo_32.setTextColor(getResources().getColor(R.color.Red));
-                        }
-                        kyo_33.setText(response.body().getResult_body().getPm().get(3));
-                        if (0 > Integer.parseInt(response.body().getResult_body().getPm().get(3))) {
-                            kyo_33.setTextColor(getResources().getColor(R.color.Red));
-                        }
-                        kyo_34.setText(response.body().getResult_body().getPm().get(4));
-                        if (0 > Integer.parseInt(response.body().getResult_body().getPm().get(4))) {
-                            kyo_34.setTextColor(getResources().getColor(R.color.Red));
-                        }
-
-                        jun_01.setText(response.body().getResult_body().getTitle2().get(6));
-                        jun_02.setText(response.body().getResult_body().getTitle2().get(7));
-
-                        jun_11.setText(response.body().getResult_body().getNeed().get(7));
-                        jun_12.setText(response.body().getResult_body().getNeed().get(8));
-
-                        jun_21.setText(response.body().getResult_body().getGet().get(7));
-                        jun_22.setText(response.body().getResult_body().getGet().get(8));
-
-                        jun_31.setText(response.body().getResult_body().getPm().get(7));
-                        if (0 > Integer.parseInt(response.body().getResult_body().getPm().get(7))) {
-                            jun_31.setTextColor(getResources().getColor(R.color.Red));
-                        }
-                        jun_32.setText(response.body().getResult_body().getPm().get(8));
-                        if (0 > Integer.parseInt(response.body().getResult_body().getPm().get(8))) {
-                            jun_32.setTextColor(getResources().getColor(R.color.Red));
-                        }
-
-                        ja_1.setText(response.body().getResult_body().getNeed().get(10));
-                        ja_2.setText(response.body().getResult_body().getGet().get(10));
-                        ja_3.setText(response.body().getResult_body().getPm().get(10));
-                        if (0 > Integer.parseInt(response.body().getResult_body().getPm().get(10))) {
-                            ja_3.setTextColor(getResources().getColor(R.color.Red));
-                        }
-
-                        hideProgressDialog();
-                    } else {
-                        hideProgressDialog();
-                        log.appendLog("inStu_GradeFragment code not matched");
-                        Toasty.error(getContext(), "불러오기 실패", Toast.LENGTH_SHORT).show();
-                    }
-                }
-
-                @Override
-                public void onFailure(Call<com.donga.examples.boomin.retrofit.retrofitGrad.Master> call, Throwable t) {
-                    hideProgressDialog();
-                    Toasty.error(getContext(), "불러오기 실패", Toast.LENGTH_SHORT).show();
-                    log.appendLog("inStu_GradeFragment failure");
-                    t.printStackTrace();
-                }
-            });
+            manager = new Manager(new AndroidContext(getContext()), Manager.DEFAULT_OPTIONS);
+            database = manager.getDatabase(DB_NAME);
         } catch (Exception e) {
-            e.printStackTrace();
+            Log.e("stu_gradeFragment", "Error getting database", e);
         }
+        sharedPreferences = getContext().getSharedPreferences(getResources().getString(R.string.SFLAG), Context.MODE_PRIVATE);
+//        document = database.getDocument(String.valueOf(sharedPreferences.getInt("stuID", 0)));
+        document = database.getDocument(String.valueOf(sharedPreferences.getInt("stuID", 0))+"GRADE");
 
+        if(document.getProperty("grade") == null) {
+            Logger.d("이프");
+            //retrofit 통신
+            Retrofit client = new Retrofit.Builder().baseUrl(getString(R.string.retrofit_url))
+                    .addConverterFactory(GsonConverterFactory.create()).build();
+            Interface_grad sche = client.create(Interface_grad.class);
+            try {
+                String decryptedStuPw = Decrypt(InfoSingleton.getInstance().getStuPw(), getString(R.string.decrypt_key));
+                Call<Master> call =
+                        sche.getSchedule(InfoSingleton.getInstance().getStuId(), decryptedStuPw);
+                call.enqueue(new Callback<Master>() {
+                    @Override
+                    public void onResponse(Call<com.donga.examples.boomin.retrofit.retrofitGrad.Master> call, Response<Master> response) {
+                        Result_body resultBody = response.body().getResult_body();
+                        if (response.body().getResult_code() == 1) {
+
+                            helloCBL(resultBody);
+
+                            setGradeInfo(resultBody);
+                        } else {
+                            hideProgressDialog();
+                            log.appendLog("inStu_GradeFragment code not matched");
+                            Toasty.error(getContext(), "불러오기 실패", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<com.donga.examples.boomin.retrofit.retrofitGrad.Master> call, Throwable t) {
+                        hideProgressDialog();
+                        Toasty.error(getContext(), "불러오기 실패", Toast.LENGTH_SHORT).show();
+                        log.appendLog("inStu_GradeFragment failure");
+                        t.printStackTrace();
+                    }
+                });
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }else{
+            Logger.d("엘스당, "+document.getProperty("grade"));
+
+            ObjectMapper mapper = new ObjectMapper();
+            Result_body resultBody = mapper.convertValue(document.getProperties().get("grade"), Result_body.class);
+
+            setGradeInfo(resultBody);
+        }
         return rootview;
     }
 
@@ -252,5 +230,94 @@ public class Stu_GrageFragment extends Fragment {
         cipher.init(Cipher.DECRYPT_MODE, keySpec, ivSpec);
         byte[] results = cipher.doFinal(Base64.decode(text, 0));
         return new String(results, "UTF-8");
+    }
+
+    private void helloCBL(Result_body resultBody) {
+
+        sharedPreferences = getContext().getSharedPreferences(getResources().getString(R.string.SFLAG), Context.MODE_PRIVATE);
+
+        // Create the documenteDocument(database);
+        String revDocumentId = String.valueOf(sharedPreferences.getInt("stuID", 0))+"GRADE";
+        String documentId = revDocumentId;
+//        String documentId = String.valueOf(sharedPreferences.getInt("stuID", 0));
+        document = database.getDocument(documentId);
+        Map<String, Object> properties = new HashMap<>();
+        properties.put("grade", resultBody);
+        try {
+            document.putProperties(properties);
+            Log.i("dddddd", String.valueOf(document.getProperty("grade")));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void setGradeInfo(Result_body resultBody){
+        tv_multi.setText(resultBody.getInfo().getMulti());
+        tv_sub.setText(resultBody.getInfo().getSub());
+        tv_year.setText(resultBody.getInfo().getYear());
+        InfoSingleton.getInstance().setYear(resultBody.getInfo().getYear());
+        tv_avgGrade.setText(resultBody.getInfo().getAvgGrade());
+        tv_early.setText(resultBody.getInfo().getEarly());
+        tv_smart.setText(resultBody.getInfo().getSmart());
+
+        ArrayList<String> title = resultBody.getTitle2();
+        kyo_02.setText(title.get(0).split("교양")[0]);
+        kyo_03.setText(title.get(1).split("교양")[0]);
+        kyo_04.setText(title.get(2).split("교양")[0]);
+        kyo_05.setText(title.get(3).split("교양")[0]);
+
+        kyo_11.setText(resultBody.getNeed().get(1));
+        kyo_12.setText(resultBody.getNeed().get(2));
+        kyo_13.setText(resultBody.getNeed().get(3));
+        kyo_14.setText(resultBody.getNeed().get(4));
+
+        kyo_21.setText(resultBody.getGet().get(1));
+        kyo_22.setText(resultBody.getGet().get(2));
+        kyo_23.setText(resultBody.getGet().get(3));
+        kyo_24.setText(resultBody.getGet().get(4));
+
+        kyo_31.setText(resultBody.getPm().get(1));
+        if (0 > Integer.parseInt(resultBody.getPm().get(1))) {
+            kyo_31.setTextColor(getResources().getColor(R.color.Red));
+        }
+        kyo_32.setText(resultBody.getPm().get(2));
+        if (0 > Integer.parseInt(resultBody.getPm().get(2))) {
+            kyo_32.setTextColor(getResources().getColor(R.color.Red));
+        }
+        kyo_33.setText(resultBody.getPm().get(3));
+        if (0 > Integer.parseInt(resultBody.getPm().get(3))) {
+            kyo_33.setTextColor(getResources().getColor(R.color.Red));
+        }
+        kyo_34.setText(resultBody.getPm().get(4));
+        if (0 > Integer.parseInt(resultBody.getPm().get(4))) {
+            kyo_34.setTextColor(getResources().getColor(R.color.Red));
+        }
+
+        jun_01.setText(resultBody.getTitle2().get(6));
+        jun_02.setText(resultBody.getTitle2().get(7));
+
+        jun_11.setText(resultBody.getNeed().get(7));
+        jun_12.setText(resultBody.getNeed().get(8));
+
+        jun_21.setText(resultBody.getGet().get(7));
+        jun_22.setText(resultBody.getGet().get(8));
+
+        jun_31.setText(resultBody.getPm().get(7));
+        if (0 > Integer.parseInt(resultBody.getPm().get(7))) {
+            jun_31.setTextColor(getResources().getColor(R.color.Red));
+        }
+        jun_32.setText(resultBody.getPm().get(8));
+        if (0 > Integer.parseInt(resultBody.getPm().get(8))) {
+            jun_32.setTextColor(getResources().getColor(R.color.Red));
+        }
+
+        ja_1.setText(resultBody.getNeed().get(10));
+        ja_2.setText(resultBody.getGet().get(10));
+        ja_3.setText(resultBody.getPm().get(10));
+        if (0 > Integer.parseInt(resultBody.getPm().get(10))) {
+            ja_3.setTextColor(getResources().getColor(R.color.Red));
+        }
+
+        hideProgressDialog();
     }
 }
