@@ -1,10 +1,13 @@
 package com.donga.examples.boomin.fragment;
 
 import android.app.ProgressDialog;
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.Base64;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,6 +15,11 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.couchbase.lite.CouchbaseLiteException;
+import com.couchbase.lite.Database;
+import com.couchbase.lite.Document;
+import com.couchbase.lite.Manager;
+import com.couchbase.lite.android.AndroidContext;
 import com.donga.examples.boomin.AppendLog;
 import com.donga.examples.boomin.R;
 import com.donga.examples.boomin.Singleton.InfoSingleton;
@@ -22,6 +30,8 @@ import com.orhanobut.logger.Logger;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.crypto.Cipher;
 import javax.crypto.spec.IvParameterSpec;
@@ -40,8 +50,24 @@ import retrofit2.converter.gson.GsonConverterFactory;
  * Created by rhfoq on 2017-02-15.
  */
 public class Stu_ScheFragment extends Fragment {
+    SharedPreferences sharedPreferences;
+    SharedPreferences.Editor editor;
+
+    Document document;
+    Manager manager;
+    Database database;
+
+    public static final String DB_NAME = "app";
+    public static final String TAG = "BOO_HomeActivity";
+
     private ProgressDialog mProgressDialog;
     AppendLog log = new AppendLog();
+
+    ArrayList<TextView> monTvArray = null;
+    ArrayList<TextView> tueTvArray = null;
+    ArrayList<TextView> wedTvArray = null;
+    ArrayList<TextView> thuTvArray = null;
+    ArrayList<TextView> friTvArray = null;
 
     @BindView(R.id.dayLinear)
     LinearLayout dayLinear;
@@ -383,7 +409,8 @@ public class Stu_ScheFragment extends Fragment {
 
         showProgressDialog();
 
-        final ArrayList<TextView> monTvArray = new ArrayList<>();
+
+        monTvArray = new ArrayList<>();
         monTvArray.add(mon1);
         monTvArray.add(mon2);
         monTvArray.add(mon3);
@@ -413,7 +440,7 @@ public class Stu_ScheFragment extends Fragment {
         monTvArray.add(night_mon9);
         monTvArray.add(night_mon10);
 
-        final ArrayList<TextView> tueTvArray = new ArrayList<>();
+        tueTvArray = new ArrayList<>();
         tueTvArray.add(tue1);
         tueTvArray.add(tue2);
         tueTvArray.add(tue3);
@@ -443,7 +470,7 @@ public class Stu_ScheFragment extends Fragment {
         tueTvArray.add(night_tue9);
         tueTvArray.add(night_tue10);
 
-        final ArrayList<TextView> wedTvArray = new ArrayList<>();
+        wedTvArray = new ArrayList<>();
         wedTvArray.add(wed1);
         wedTvArray.add(wed2);
         wedTvArray.add(wed3);
@@ -473,7 +500,7 @@ public class Stu_ScheFragment extends Fragment {
         wedTvArray.add(night_wed9);
         wedTvArray.add(night_wed10);
 
-        final ArrayList<TextView> thuTvArray = new ArrayList<>();
+        thuTvArray = new ArrayList<>();
         thuTvArray.add(thu1);
         thuTvArray.add(thu2);
         thuTvArray.add(thu3);
@@ -503,7 +530,7 @@ public class Stu_ScheFragment extends Fragment {
         thuTvArray.add(night_thu9);
         thuTvArray.add(night_thu10);
 
-        final ArrayList<TextView> friTvArray = new ArrayList<>();
+        friTvArray = new ArrayList<>();
         friTvArray.add(fri1);
         friTvArray.add(fri2);
         friTvArray.add(fri3);
@@ -537,123 +564,57 @@ public class Stu_ScheFragment extends Fragment {
         Retrofit client = new Retrofit.Builder().baseUrl(getString(R.string.retrofit_url))
                 .addConverterFactory(GsonConverterFactory.create()).build();
         Interface_sche sche = client.create(Interface_sche.class);
+
+        manager = null;
+        database = null;
         try {
-            Call<Master> call = sche.getTimeTable(InfoSingleton.getInstance().getStuId(),
-                    Decrypt(InfoSingleton.getInstance().getStuPw(), getString(R.string.decrypt_key)));
-            call.enqueue(new Callback<Master>() {
-                @Override
-                public void onResponse(Call<Master> call, Response<Master> response) {
-                    int currentMinTime = 21;
-                    int currentMaxTime = 0;
-                    if(response.body().getResult_code() == 1){
-                        ArrayList<String> codeArray = new ArrayList<String>();
-                        String[] colorArray = getResources().getStringArray(R.array.colorArray);
-                        ArrayList<String> colorArray2 = new ArrayList(Arrays.asList(colorArray));
-                        ArrayList<ArrayList<String>> resultBody = response.body().getResult_body();
-//                        ArrayList<ArrayList<String>> resultBody = new ArrayList<ArrayList<String>>();
-//                        ArrayList<String> testArray = new ArrayList<String>();
-//                        testArray.add("MIS666");
-//                        testArray.add("03");
-//                        testArray.add("야간수업임");
-//                        testArray.add("3");
-//                        testArray.add("강사");
-//                        testArray.add("수21-24(BB-0704 부민)");
-//                        testArray.add("  \r\n\t\t\t\t\t\t      \r\n\t\t\t\t\t\t ");
-//                        testArray.add("확정");
-//                        testArray.add("");
-//                        testArray.add("자유선택");
-//                        resultBody.add(testArray);
-
-                        for(int i = 0; i < resultBody.size(); i++){
-                            String get5string = resultBody.get(i).get(5);
-//                            String get5string = "수21-24(BC-0106 부민)";
-                            if(!get5string.equals("")){
-                                if(!codeArray.contains(resultBody.get(i).get(0))){
-                                    codeArray.add(resultBody.get(i).get(0));
-                                }
-                                if(Integer.parseInt(get5string.substring(1, get5string.indexOf("-")))<currentMinTime){
-                                    currentMinTime = Integer.parseInt(get5string.substring(1, get5string.indexOf("-")));
-                                    ScheduleSingleton.getInstance().setCurrentMinTime(currentMinTime);
-                                }
-                                if(Integer.parseInt(get5string.substring(get5string.indexOf("-")+1, get5string.indexOf("(")))>currentMaxTime){
-                                    currentMaxTime = Integer.parseInt(get5string.substring(get5string.indexOf("-")+1, get5string.indexOf("(")));
-                                    ScheduleSingleton.getInstance().setCurrentMaxTime(currentMaxTime);
-                                }
-
-                                switch (get5string.substring(0, 1)){
-                                    case "월" :
-                                        setText(monTvArray, get5string, resultBody, i);
-                                        setColor(get5string, monTvArray, colorArray2, codeArray);
-                                        break;
-                                    case "화" :
-                                        setText(tueTvArray, get5string, resultBody, i);
-                                        setColor(get5string, tueTvArray, colorArray2, codeArray);
-                                        break;
-                                    case "수" :
-                                        setText(wedTvArray, get5string, resultBody, i);
-                                        setColor(get5string, wedTvArray, colorArray2, codeArray);
-                                        break;
-                                    case "목" :
-                                        setText(thuTvArray, get5string, resultBody, i);
-                                        setColor(get5string, thuTvArray, colorArray2, codeArray);
-                                        break;
-                                    case "금" :
-                                        setText(friTvArray, get5string, resultBody, i);
-                                        setColor(get5string, friTvArray, colorArray2, codeArray);
-                                        break;
-                                    default:
-                                        Logger.d("default");
-                                        break;
-                                }
-                            }
-                        }
-
-                        if(2<currentMinTime && currentMaxTime<21){
-                            //주간
-                            Logger.d("이것은 주간");
-                            nightLinear.setVisibility(View.GONE);
-                            timeLinear.setVisibility(View.GONE);
-                            monLinear.setVisibility(View.GONE);
-                            tueLinear.setVisibility(View.GONE);
-                            wedLinear.setVisibility(View.GONE);
-                            thuLinear.setVisibility(View.GONE);
-                            friLinear.setVisibility(View.GONE);
-                        }else if(20<currentMinTime){
-                            //야간
-                            Logger.d("이것은 야간, "+currentMinTime);
-                            dayLinear.setVisibility(View.GONE);
-                            timeNight.setVisibility(View.VISIBLE);
-                            monNight.setVisibility(View.VISIBLE);
-                            tueNight.setVisibility(View.VISIBLE);
-                            wedNight.setVisibility(View.VISIBLE);
-                            thuNight.setVisibility(View.VISIBLE);
-                            friNight.setVisibility(View.VISIBLE);
-                        }else {
-                            //주야간
-                            Logger.d("이것은 주간야간, "+currentMinTime);
-                        }
-
-                        hideProgressDialog();
-                    }else{
-                        hideProgressDialog();
-                        Toasty.error(getContext(), "불러오기 실패", Toast.LENGTH_SHORT).show();
-                        log.appendLog("inScheFragment code not matched");
-                    }
-                }
-
-                @Override
-                public void onFailure(Call<Master> call, Throwable t) {
-                    Toasty.error(getContext(), "불러오기 실패", Toast.LENGTH_SHORT).show();
-                    log.appendLog("inScheFragment failure");
-                    hideProgressDialog();
-                    t.printStackTrace();
-                }
-            });
+            manager = new Manager(new AndroidContext(getContext()), Manager.DEFAULT_OPTIONS);
+            database = manager.getDatabase(DB_NAME);
         } catch (Exception e) {
-            log.appendLog("inScheFragment exception");
+            Log.e(TAG, "Error getting database", e);
+        }
+        sharedPreferences = getContext().getSharedPreferences(getResources().getString(R.string.SFLAG), Context.MODE_PRIVATE);
+        document = database.getDocument(String.valueOf(sharedPreferences.getInt("stuID", 0)));
+
+        if (document.getProperty("properties") == null) {
+            try {
+                Logger.d("이프없당");
+                Call<Master> call = sche.getTimeTable(InfoSingleton.getInstance().getStuId(),
+                        Decrypt(InfoSingleton.getInstance().getStuPw(), getString(R.string.decrypt_key)));
+                call.enqueue(new Callback<Master>() {
+                    @Override
+                    public void onResponse(Call<Master> call, Response<Master> response) {
+                        if(response.body().getResult_code() == 1){
+                            ArrayList<ArrayList<String>> resultBody = response.body().getResult_body();
+                            helloCBL(resultBody);
+                            setSchedule(resultBody);
+                            hideProgressDialog();
+                        }else{
+                            hideProgressDialog();
+                            Toasty.error(getContext(), "불러오기 실패", Toast.LENGTH_SHORT).show();
+                            log.appendLog("inScheFragment code not matched");
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<Master> call, Throwable t) {
+                        Toasty.error(getContext(), "불러오기 실패", Toast.LENGTH_SHORT).show();
+                        log.appendLog("inScheFragment failure");
+                        hideProgressDialog();
+                        t.printStackTrace();
+                    }
+                });
+            } catch (Exception e) {
+                log.appendLog("inScheFragment exception");
+                hideProgressDialog();
+                Toasty.error(getContext(), "불러오기 실패", Toast.LENGTH_SHORT).show();
+                e.printStackTrace();
+            }
+        } else{
+            Logger.d("엘스");
+            ArrayList<ArrayList<String>> resultBody = (ArrayList<ArrayList<String>>)document.getProperties().get("properties");
+            setSchedule(resultBody);
             hideProgressDialog();
-            Toasty.error(getContext(), "불러오기 실패", Toast.LENGTH_SHORT).show();
-            e.printStackTrace();
         }
 
         return rootview;
@@ -695,7 +656,7 @@ public class Stu_ScheFragment extends Fragment {
         int end = Integer.parseInt(get5string.substring(get5string.indexOf("-")+1, get5string.indexOf("(")));
         tvArray.get(start).setText(get5string.substring(get5string.indexOf("(")+1, get5string.indexOf(" ")));
         tvArray.get(start+1).setText(resultBody.get(i).get(2));
-        tvArray.get(start+2).setText(resultBody.get(i).get(4));
+//        tvArray.get(start+2).setText(resultBody.get(i).get(4));
 //        Logger.d(end-(start+3)+1);
     }
 
@@ -711,6 +672,115 @@ public class Stu_ScheFragment extends Fragment {
             if((end-(start+3)+1)==4){
                 tvArray.get(start+3).setBackgroundColor(Color.parseColor(colorArray2.get(j)));
             }
+        }
+    }
+
+
+    private void helloCBL(ArrayList<ArrayList<String>> resultBody) {
+
+        sharedPreferences = getContext().getSharedPreferences(getResources().getString(R.string.SFLAG), Context.MODE_PRIVATE);
+        editor = sharedPreferences.edit();
+
+        // Create the documenteDocument(database);
+        String documentId = String.valueOf(sharedPreferences.getInt("stuID", 0));
+        // stuID라는 이름의 Document 생성
+        document = database.getDocument(documentId);
+        Map<String, Object> properties = new HashMap<>();
+        // properties 형식 안에 "properties"라는 이름의 resultBody를 put
+        properties.put("properties", resultBody);
+        try {
+            document.putProperties(properties);
+            Log.i("dddddd", String.valueOf(document.getProperties()));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void updateDoc(Database database, String documentId) {
+        Document document = database.getDocument(documentId);
+        try {
+            // Update the document with more data
+            Map<String, Object> updatedProperties = new HashMap<String, Object>();
+            updatedProperties.putAll(document.getProperties());
+            updatedProperties.put("eventDescription", "Everyone is invited!");
+            updatedProperties.put("address", "123 Elm St.");
+            // Save to the Couchbase local Couchbase Lite DB
+            document.putProperties(updatedProperties);
+        } catch (CouchbaseLiteException e) {
+            Log.e(TAG, "Error putting", e);
+        }
+    }
+
+    public void setSchedule(ArrayList<ArrayList<String>> resultBody){
+        ArrayList<String> codeArray = new ArrayList<String>();
+        String[] colorArray = getResources().getStringArray(R.array.colorArray);
+        ArrayList<String> colorArray2 = new ArrayList(Arrays.asList(colorArray));
+        int currentMinTime = 21;
+        int currentMaxTime = 0;
+
+        for(int i = 0; i < resultBody.size(); i++){
+            String get5string = resultBody.get(i).get(5);
+            if(!get5string.equals("")){
+                if(!codeArray.contains(resultBody.get(i).get(0))){
+                    codeArray.add(resultBody.get(i).get(0));
+                }
+                if(Integer.parseInt(get5string.substring(1, get5string.indexOf("-")))<currentMinTime){
+                    currentMinTime = Integer.parseInt(get5string.substring(1, get5string.indexOf("-")));
+                    ScheduleSingleton.getInstance().setCurrentMinTime(currentMinTime);
+                }
+                if(Integer.parseInt(get5string.substring(get5string.indexOf("-")+1, get5string.indexOf("(")))>currentMaxTime){
+                    currentMaxTime = Integer.parseInt(get5string.substring(get5string.indexOf("-")+1, get5string.indexOf("(")));
+                    ScheduleSingleton.getInstance().setCurrentMaxTime(currentMaxTime);
+                }
+
+                switch (get5string.substring(0, 1)){
+                    case "월" :
+                        setText(monTvArray, get5string, resultBody, i);
+                        setColor(get5string, monTvArray, colorArray2, codeArray);
+                        break;
+                    case "화" :
+                        setText(tueTvArray, get5string, resultBody, i);
+                        setColor(get5string, tueTvArray, colorArray2, codeArray);
+                        break;
+                    case "수" :
+                        setText(wedTvArray, get5string, resultBody, i);
+                        setColor(get5string, wedTvArray, colorArray2, codeArray);
+                        break;
+                    case "목" :
+                        setText(thuTvArray, get5string, resultBody, i);
+                        setColor(get5string, thuTvArray, colorArray2, codeArray);
+                        break;
+                    case "금" :
+                        setText(friTvArray, get5string, resultBody, i);
+                        setColor(get5string, friTvArray, colorArray2, codeArray);
+                        break;
+                    default:
+                        Logger.d("default");
+                        break;
+                }
+            }
+        }
+
+        if(2<currentMinTime && currentMaxTime<21){
+            //주간
+            nightLinear.setVisibility(View.GONE);
+            timeLinear.setVisibility(View.GONE);
+            monLinear.setVisibility(View.GONE);
+            tueLinear.setVisibility(View.GONE);
+            wedLinear.setVisibility(View.GONE);
+            thuLinear.setVisibility(View.GONE);
+            friLinear.setVisibility(View.GONE);
+        }else if(20<currentMinTime){
+            //야간
+            dayLinear.setVisibility(View.GONE);
+            timeNight.setVisibility(View.VISIBLE);
+            monNight.setVisibility(View.VISIBLE);
+            tueNight.setVisibility(View.VISIBLE);
+            wedNight.setVisibility(View.VISIBLE);
+            thuNight.setVisibility(View.VISIBLE);
+            friNight.setVisibility(View.VISIBLE);
+        }else {
+            //주야간
         }
     }
 }
