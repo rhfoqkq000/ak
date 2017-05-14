@@ -150,7 +150,7 @@ public class EmptyActivity extends AppCompatActivity
                 }
             }
         });
-        fab.setBackgroundTintList(ColorStateList.valueOf(Color.parseColor("#A2D4AB")));
+        fab.setBackgroundTintList(ColorStateList.valueOf(Color.parseColor("#c1e1eb")));
     }
 
     @OnClick(R.id.fab_empty)
