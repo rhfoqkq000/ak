@@ -6,6 +6,12 @@
     android:weightSum="14">
     <!--주간 시간표-->
     <!--요기-->
+    <android.support.v4.widget.SwipeRefreshLayout
+        android:id="@+id/swiper"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="12dp">
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -1051,6 +1057,10 @@
         </LinearLayout>
 
     </LinearLayout>
+
+    </android.support.v4.widget.SwipeRefreshLayout>
+
+
     <!--야간 시간표-->
     <LinearLayout
         android:layout_width="match_parent"

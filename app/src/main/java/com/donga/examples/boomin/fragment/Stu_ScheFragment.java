@@ -6,6 +6,7 @@ import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.util.Base64;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -409,6 +410,16 @@ public class Stu_ScheFragment extends Fragment {
 
         showProgressDialog();
 
+        final SwipeRefreshLayout swipeRefreshLayout = (SwipeRefreshLayout) rootview.findViewById(R.id.swiper);
+        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                showProgressDialog();
+                retrofitSche();
+                swipeRefreshLayout.setRefreshing(false);
+                hideProgressDialog();
+            }
+        });
 
         monTvArray = new ArrayList<>();
         monTvArray.add(mon1);
@@ -577,33 +588,35 @@ public class Stu_ScheFragment extends Fragment {
         document = database.getDocument(String.valueOf(sharedPreferences.getInt("stuID", 0)));
 
         if (document.getProperty("properties") == null) {
-            try {
+                try {
                 Logger.d("이프없당");
-                Call<Master> call = sche.getTimeTable(InfoSingleton.getInstance().getStuId(),
-                        Decrypt(InfoSingleton.getInstance().getStuPw(), getString(R.string.decrypt_key)));
-                call.enqueue(new Callback<Master>() {
-                    @Override
-                    public void onResponse(Call<Master> call, Response<Master> response) {
-                        if(response.body().getResult_code() == 1){
-                            ArrayList<ArrayList<String>> resultBody = response.body().getResult_body();
-                            helloCBL(resultBody);
-                            setSchedule(resultBody);
-                            hideProgressDialog();
-                        }else{
-                            hideProgressDialog();
-                            Toasty.error(getContext(), "불러오기 실패", Toast.LENGTH_SHORT).show();
-                            log.appendLog("inScheFragment code not matched");
-                        }
-                    }
 
-                    @Override
-                    public void onFailure(Call<Master> call, Throwable t) {
-                        Toasty.error(getContext(), "불러오기 실패", Toast.LENGTH_SHORT).show();
-                        log.appendLog("inScheFragment failure");
-                        hideProgressDialog();
-                        t.printStackTrace();
-                    }
-                });
+                retrofitSche();
+//                Call<Master> call = sche.getTimeTable(InfoSingleton.getInstance().getStuId(),
+//                        Decrypt(InfoSingleton.getInstance().getStuPw(), getString(R.string.decrypt_key)));
+//                call.enqueue(new Callback<Master>() {
+//                    @Override
+//                    public void onResponse(Call<Master> call, Response<Master> response) {
+//                        if(response.body().getResult_code() == 1){
+//                            ArrayList<ArrayList<String>> resultBody = response.body().getResult_body();
+//                            helloCBL(resultBody);
+//                            setSchedule(resultBody);
+//                            hideProgressDialog();
+//                        }else{
+//                            hideProgressDialog();
+//                            Toasty.error(getContext(), "불러오기 실패", Toast.LENGTH_SHORT).show();
+//                            log.appendLog("inScheFragment code not matched");
+//                        }
+//                    }
+//
+//                    @Override
+//                    public void onFailure(Call<Master> call, Throwable t) {
+//                        Toasty.error(getContext(), "불러오기 실패", Toast.LENGTH_SHORT).show();
+//                        log.appendLog("inScheFragment failure");
+//                        hideProgressDialog();
+//                        t.printStackTrace();
+//                    }
+//                });
             } catch (Exception e) {
                 log.appendLog("inScheFragment exception");
                 hideProgressDialog();
@@ -685,14 +698,17 @@ public class Stu_ScheFragment extends Fragment {
         String documentId = String.valueOf(sharedPreferences.getInt("stuID", 0));
         // stuID라는 이름의 Document 생성
         document = database.getDocument(documentId);
-        Map<String, Object> properties = new HashMap<>();
-        // properties 형식 안에 "properties"라는 이름의 resultBody를 put
-        properties.put("properties", resultBody);
-        try {
-            document.putProperties(properties);
-            Log.i("dddddd", String.valueOf(document.getProperties()));
-        } catch (Exception e) {
-            e.printStackTrace();
+
+        if (document.getProperty("properties") == null){
+            Map<String, Object> properties = new HashMap<>();
+            // properties 형식 안에 "properties"라는 이름의 resultBody를 put
+            properties.put("properties", resultBody);
+            try {
+                document.putProperties(properties);
+                Log.i("dddddd", String.valueOf(document.getProperties()));
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         }
     }
 
@@ -782,5 +798,42 @@ public class Stu_ScheFragment extends Fragment {
         }else {
             //주야간
         }
+    }
+
+    public void retrofitSche(){
+        Retrofit client = new Retrofit.Builder().baseUrl(getString(R.string.retrofit_url))
+                .addConverterFactory(GsonConverterFactory.create()).build();
+        Interface_sche sche = client.create(Interface_sche.class);
+
+        Call<Master> call = null;
+        try {
+            call = sche.getTimeTable(InfoSingleton.getInstance().getStuId(),
+                    Decrypt(InfoSingleton.getInstance().getStuPw(), getString(R.string.decrypt_key)));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        call.enqueue(new Callback<Master>() {
+            @Override
+            public void onResponse(Call<Master> call, Response<Master> response) {
+                if(response.body().getResult_code() == 1){
+                    ArrayList<ArrayList<String>> resultBody = response.body().getResult_body();
+                    helloCBL(resultBody);
+                    setSchedule(resultBody);
+                    hideProgressDialog();
+                }else{
+                    hideProgressDialog();
+                    Toasty.error(getContext(), "불러오기 실패", Toast.LENGTH_SHORT).show();
+                    log.appendLog("inScheFragment code not matched");
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Master> call, Throwable t) {
+                Toasty.error(getContext(), "불러오기 실패", Toast.LENGTH_SHORT).show();
+                log.appendLog("inScheFragment failure");
+                hideProgressDialog();
+                t.printStackTrace();
+            }
+        });
     }
 }

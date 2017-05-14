@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.util.Base64;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -138,6 +139,17 @@ public class Stu_GrageFragment extends Fragment {
         final View rootview = inflater.inflate(R.layout.fragment_grades, container, false);
         ButterKnife.bind(this, rootview);
 
+        final SwipeRefreshLayout swipeRefreshLayout = (SwipeRefreshLayout) rootview.findViewById(R.id.swiper);
+        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                showProgressDialog();
+                retrofitGrade();
+                swipeRefreshLayout.setRefreshing(false);
+                hideProgressDialog();
+            }
+        });
+
         showProgressDialog();
 
         manager = null;
@@ -154,41 +166,8 @@ public class Stu_GrageFragment extends Fragment {
 
         if(document.getProperty("grade") == null) {
             Logger.d("이프");
-            //retrofit 통신
-            Retrofit client = new Retrofit.Builder().baseUrl(getString(R.string.retrofit_url))
-                    .addConverterFactory(GsonConverterFactory.create()).build();
-            Interface_grad sche = client.create(Interface_grad.class);
-            try {
-                String decryptedStuPw = Decrypt(InfoSingleton.getInstance().getStuPw(), getString(R.string.decrypt_key));
-                Call<Master> call =
-                        sche.getSchedule(InfoSingleton.getInstance().getStuId(), decryptedStuPw);
-                call.enqueue(new Callback<Master>() {
-                    @Override
-                    public void onResponse(Call<com.donga.examples.boomin.retrofit.retrofitGrad.Master> call, Response<Master> response) {
-                        Result_body resultBody = response.body().getResult_body();
-                        if (response.body().getResult_code() == 1) {
 
-                            helloCBL(resultBody);
-
-                            setGradeInfo(resultBody);
-                        } else {
-                            hideProgressDialog();
-                            log.appendLog("inStu_GradeFragment code not matched");
-                            Toasty.error(getContext(), "불러오기 실패", Toast.LENGTH_SHORT).show();
-                        }
-                    }
-
-                    @Override
-                    public void onFailure(Call<com.donga.examples.boomin.retrofit.retrofitGrad.Master> call, Throwable t) {
-                        hideProgressDialog();
-                        Toasty.error(getContext(), "불러오기 실패", Toast.LENGTH_SHORT).show();
-                        log.appendLog("inStu_GradeFragment failure");
-                        t.printStackTrace();
-                    }
-                });
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
+            retrofitGrade();
         }else{
             Logger.d("엘스당, "+document.getProperty("grade"));
 
@@ -241,13 +220,16 @@ public class Stu_GrageFragment extends Fragment {
         String documentId = revDocumentId;
 //        String documentId = String.valueOf(sharedPreferences.getInt("stuID", 0));
         document = database.getDocument(documentId);
-        Map<String, Object> properties = new HashMap<>();
-        properties.put("grade", resultBody);
-        try {
-            document.putProperties(properties);
-            Log.i("dddddd", String.valueOf(document.getProperty("grade")));
-        } catch (Exception e) {
-            e.printStackTrace();
+        if (document.getProperty("grade") == null) {
+
+            Map<String, Object> properties = new HashMap<>();
+            properties.put("grade", resultBody);
+            try {
+                document.putProperties(properties);
+                Log.i("dddddd", String.valueOf(document.getProperty("grade")));
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         }
     }
 
@@ -319,5 +301,46 @@ public class Stu_GrageFragment extends Fragment {
         }
 
         hideProgressDialog();
+    }
+
+    public void retrofitGrade(){
+        //retrofit 통신
+        Retrofit client = new Retrofit.Builder().baseUrl(getString(R.string.retrofit_url))
+                .addConverterFactory(GsonConverterFactory.create()).build();
+        Interface_grad sche = client.create(Interface_grad.class);
+        try {
+            Call<Master> call =
+                    sche.getSchedule(InfoSingleton.getInstance().getStuId(),
+                            Decrypt(InfoSingleton.getInstance().getStuPw(), getString(R.string.decrypt_key)));
+            call.enqueue(new Callback<Master>() {
+                @Override
+                public void onResponse(Call<com.donga.examples.boomin.retrofit.retrofitGrad.Master> call, Response<Master> response) {
+                    Result_body resultBody = response.body().getResult_body();
+                    if (response.body().getResult_code() == 1) {
+
+                        helloCBL(resultBody);
+
+                        setGradeInfo(resultBody);
+                    } else {
+                        hideProgressDialog();
+                        log.appendLog("inStu_GradeFragment code not matched");
+                        Toasty.error(getContext(), "불러오기 실패", Toast.LENGTH_SHORT).show();
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<com.donga.examples.boomin.retrofit.retrofitGrad.Master> call, Throwable t) {
+                    hideProgressDialog();
+                    Toasty.error(getContext(), "불러오기 실패", Toast.LENGTH_SHORT).show();
+                    log.appendLog("inStu_GradeFragment failure");
+                    t.printStackTrace();
+                }
+            });
+        } catch (Exception e) {
+            hideProgressDialog();
+            Toasty.error(getContext(), "불러오기 실패", Toast.LENGTH_SHORT).show();
+            log.appendLog("inStu_GradeFragment failure");
+            e.printStackTrace();
+        }
     }
 }
