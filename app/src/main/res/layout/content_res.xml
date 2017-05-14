@@ -57,7 +57,7 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:background="#F2F2F2"
+                android:background="#F7F7F7"
                 android:orientation="vertical">
 
                 <TextView
@@ -67,7 +67,7 @@
                     android:gravity="center"
                     android:padding="10dp"
                     android:text="국제회관 기숙사"
-                    android:textColor="#5a5a5a"
+                    android:textColor="#3A4B5A"
                     android:textSize="19dp"
                     android:textStyle="bold" />
 
@@ -92,7 +92,7 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:background="#F2F2F2"
+                android:background="#F7F7F7"
                 android:orientation="vertical">
 
                 <TextView
@@ -102,7 +102,7 @@
                     android:gravity="center"
                     android:padding="10dp"
                     android:text="부민(교직원)"
-                    android:textColor="#5a5a5a"
+                    android:textColor="#3A4B5A"
                     android:textSize="19dp"
                     android:textStyle="bold" />
 
@@ -128,7 +128,7 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:background="#F2F2F2"
+                android:background="#F7F7F7"
                 android:orientation="vertical">
 
                 <TextView
@@ -138,7 +138,7 @@
                     android:gravity="center"
                     android:padding="10dp"
                     android:text="강의동학생회관"
-                    android:textColor="#5a5a5a"
+                    android:textColor="#3A4B5A"
                     android:textSize="19dp"
                     android:textStyle="bold" />
 
