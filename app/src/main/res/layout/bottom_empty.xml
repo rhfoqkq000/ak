@@ -5,7 +5,7 @@
     android:id="@+id/bottom"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="#D8D8D8"
+    android:background="#EBEBEB"
     android:orientation="vertical"
     android:paddingBottom="10dp"
     app:behavior_hideable="true"
@@ -118,7 +118,7 @@
             android:background="#000000FF"
             android:onClick="onButtonClick"
             android:text="확인"
-            android:textColor="#fff"
+            android:textColor="#3A4B5A"
             android:textSize="18dp" />
     </android.support.v7.widget.CardView>
 </GridLayout>

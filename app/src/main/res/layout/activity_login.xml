@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/gra"
+    android:background="#fff"
     android:cacheColorHint="#00000000"
     android:gravity="center_vertical"
     android:orientation="vertical">
@@ -10,13 +10,24 @@
     <ImageView
         android:layout_width="186dp"
         android:layout_height="70dp"
-        android:layout_gravity="center_horizontal"
+        android:id="@+id/login_image"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="70dp"
         android:layout_marginBottom="50dp"
         android:src="@drawable/login" />
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="150dp"
+        android:id="@+id/bottom_image"
+        android:scaleType="fitXY"
+        android:layout_alignParentBottom="true"
+        android:src="@drawable/newsplash" />
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:id="@+id/login_input"
+        android:layout_above="@+id/login_bt"
         android:orientation="vertical"
         android:paddingBottom="25dp"
         android:paddingLeft="30dp"
@@ -27,13 +38,13 @@
             android:id="@+id/s_id"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:backgroundTint="#fff"
+            android:backgroundTint="#b5b5b5"
             android:drawableLeft="@drawable/user"
             android:drawablePadding="10dp"
             android:hint="학번을 입력하세요."
             android:inputType="number"
             android:paddingBottom="20dp"
-            android:textColorHint="#fff" />
+            android:textColorHint="#b5b5b5" />
 
         <EditText
             android:id="@+id/s_pw"
@@ -41,27 +52,29 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="10dp"
-            android:backgroundTint="#fff"
+            android:backgroundTint="#b5b5b5"
             android:drawableLeft="@drawable/lock"
             android:drawablePadding="10dp"
             android:ems="30"
             android:hint="비밀번호를 입력하세요."
             android:inputType="textPassword"
             android:paddingBottom="20dp"
-            android:textColorHint="#fff" />
+            android:textColorHint="#b5b5b5" />
     </LinearLayout>
 
     <Button
         android:id="@+id/login_bt"
+        android:layout_above="@+id/bottom_image"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="40dp"
         android:layout_marginRight="40dp"
+        android:layout_marginBottom="30dp"
         android:background="@drawable/round"
         android:paddingBottom="10dp"
         android:paddingTop="10dp"
         android:text="로그인"
-        android:textColor="@color/four"
+        android:textColor="#58AFAC"
         android:textStyle="bold" />
 
-</LinearLayout>
+</RelativeLayout>
