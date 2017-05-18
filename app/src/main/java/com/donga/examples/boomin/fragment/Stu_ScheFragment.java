@@ -4,6 +4,7 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -60,6 +61,7 @@ public class Stu_ScheFragment extends Fragment {
 
     public static final String DB_NAME = "app";
     public static final String TAG = "BOO_HomeActivity";
+    String blank = "";
 
     private ProgressDialog mProgressDialog;
     AppendLog log = new AppendLog();
@@ -571,11 +573,6 @@ public class Stu_ScheFragment extends Fragment {
         friTvArray.add(night_fri9);
         friTvArray.add(night_fri10);
 
-        //retrofit 통신
-        Retrofit client = new Retrofit.Builder().baseUrl(getString(R.string.retrofit_url))
-                .addConverterFactory(GsonConverterFactory.create()).build();
-        Interface_sche sche = client.create(Interface_sche.class);
-
         manager = null;
         database = null;
         try {
@@ -592,31 +589,6 @@ public class Stu_ScheFragment extends Fragment {
                 Logger.d("이프없당");
 
                 retrofitSche();
-//                Call<Master> call = sche.getTimeTable(InfoSingleton.getInstance().getStuId(),
-//                        Decrypt(InfoSingleton.getInstance().getStuPw(), getString(R.string.decrypt_key)));
-//                call.enqueue(new Callback<Master>() {
-//                    @Override
-//                    public void onResponse(Call<Master> call, Response<Master> response) {
-//                        if(response.body().getResult_code() == 1){
-//                            ArrayList<ArrayList<String>> resultBody = response.body().getResult_body();
-//                            helloCBL(resultBody);
-//                            setSchedule(resultBody);
-//                            hideProgressDialog();
-//                        }else{
-//                            hideProgressDialog();
-//                            Toasty.error(getContext(), "불러오기 실패", Toast.LENGTH_SHORT).show();
-//                            log.appendLog("inScheFragment code not matched");
-//                        }
-//                    }
-//
-//                    @Override
-//                    public void onFailure(Call<Master> call, Throwable t) {
-//                        Toasty.error(getContext(), "불러오기 실패", Toast.LENGTH_SHORT).show();
-//                        log.appendLog("inScheFragment failure");
-//                        hideProgressDialog();
-//                        t.printStackTrace();
-//                    }
-//                });
             } catch (Exception e) {
                 log.appendLog("inScheFragment exception");
                 hideProgressDialog();
@@ -668,7 +640,12 @@ public class Stu_ScheFragment extends Fragment {
         int start = Integer.parseInt(get5string.substring(1, get5string.indexOf("-")))-3;
         int end = Integer.parseInt(get5string.substring(get5string.indexOf("-")+1, get5string.indexOf("(")));
         tvArray.get(start).setText(get5string.substring(get5string.indexOf("(")+1, get5string.indexOf(" ")));
-        tvArray.get(start+1).setText(resultBody.get(i).get(2));
+        if(!resultBody.get(i).get(3).equals("")){
+            blank = resultBody.get(i).get(3);
+            tvArray.get(start+1).setText(resultBody.get(i).get(3));
+        }else{
+            tvArray.get(start+1).setText(blank);
+        }
 //        tvArray.get(start+2).setText(resultBody.get(i).get(4));
 //        Logger.d(end-(start+3)+1);
     }
@@ -735,18 +712,22 @@ public class Stu_ScheFragment extends Fragment {
         int currentMaxTime = 0;
 
         for(int i = 0; i < resultBody.size(); i++){
-            String get5string = resultBody.get(i).get(5);
+            String get5string = resultBody.get(i).get(6);
             if(!get5string.equals("")){
-                if(!codeArray.contains(resultBody.get(i).get(0))){
-                    codeArray.add(resultBody.get(i).get(0));
-                }
-                if(Integer.parseInt(get5string.substring(1, get5string.indexOf("-")))<currentMinTime){
-                    currentMinTime = Integer.parseInt(get5string.substring(1, get5string.indexOf("-")));
-                    ScheduleSingleton.getInstance().setCurrentMinTime(currentMinTime);
-                }
-                if(Integer.parseInt(get5string.substring(get5string.indexOf("-")+1, get5string.indexOf("(")))>currentMaxTime){
-                    currentMaxTime = Integer.parseInt(get5string.substring(get5string.indexOf("-")+1, get5string.indexOf("(")));
-                    ScheduleSingleton.getInstance().setCurrentMaxTime(currentMaxTime);
+                if(!get5string.equals(" ")) {
+                    if(!resultBody.get(i).get(1).equals("")){
+                        if (!codeArray.contains(resultBody.get(i).get(1))) {
+                            codeArray.add(resultBody.get(i).get(1));
+                        }
+                    }
+                    if (Integer.parseInt(get5string.substring(1, get5string.indexOf("-"))) < currentMinTime) {
+                        currentMinTime = Integer.parseInt(get5string.substring(1, get5string.indexOf("-")));
+                        ScheduleSingleton.getInstance().setCurrentMinTime(currentMinTime);
+                    }
+                    if (Integer.parseInt(get5string.substring(get5string.indexOf("-") + 1, get5string.indexOf("("))) > currentMaxTime) {
+                        currentMaxTime = Integer.parseInt(get5string.substring(get5string.indexOf("-") + 1, get5string.indexOf("(")));
+                        ScheduleSingleton.getInstance().setCurrentMaxTime(currentMaxTime);
+                    }
                 }
 
                 switch (get5string.substring(0, 1)){

@@ -165,6 +165,7 @@ public class EmptyActivity extends AppCompatActivity
     @OnClick(R.id.bottom_button2)
     void onBottomButtonClicked() {
         behavior.setState(BottomSheetBehavior.STATE_HIDDEN);
+        fab.setImageResource(R.drawable.uup);
 
         String empty_day_day = empty_day.getSelectedItem().toString();
 
