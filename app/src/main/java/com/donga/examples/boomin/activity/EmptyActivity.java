@@ -150,7 +150,7 @@ public class EmptyActivity extends AppCompatActivity
                 }
             }
         });
-        fab.setBackgroundTintList(ColorStateList.valueOf(Color.parseColor("#c1e1eb")));
+        fab.setBackgroundTintList(ColorStateList.valueOf(Color.parseColor("#a2d4ab")));
     }
 
     @OnClick(R.id.fab_empty)
@@ -165,6 +165,7 @@ public class EmptyActivity extends AppCompatActivity
     @OnClick(R.id.bottom_button2)
     void onBottomButtonClicked() {
         behavior.setState(BottomSheetBehavior.STATE_HIDDEN);
+        fab.setImageResource(R.drawable.uup);
 
         String empty_day_day = empty_day.getSelectedItem().toString();
 
