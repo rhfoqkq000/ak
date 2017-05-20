@@ -2,7 +2,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#c1e1eb"
+    android:background="@color/one"
     android:paddingBottom="7dp"
     android:paddingTop="7dp">
 
@@ -12,7 +12,7 @@
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
         android:text="경영대"
-        android:textColor="#3A4B5A"
+        android:textColor="#000"
         android:textSize="20dp"
         android:textStyle="bold" />
 </RelativeLayout>

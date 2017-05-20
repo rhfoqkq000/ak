@@ -20,7 +20,7 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="0.5"
-            android:background="#c1e1eb"
+            android:background="#a2d4ab"
             android:padding="10dp">
 
             <TextView
@@ -35,7 +35,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_margin="35dp"
-                android:src="@drawable/restsu" />
+                android:src="@drawable/rest" />
         </RelativeLayout>
 
 
@@ -44,14 +44,14 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="0.5"
-            android:background="#fff"
+            android:background="#fcfcfc"
             android:padding="10dp">
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="열람실"
-                android:textColor="#5FA8C0"
+                android:textColor="#547A82"
                 android:textSize="20dp"
                 android:textStyle="bold" />
 
@@ -59,7 +59,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_margin="35dp"
-                android:src="@drawable/roomsu" />
+                android:src="@drawable/room" />
         </RelativeLayout>
 
     </LinearLayout>
@@ -78,14 +78,14 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="0.5"
-            android:background="#fff"
+            android:background="#fcfcfc"
             android:padding="10dp">
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="To. 교수님"
-                android:textColor="#5FA8C0"
+                android:textColor="#547A82"
                 android:textSize="20dp"
                 android:textStyle="bold" />
 
@@ -93,7 +93,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_margin="35dp"
-                android:src="@drawable/profsu" />
+                android:src="@drawable/prof" />
         </RelativeLayout>
 
 
@@ -102,7 +102,7 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="0.5"
-            android:background="#66B5CE"
+            android:background="#3eaca8"
             android:padding="10dp">
 
             <TextView
@@ -117,7 +117,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_margin="35dp"
-                android:src="@drawable/studsu" />
+                android:src="@drawable/stud" />
         </RelativeLayout>
     </LinearLayout>
 
@@ -135,7 +135,7 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="0.5"
-            android:background="#c1e1eb"
+            android:background="#a2d4ab"
             android:padding="10dp">
 
             <TextView
@@ -150,7 +150,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_margin="35dp"
-                android:src="@drawable/emptsu" />
+                android:src="@drawable/empt" />
         </RelativeLayout>
 
         <RelativeLayout
@@ -158,14 +158,14 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="0.5"
-            android:background="#fff"
+            android:background="#e5eec1"
             android:padding="10dp">
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="쪽지함"
-                android:textColor="#5FA8C0"
+                android:textColor="@color/four"
                 android:textSize="20dp"
                 android:textStyle="bold" />
 
@@ -173,7 +173,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_margin="35dp"
-                android:src="@drawable/lesu" />
+                android:src="@drawable/le" />
         </RelativeLayout>
 
     </LinearLayout>
