@@ -58,28 +58,9 @@ public class StudentActivity extends AppCompatActivity implements NavigationView
         if(!sharedPreferences.contains("stuActivityHelp")){
             editor.putInt("stuActivityHelp", 0);
             editor.commit();
+            showPopup();
         } else{
-            if(sharedPreferences.getInt("stuActivityHelp", 0)==0){
-                AlertDialog.Builder alert_confirm = new AlertDialog.Builder(this);
-                alert_confirm.setMessage("시간표, 학점 탭에서 위쪽으로 스크롤하시면 새로고침됩니다.").setCancelable(false).setPositiveButton("확인",
-                        new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                // 'YES'
-                            }
-                        }).setNegativeButton("다시보지않기",
-                        new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                // 'No'
-                                editor.putInt("stuActivityHelp", 1);
-                                editor.commit();
-                                Logger.d(sharedPreferences.getInt("stuActivityHelp", 0));
-                            }
-                        });
-                AlertDialog alert = alert_confirm.create();
-                alert.show();
-            }
+            showPopup();
         }
 
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -215,5 +196,29 @@ public class StudentActivity extends AppCompatActivity implements NavigationView
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout_stu);
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    public void showPopup(){
+        if(sharedPreferences.getInt("stuActivityHelp", 0)==0){
+            AlertDialog.Builder alert_confirm = new AlertDialog.Builder(this);
+            alert_confirm.setMessage("시간표, 학점 탭에서 위쪽으로 스크롤하시면 새로고침됩니다.").setCancelable(false).setPositiveButton("확인",
+                    new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            // 'YES'
+                        }
+                    }).setNegativeButton("다시보지않기",
+                    new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            // 'No'
+                            editor.putInt("stuActivityHelp", 1);
+                            editor.commit();
+                            Logger.d(sharedPreferences.getInt("stuActivityHelp", 0));
+                        }
+                    });
+            AlertDialog alert = alert_confirm.create();
+            alert.show();
+        }
     }
 }
