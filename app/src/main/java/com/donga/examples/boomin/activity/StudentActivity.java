@@ -1,6 +1,8 @@
 package com.donga.examples.boomin.activity;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
@@ -18,14 +20,20 @@ import android.view.MenuItem;
 
 import com.donga.examples.boomin.R;
 import com.donga.examples.boomin.TabPagerAdapter_Stu;
+import com.orhanobut.logger.Logger;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+
+import static java.security.AccessController.getContext;
 
 /**
  * Created by rhfoq on 2017-02-15.
  */
 public class StudentActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
+
+    SharedPreferences sharedPreferences;
+    SharedPreferences.Editor editor;
 
     private TabLayout tabLayout;
     private ViewPager viewPager;
@@ -43,6 +51,36 @@ public class StudentActivity extends AppCompatActivity implements NavigationView
         setContentView(R.layout.activity_student);
         ButterKnife.bind(this);
         setSupportActionBar(toolbar);
+
+        sharedPreferences = getApplicationContext().getSharedPreferences(getResources().getString(R.string.SFLAG), Context.MODE_PRIVATE);
+        editor = sharedPreferences.edit();
+
+        if(!sharedPreferences.contains("stuActivityHelp")){
+            editor.putInt("stuActivityHelp", 0);
+            editor.commit();
+        } else{
+            if(sharedPreferences.getInt("stuActivityHelp", 0)==0){
+                AlertDialog.Builder alert_confirm = new AlertDialog.Builder(this);
+                alert_confirm.setMessage("시간표, 학점 탭에서 위쪽으로 스크롤하시면 새로고침됩니다.").setCancelable(false).setPositiveButton("확인",
+                        new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                // 'YES'
+                            }
+                        }).setNegativeButton("다시보지않기",
+                        new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                // 'No'
+                                editor.putInt("stuActivityHelp", 1);
+                                editor.commit();
+                                Logger.d(sharedPreferences.getInt("stuActivityHelp", 0));
+                            }
+                        });
+                AlertDialog alert = alert_confirm.create();
+                alert.show();
+            }
+        }
 
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);

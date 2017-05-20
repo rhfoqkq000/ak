@@ -1,9 +1,13 @@
 package com.donga.examples.boomin.fragment;
 
 import android.app.ProgressDialog;
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.util.Base64;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,13 +16,22 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.couchbase.lite.Database;
+import com.couchbase.lite.Document;
+import com.couchbase.lite.Manager;
+import com.couchbase.lite.android.AndroidContext;
 import com.donga.examples.boomin.AppendLog;
 import com.donga.examples.boomin.listviewAdapter.PartListViewAdapter;
 import com.donga.examples.boomin.R;
 import com.donga.examples.boomin.Singleton.GradeSingleton;
+import com.donga.examples.boomin.retrofit.retrofitAchieveAll.Result_body;
+import com.orhanobut.logger.Logger;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.crypto.Cipher;
 import javax.crypto.spec.IvParameterSpec;
@@ -26,6 +39,7 @@ import javax.crypto.spec.SecretKeySpec;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import es.dmoral.toasty.Toasty;
 
 /**
  * Created by rhfoq on 2017-02-15.
@@ -33,6 +47,16 @@ import butterknife.ButterKnife;
 public class Stu_Achiev_All_Fragment extends Fragment {
     AppendLog log = new AppendLog();
     private ProgressDialog mProgressDialog;
+
+    SharedPreferences sharedPreferences;
+    SharedPreferences.Editor editor;
+
+    Document document;
+    Manager manager;
+    Database database;
+
+    public static final String DB_NAME = "app";
+    public static final String TAG = "BOO_AchievAllFragment";
 
     @BindView(R.id.list_all)
     ListView list_all;
@@ -56,6 +80,17 @@ public class Stu_Achiev_All_Fragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         final View rootview = inflater.inflate(R.layout.fragment_achiev_all, container, false);
         ButterKnife.bind(this, rootview);
+
+//        final SwipeRefreshLayout swipeRefreshLayout = (SwipeRefreshLayout) rootview.findViewById(R.id.swiper);
+//        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+//            @Override
+//            public void onRefresh() {
+//                showProgressDialog();
+//                setGrade();
+//                swipeRefreshLayout.setRefreshing(false);
+//                hideProgressDialog();
+//            }
+//        });
 
         below.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -83,15 +118,67 @@ public class Stu_Achiev_All_Fragment extends Fragment {
             }
         });
 
-        tv_getAllGrade.setText(GradeSingleton.getInstance().getAllGrade());
-        tv_getAllAverage.setText(GradeSingleton.getInstance().getAvgGrade());
+        setGrade();
 
-        int GradeDetailSize = GradeSingleton.getInstance().getDetail().size();
-        ArrayList<ArrayList<String>> DetailList = GradeSingleton.getInstance().getDetail();
+//        manager = null;
+//        database = null;
+//        try {
+//            manager = new Manager(new AndroidContext(getContext()), Manager.DEFAULT_OPTIONS);
+//            database = manager.getDatabase(DB_NAME);
+//        } catch (Exception e) {
+//            Log.e(TAG, "Error getting database", e);
+//        }
+//        sharedPreferences = getContext().getSharedPreferences(getResources().getString(R.string.SFLAG), Context.MODE_PRIVATE);
+//        document = database.getDocument(String.valueOf(sharedPreferences.getInt("stuID", 0)));
+//
+//        if (document.getProperty("allGrade") == null) {
+//            try {
+//                Logger.d("이프없당");
+//
+//            } catch (Exception e) {
+//                log.appendLog("inScheFragment exception");
+//                hideProgressDialog();
+//                Toasty.error(getContext(), "불러오기 실패", Toast.LENGTH_SHORT).show();
+//                e.printStackTrace();
+//            }
+//        } else{
+//            Logger.d("엘스");
+//            ArrayList<ArrayList<String>> resultBody = (ArrayList<ArrayList<String>>)document.getProperties().get("properties");
+//            hideProgressDialog();
+//        }
+
+        return rootview;
+    }
+
+    private void showProgressDialog() {
+        if (mProgressDialog == null) {
+            mProgressDialog = new ProgressDialog(getContext());
+            mProgressDialog.setMessage(getString(R.string.loading));
+            mProgressDialog.setIndeterminate(true);
+        }
+        mProgressDialog.show();
+    }
+
+    private void hideProgressDialog() {
+        if (mProgressDialog != null && mProgressDialog.isShowing()) {
+            mProgressDialog.hide();
+            mProgressDialog.dismiss();
+        }
+    }
+
+
+
+    public void setGrade(){
+        Result_body result_body = GradeSingleton.getInstance().getAllResultBody();
+        tv_getAllGrade.setText(result_body.getAllGrade());
+        tv_getAllAverage.setText(result_body.getAvgGrade());
+
+        int GradeDetailSize = result_body.getDetail().size();
+        ArrayList<ArrayList<String>> DetailList = result_body.getDetail();
         ArrayList<String> yearList = new ArrayList<String>();
 
         for(int i = 1; i<GradeDetailSize; i++){
-            if (GradeSingleton.getInstance().getDetail().get(i).get(0).length() == 4) {
+            if (DetailList.get(i).get(0).length() == 4) {
                 yearList.add(String.valueOf(i));
             }
         }
@@ -99,7 +186,7 @@ public class Stu_Achiev_All_Fragment extends Fragment {
         ArrayList<String> sTitle = new ArrayList<String>(yearList.size());
         ArrayList<Integer> position = new ArrayList<Integer>();
         for (int i = 1; i < GradeDetailSize; i++) {
-            if (GradeSingleton.getInstance().getDetail().get(i).get(0).length() == 4) {
+            if (DetailList.get(i).get(0).length() == 4) {
                 fTitle.add(DetailList.get(i).get(0));
                 sTitle.add(DetailList.get(i).get(1));
             }
@@ -120,41 +207,28 @@ public class Stu_Achiev_All_Fragment extends Fragment {
             }
         }
         GradeSingleton.getInstance().setPosition(position);
-
-        return rootview;
     }
 
-    // MD5 복호화
-    public static String Decrypt(String text, String key) throws Exception {
-        Cipher cipher = Cipher.getInstance("AES/CBC/PKCS5Padding");
-        byte[] keyBytes = new byte[16];
-        byte[] b = key.getBytes("UTF-8");
-        int len = b.length;
-        if (len > keyBytes.length) len = keyBytes.length;
-        System.arraycopy(b, 0, keyBytes, 0, len);
-        SecretKeySpec keySpec = new SecretKeySpec(keyBytes, "AES");
-        IvParameterSpec ivSpec = new IvParameterSpec(keyBytes);
-        cipher.init(Cipher.DECRYPT_MODE, keySpec, ivSpec);
-        byte[] results = cipher.doFinal(Base64.decode(text, 0));
-        return new String(results, "UTF-8");
-    }
 
-    private void showProgressDialog() {
-        if (mProgressDialog == null) {
-            mProgressDialog = new ProgressDialog(getContext());
-            mProgressDialog.setMessage(getString(R.string.loading));
-            mProgressDialog.setIndeterminate(true);
-        }
-        mProgressDialog.show();
-    }
 
-    private void hideProgressDialog() {
-        if (mProgressDialog != null && mProgressDialog.isShowing()) {
-            mProgressDialog.hide();
-            mProgressDialog.dismiss();
+    private void helloCBL(Result_body resultBody) {
+
+        sharedPreferences = getContext().getSharedPreferences(getResources().getString(R.string.SFLAG), Context.MODE_PRIVATE);
+        editor = sharedPreferences.edit();
+
+        String documentId = String.valueOf(sharedPreferences.getInt("stuID", 0));
+        document = database.getDocument(documentId);
+
+        if (document.getProperty("allGrade") == null){
+            Map<String, Object> properties = new HashMap<>();
+            properties.put("allGrade", resultBody);
+            try {
+                document.putProperties(properties);
+                Log.i("dddddd", String.valueOf(document.getProperties()));
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         }
     }
-
-
 
 }

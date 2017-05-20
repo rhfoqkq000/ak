@@ -1,5 +1,7 @@
 package com.donga.examples.boomin.Singleton;
 
+import com.donga.examples.boomin.retrofit.retrofitAchieveAll.Result_body;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -8,12 +10,13 @@ import java.util.HashMap;
  */
 public class GradeSingleton {
     private static GradeSingleton mInstance = null;
-    String allGrade, avgGrade, partGrade, partAvg;
-    ArrayList<ArrayList<String>> detail;
+    String partGrade, partAvg;
     ArrayList<Integer> position;
     ArrayList<String> year;
     ArrayList<ArrayList<String>> detail2;
+
     HashMap<String, HashMap<String, String>> bottom;
+    Result_body AllResultBody;
 
     public String getPartAvg() {
         return partAvg;
@@ -37,30 +40,6 @@ public class GradeSingleton {
             mInstance = new GradeSingleton();
         }
         return mInstance;
-    }
-
-    public String getAllGrade() {
-        return allGrade;
-    }
-
-    public void setAllGrade(String allGrade) {
-        this.allGrade = allGrade;
-    }
-
-    public String getAvgGrade() {
-        return avgGrade;
-    }
-
-    public void setAvgGrade(String avgGrade) {
-        this.avgGrade = avgGrade;
-    }
-
-    public ArrayList<ArrayList<String>> getDetail() {
-        return detail;
-    }
-
-    public void setDetail(ArrayList<ArrayList<String>> detail) {
-        this.detail = detail;
     }
 
     public ArrayList<Integer> getPosition() {
@@ -93,5 +72,13 @@ public class GradeSingleton {
 
     public void setBottom(HashMap<String, HashMap<String, String>> bottom) {
         this.bottom = bottom;
+    }
+
+    public Result_body getAllResultBody() {
+        return AllResultBody;
+    }
+
+    public void setAllResultBody(Result_body allResultBody) {
+        AllResultBody = allResultBody;
     }
 }

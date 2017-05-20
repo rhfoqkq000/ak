@@ -147,7 +147,6 @@ public class Stu_AchievFragment extends Fragment {
                 }
             }
 
-
         });
         return rootview;
     }
@@ -165,9 +164,7 @@ public class Stu_AchievFragment extends Fragment {
                 @Override
                 public void onResponse(Call<Master> call, Response<Master> response) {
                     if (response.body().getResult_code() == 1) {
-                        GradeSingleton.getInstance().setAllGrade(response.body().getResult_body().getAllGrade());
-                        GradeSingleton.getInstance().setAvgGrade(response.body().getResult_body().getAvgGrade());
-                        GradeSingleton.getInstance().setDetail(response.body().getResult_body().getDetail());
+                        GradeSingleton.getInstance().setAllResultBody(response.body().getResult_body());
                         Log.i("ACHIFRAG GRADESINGLETON", "input");
                         hideProgressDialog();
 
