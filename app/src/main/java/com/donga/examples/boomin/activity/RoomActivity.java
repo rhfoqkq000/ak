@@ -1,7 +1,9 @@
 package com.donga.examples.boomin.activity;
 
+import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
@@ -27,6 +29,7 @@ import com.donga.examples.boomin.R;
 import com.donga.examples.boomin.listviewAdapter.RoomListViewAdapter;
 import com.donga.examples.boomin.retrofit.retrofitRoom.Interface_room;
 import com.donga.examples.boomin.retrofit.retrofitRoom.Master4;
+import com.orhanobut.logger.Logger;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -45,6 +48,9 @@ import retrofit2.converter.gson.GsonConverterFactory;
  */
 public class RoomActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
+
+    SharedPreferences sharedPreferences;
+    SharedPreferences.Editor editor;
 
     private ProgressDialog mProgressDialog;
     AppendLog log = new AppendLog();
@@ -73,6 +79,16 @@ public class RoomActivity extends AppCompatActivity
         toggle.syncState();
 
         navigationView.setNavigationItemSelectedListener(this);
+
+        sharedPreferences = getApplicationContext().getSharedPreferences(getResources().getString(R.string.SFLAG), Context.MODE_PRIVATE);
+        editor = sharedPreferences.edit();
+        if(!sharedPreferences.contains("roomActivityHelp")){
+            editor.putInt("roomActivityHelp", 0);
+            editor.commit();
+            showPopup();
+        } else{
+            showPopup();
+        }
 
         showProgressDialog();
 
@@ -246,5 +262,29 @@ public class RoomActivity extends AppCompatActivity
         final Pattern VALID_PERCENT_REGEX = Pattern.compile("100");
         Matcher matcher = VALID_PERCENT_REGEX.matcher(emailStr);
         return matcher.find();
+    }
+
+    public void showPopup(){
+        if(sharedPreferences.getInt("roomActivityHelp", 0)==0){
+            AlertDialog.Builder alert_confirm = new AlertDialog.Builder(this);
+            alert_confirm.setMessage("위쪽으로 스크롤하시면 새로고침됩니다.").setCancelable(false).setPositiveButton("확인",
+                    new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            // 'YES'
+                        }
+                    }).setNegativeButton("다시보지않기",
+                    new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            // 'No'
+                            editor.putInt("roomActivityHelp", 1);
+                            editor.commit();
+                            Logger.d(sharedPreferences.getInt("roomActivityHelp", 0));
+                        }
+                    });
+            AlertDialog alert = alert_confirm.create();
+            alert.show();
+        }
     }
 }
