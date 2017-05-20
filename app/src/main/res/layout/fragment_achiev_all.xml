@@ -29,7 +29,6 @@
         android:layout_weight="1"
         android:padding="16dp"></ListView>
 
-
     <LinearLayout
         android:id="@+id/achiev_bottom"
         android:layout_width="match_parent"

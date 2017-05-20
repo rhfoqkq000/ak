@@ -60,7 +60,7 @@ public class Stu_ScheFragment extends Fragment {
     Database database;
 
     public static final String DB_NAME = "app";
-    public static final String TAG = "BOO_HomeActivity";
+    public static final String TAG = "BOO_Stu_ScheFragment";
     String blank = "";
 
     private ProgressDialog mProgressDialog;
