@@ -83,10 +83,10 @@
         android:background="#797979" />
 
     <android.support.v4.widget.SwipeRefreshLayout
-    android:id="@+id/swiper"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:layout_marginTop="12dp">
+        android:id="@+id/swiper"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="12dp">
 
         <ListView
             android:id="@+id/list_room"
