@@ -166,10 +166,10 @@ public class BooWidget extends AppWidgetProvider {
         if(!resultBody.get(i).get(3).equals("")){
             blank = resultBody.get(i).get(3);
             views.setTextViewText(tvNameAddress2, resultBody.get(i).get(3));
-            views.setFloat(tvNameAddress2,"setTextSize",8);
+            views.setFloat(tvNameAddress2,"setTextSize",Float.valueOf("8.7"));
         }else{
             views.setTextViewText(tvNameAddress2, blank);
-            views.setFloat(tvNameAddress2,"setTextSize",8);
+            views.setFloat(tvNameAddress2,"setTextSize",Float.valueOf("8.7"));
         }
 
         for(int j = 0; j < codeArray.size(); j++){

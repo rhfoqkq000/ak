@@ -16,6 +16,8 @@ import android.util.Base64;
 import android.util.Log;
 import android.widget.Toast;
 
+import com.crashlytics.android.Crashlytics;
+
 import com.donga.examples.boomin.AppendLog;
 import com.donga.examples.boomin.R;
 import com.donga.examples.boomin.Singleton.InfoSingleton;
@@ -25,6 +27,8 @@ import com.donga.examples.boomin.retrofit.retrofitLogin.Interface_login;
 import com.donga.examples.boomin.retrofit.retrofitLogin.Master;
 import com.orhanobut.logger.Logger;
 
+import io.fabric.sdk.android.Fabric;
+import com.appsee.Appsee;
 import javax.crypto.Cipher;
 import javax.crypto.spec.IvParameterSpec;
 import javax.crypto.spec.SecretKeySpec;
@@ -68,6 +72,9 @@ public class FirstActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Fabric.with(this, new Crashlytics());
+        Fabric.with(this);
+        Appsee.start(getString(R.string.com_appsee_apikey));
         setContentView(R.layout.splash);
         if (getIntent().getExtras() != null) {
             if (getIntent().getExtras().getString("contents") != null) {
@@ -82,7 +89,8 @@ public class FirstActivity extends AppCompatActivity {
         if (sharedPreferences.contains("stuID") && sharedPreferences.contains("ID") && sharedPreferences.contains("pw")) {
 
             //retrofit 통신
-            Retrofit client = new Retrofit.Builder().baseUrl(getString(R.string.retrofit_url))
+            Retrofit client = new Retrofit.Builder().baseUrl(
+                    getString(R.string.retrofit_url))
                     .addConverterFactory(GsonConverterFactory.create()).build();
             Interface_login room = client.create(Interface_login.class);
             Call<Master> call4 = null;
