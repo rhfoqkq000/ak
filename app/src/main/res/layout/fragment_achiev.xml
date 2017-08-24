@@ -28,7 +28,7 @@
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
             android:layout_marginBottom="5dp"
-            app:cardBackgroundColor="@color/three"
+            app:cardBackgroundColor="@color/five"
             app:cardCornerRadius="5dp"
             app:cardElevation="2dp">
 
@@ -78,7 +78,7 @@
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
             android:layout_marginBottom="5dp"
-            app:cardBackgroundColor="@color/three"
+            app:cardBackgroundColor="@color/five"
             app:cardCornerRadius="5dp">
 
             <Button

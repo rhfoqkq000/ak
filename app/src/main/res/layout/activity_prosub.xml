@@ -30,7 +30,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="경영학과"
-                    android:textColor="@color/four"
+                    android:textColor="@color/three"
                     android:textSize="20dp"
                     android:textStyle="bold" />
 

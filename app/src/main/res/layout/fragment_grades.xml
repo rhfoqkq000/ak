@@ -135,7 +135,7 @@
     <View
         android:layout_width="match_parent"
         android:layout_height="2dp"
-        android:background="@color/three" />
+        android:background="@color/five" />
 
     <android.support.v4.widget.SwipeRefreshLayout
         android:id="@+id/swiper"
@@ -161,7 +161,7 @@
                 android:layout_marginBottom="15dp"
                 android:layout_marginTop="10dp"
                 android:text="교 양"
-                android:textColor="@color/three"
+                android:textColor="@color/five"
                 android:textSize="17dp"
                 android:textStyle="bold" />
 
@@ -343,7 +343,7 @@
                 android:layout_marginBottom="15dp"
                 android:layout_marginTop="25dp"
                 android:text="전 공"
-                android:textColor="@color/three"
+                android:textColor="@color/five"
                 android:textSize="17dp"
                 android:textStyle="bold" />
 
@@ -469,7 +469,7 @@
                 android:layout_marginBottom="15dp"
                 android:layout_marginTop="25dp"
                 android:text="자유선택(기타)"
-                android:textColor="@color/three"
+                android:textColor="@color/five"
                 android:textSize="17dp"
                 android:textStyle="bold" />
 

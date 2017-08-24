@@ -106,7 +106,7 @@
         android:layout_gravity="right"
         android:layout_marginBottom="5dp"
         android:layout_marginRight="10dp"
-        card_view:cardBackgroundColor="@color/two"
+        card_view:cardBackgroundColor="@color/four"
         card_view:cardCornerRadius="5dp"
         card_view:cardElevation="2dp">
 
@@ -118,7 +118,7 @@
             android:background="#000000FF"
             android:onClick="onButtonClick"
             android:text="확인"
-            android:textColor="#3A4B5A"
+            android:textColor="#000"
             android:textSize="18dp" />
     </android.support.v7.widget.CardView>
 </GridLayout>

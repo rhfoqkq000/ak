@@ -6,27 +6,27 @@
         android:checkableBehavior="single">
         <item
             android:id="@+id/nav_res"
-            android:icon="@drawable/rest"
+            android:icon="@drawable/menu_rest"
             android:title="식당" />
         <item
             android:id="@+id/nav_room"
-            android:icon="@drawable/room"
+            android:icon="@drawable/menu_room"
             android:title="열람실" />
         <item
             android:id="@+id/nav_pro"
-            android:icon="@drawable/prof"
+            android:icon="@drawable/menu_prof"
             android:title="To. 교수님" />
         <item
             android:id="@+id/nav_stu"
-            android:icon="@drawable/stud"
+            android:icon="@drawable/menu_stud"
             android:title="학생정보" />
         <item
             android:id="@+id/nav_empty"
-            android:icon="@drawable/empt"
+            android:icon="@drawable/menu_empt"
             android:title="빈강" />
         <item
             android:id="@+id/nav_wisper"
-            android:icon="@drawable/le"
+            android:icon="@drawable/menu_le"
             android:title="쪽지함" />
         <item
             android:id="@+id/nav_site"
