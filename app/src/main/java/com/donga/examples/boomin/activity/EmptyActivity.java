@@ -30,6 +30,7 @@ import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.donga.examples.boomin.AppendLog;
+
 import com.donga.examples.boomin.R;
 import com.donga.examples.boomin.listviewAdapter.EmptyListViewAdapter;
 import com.donga.examples.boomin.retrofit.retrofitEmpty.Empty;
@@ -61,7 +62,7 @@ public class EmptyActivity extends AppCompatActivity
     BottomSheetBehavior behavior;
     EmptyListViewAdapter adapter;
 
-    @BindView(R.id.toolbar_empty)
+    @BindView(R .id.toolbar_empty)
     Toolbar toolbar;
     @BindView(R.id.drawer_layout_empty)
     DrawerLayout drawer;
@@ -150,7 +151,7 @@ public class EmptyActivity extends AppCompatActivity
                 }
             }
         });
-        fab.setBackgroundTintList(ColorStateList.valueOf(Color.parseColor("#c1e1eb")));
+        fab.setBackgroundTintList(ColorStateList.valueOf(Color.parseColor("#fbc9bc")));
     }
 
     @OnClick(R.id.fab_empty)

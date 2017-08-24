@@ -13,8 +13,8 @@
         android:background="@color/one"
         android:minHeight="?attr/actionBarSize"
         android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
-        app:tabIndicatorColor="#106d78"
-        app:tabSelectedTextColor="#106d78"
+        app:tabIndicatorColor="@color/five"
+        app:tabSelectedTextColor="@color/five"
         app:tabTextAppearance="@style/MyTabLayoutTextAppearance"
         app:tabTextColor="#000" />
 

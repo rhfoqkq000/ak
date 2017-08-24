@@ -17,7 +17,7 @@
         android:layout_alignParentTop="true"
         android:layout_margin="16dp"
         android:text="TextView"
-        android:textColor="#fff"
+        android:textColor="#000"
         android:textSize="20dp" />
 
     <TextView
@@ -27,7 +27,7 @@
         android:layout_below="@+id/tv_send"
         android:layout_margin="16dp"
         android:text="TextView"
-        android:textColor="#fff"
+        android:textColor="#000"
         android:textSize="20dp" />
 
     <TextView
@@ -37,7 +37,7 @@
         android:layout_below="@+id/tv_title"
         android:layout_margin="16dp"
         android:text="TextView"
-        android:textColor="#fff"
+        android:textColor="#000"
         android:textSize="20dp" />
 
     <View
@@ -45,7 +45,7 @@
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:layout_below="@+id/tv_popup"
-        android:background="#fff" />
+        android:background="#000" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -63,13 +63,13 @@
             android:layout_weight="0.5"
             android:gravity="center_horizontal|center_vertical"
             android:text="보기"
-            android:textColor="#fff"
+            android:textColor="#000"
             android:textSize="20dp" />
 
         <View
             android:layout_width="1dp"
             android:layout_height="match_parent"
-            android:background="#fff" />
+            android:background="#000" />
 
         <TextView
             android:id="@+id/popup_close"
@@ -80,7 +80,7 @@
             android:layout_weight="0.5"
             android:gravity="center_horizontal|center_vertical"
             android:text="닫기"
-            android:textColor="#fff"
+            android:textColor="#000"
             android:textSize="20dp" />
     </LinearLayout>
 </RelativeLayout>

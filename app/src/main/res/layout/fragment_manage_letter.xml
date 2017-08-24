@@ -110,7 +110,8 @@
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:layout_below="@+id/manage_letter_content_card"
-            app:cardBackgroundColor="#9bc2d4"
+            android:layout_margin="10dp"
+            app:cardBackgroundColor="@color/five"
             app:cardCornerRadius="5dp"
             app:cardElevation="2dp">
 
@@ -121,7 +122,7 @@
                 android:layout_marginLeft="10dp"
                 android:layout_marginRight="10dp"
                 android:layout_marginTop="5dp"
-                android:background="#9bc2d4"
+                android:background="@color/five"
                 android:text="보내기"
                 android:textColor="#fff"
                 android:textSize="20dp" />

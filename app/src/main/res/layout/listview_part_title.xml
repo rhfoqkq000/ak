@@ -14,7 +14,7 @@
         android:layout_marginRight="10dp"
         android:layout_marginTop="10dp"
         android:text="2014"
-        android:textColor="@color/three"
+        android:textColor="@color/five"
         android:textSize="20dp"
         android:textStyle="bold" />
 
@@ -24,7 +24,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
         android:text="1학기"
-        android:textColor="@color/three"
+        android:textColor="@color/five"
         android:textSize="20dp"
         android:textStyle="bold" />
 </LinearLayout>

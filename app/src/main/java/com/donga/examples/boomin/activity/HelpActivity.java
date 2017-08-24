@@ -69,6 +69,7 @@ public class HelpActivity extends AppCompatActivity implements NavigationView.On
         adapter.addItem("약관 및 정책", getResources().getDrawable(R.drawable.arrow));
         adapter.addItem("오픈소스", getResources().getDrawable(R.drawable.arrow));
         adapter.addItem("앱 정보", getResources().getDrawable(R.drawable.arrow));
+        adapter.addItem("개발자", getResources().getDrawable(R.drawable.arrow));
 
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -100,6 +101,9 @@ public class HelpActivity extends AppCompatActivity implements NavigationView.On
                         Intent i = new Intent(getApplicationContext(), AppInfoActivity.class);
                         startActivity(i);
                         break;
+                    case 5:
+                        Intent j = new Intent(getApplicationContext(), DeveloperActivity.class);
+                        startActivity(j);
                     default:
                         Logger.e("오류 빽");
                         break;

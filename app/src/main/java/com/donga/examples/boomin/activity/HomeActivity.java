@@ -394,7 +394,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
             intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             startActivity(intent);
         } else if (id == R.id.nav_manage) {
-            Intent intent = new Intent(getApplicationContext(), ManageLoginActivity.class);
+            Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("http://www.donga.ac.kr"));
             startActivity(intent);
         }
 

@@ -11,11 +11,11 @@
         android:id="@+id/tabLayout_manage"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="#9bc2d4"
+        android:background="@color/five"
         android:minHeight="?attr/actionBarSize"
         android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
         app:tabIndicatorColor="#fff"
-        app:tabSelectedTextColor="#315160"
+        app:tabSelectedTextColor="#F7CD94"
         app:tabTextAppearance="@style/MyTabLayoutTextAppearance"
         app:tabTextColor="#fff" />
 

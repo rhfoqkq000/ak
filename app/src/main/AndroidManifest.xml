@@ -89,6 +89,9 @@
         <activity
             android:name=".activity.AppInfoActivity"
             android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".activity.DeveloperActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
 
         <!-- [START firebase_service] -->
         <service android:name=".firebase.MyFirebaseMessagingService">

@@ -29,7 +29,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="빈강"
-                    android:textColor="@color/four"
+                    android:textColor="@color/three"
                     android:textSize="20dp"
                     android:textStyle="bold" />
             </android.support.v7.widget.Toolbar>
