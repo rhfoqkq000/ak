@@ -178,8 +178,8 @@ public class WisperActivity extends AppCompatActivity
             startActivity(intent);
 
         } else if (id == R.id.nav_manage) {
-            Intent intent = new Intent(getApplicationContext(), ManageLoginActivity.class);
-            startActivity(intent);
+//            Intent intent = new Intent(getApplicationContext(), ManageLoginActivity.class);
+//            startActivity(intent);
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout_wisper);

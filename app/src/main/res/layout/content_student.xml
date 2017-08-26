@@ -14,10 +14,10 @@
         android:background="@color/five"
         android:minHeight="?attr/actionBarSize"
         android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
-        app:tabIndicatorColor="@color/two"
-        app:tabSelectedTextColor="@color/two"
+        app:tabIndicatorColor="#FEF4F1"
+        app:tabSelectedTextColor="#FEF4F1"
         app:tabTextAppearance="@style/MyTabLayoutTextAppearance"
-        app:tabTextColor="#fff" />
+        app:tabTextColor="#000" />
 
     <android.support.v4.view.ViewPager
         android:id="@+id/pager"

@@ -74,9 +74,9 @@
         <activity
             android:name=".activity.Wisper_NoticeDialogActivity"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity
-            android:name=".activity.ManageLoginActivity"
-            android:theme="@style/AppTheme.NoActionBar" />
+        <!--<activity-->
+            <!--android:name=".activity.ManageLoginActivity"-->
+            <!--android:theme="@style/AppTheme.NoActionBar" />-->
         <activity
             android:name=".activity.Wisper_OkDialogActivity"
             android:theme="@style/AppTheme.NoActionBar" />

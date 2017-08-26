@@ -2,22 +2,18 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#fff"
+    android:background="@drawable/boo_background"
     android:orientation="vertical">
 
-    <ImageView
-        android:layout_width="250dp"
-        android:layout_height="140dp"
-        android:layout_marginTop="70dp"
-        android:layout_centerHorizontal="true"
-        android:src="@drawable/splash"/>
-
-    <ImageView
-        android:layout_width="match_parent"
+    <TextView
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:scaleType="fitXY"
-        android:layout_alignParentBottom="true"
-        android:src="@drawable/newsplash" />
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="58dp"
+        android:text="Welcome"
+        android:textColor="#FEF4F1"
+        android:textSize="35dp"
+        android:textStyle="bold" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -26,6 +22,6 @@
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="10dp"
         android:text="경영정보학과 제 18대 학생회 다채움 협조"
-        android:textColor="#000"
+        android:textColor="#FEF4F1"
         android:textStyle="bold" />
 </RelativeLayout>

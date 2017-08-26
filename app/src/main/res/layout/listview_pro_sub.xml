@@ -4,12 +4,16 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:padding="8dp">
+    android:paddingBottom="10dp"
+    android:paddingLeft="8dp"
+    android:paddingRight="8dp"
+    android:paddingTop="10dp">
 
     <TextView
         android:id="@+id/pro_sub_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
         android:layout_marginRight="10dp"
         android:text="이름"
         android:textSize="19dp"
@@ -19,6 +23,7 @@
         android:id="@+id/pro_sub_major"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
         android:layout_toRightOf="@+id/pro_sub_name"
         android:text="학과"
         android:textSize="15dp" />
@@ -26,22 +31,20 @@
     <ImageButton
         android:id="@+id/pro_sub_mail"
         android:layout_width="wrap_content"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
-        android:background="#41936d"
-        android:padding="5dp"
-        android:src="@drawable/tomail" />
+        android:layout_centerVertical="true"
+        android:background="@drawable/mail_fill" />
 
 
     <ImageButton
         android:id="@+id/pro_sub_call"
         android:layout_width="wrap_content"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
         android:layout_marginRight="10dp"
         android:layout_toLeftOf="@+id/pro_sub_mail"
-        android:background="#3374b0"
-        android:padding="5dp"
-        android:src="@drawable/call" />
+        android:background="@drawable/call_fill" />
 
     <TextView
         android:id="@+id/pro_call_gone"
