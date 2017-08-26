@@ -208,8 +208,8 @@ public class ProActivity extends AppCompatActivity implements NavigationView.OnN
             startActivity(intent);
 
         } else if (id == R.id.nav_manage) {
-            Intent intent = new Intent(getApplicationContext(), ManageLoginActivity.class);
-            startActivity(intent);
+//            Intent intent = new Intent(getApplicationContext(), ManageLoginActivity.class);
+//            startActivity(intent);
         }
 
 

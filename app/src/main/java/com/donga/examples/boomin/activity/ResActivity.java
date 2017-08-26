@@ -7,7 +7,9 @@ import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
+import android.support.design.widget.TabLayout;
 import android.support.v4.view.GravityCompat;
+import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
@@ -23,6 +25,8 @@ import android.widget.Toast;
 
 import com.donga.examples.boomin.AppendLog;
 import com.donga.examples.boomin.R;
+import com.donga.examples.boomin.Singleton.TabPagerAdapter_Res;
+import com.donga.examples.boomin.TabPagerAdapter_Stu;
 import com.donga.examples.boomin.retrofit.retrofitMeal.Interface_meal;
 import com.donga.examples.boomin.retrofit.retrofitMeal.Master3;
 
@@ -46,9 +50,8 @@ public class ResActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
     AppendLog log = new AppendLog();
 
-
-    private ProgressDialog mProgressDialog;
-    public int count = 0;
+    private TabLayout tabLayout;
+    private ViewPager viewPager;
 
     @BindView(R.id.toolbar_res)
     Toolbar toolbar;
@@ -56,19 +59,7 @@ public class ResActivity extends AppCompatActivity
     DrawerLayout drawer;
     @BindView(R.id.nav_view_res)
     NavigationView navigationView;
-    @BindView(R.id.date_text)
-    TextView date_text;
-    @BindView(R.id.pre_res)
-    ImageView pre_res;
-    @BindView(R.id.next_res)
-    ImageView next_res;
 
-    @BindView(R.id.guk)
-    TextView guk;
-    @BindView(R.id.gang)
-    TextView gang;
-    @BindView(R.id.bumin)
-    TextView bumin;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -84,51 +75,39 @@ public class ResActivity extends AppCompatActivity
 
         navigationView.setNavigationItemSelectedListener(this);
 
-        SimpleDateFormat msimpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
-        Date currentTime = new Date();
-        String now = msimpleDateFormat.format(currentTime);
+        // Initializing the TabLayout
+        tabLayout = (TabLayout) findViewById(R.id.tabLayout);
+        tabLayout.addTab(tabLayout.newTab().setText("하단캠퍼스"));
+        tabLayout.addTab(tabLayout.newTab().setText("부민캠퍼스"));
+        tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
 
+        // Initializing ViewPager
+        viewPager = (ViewPager) findViewById(R.id.pager);
 
-        retrofit(now);
+        // Creating TabPagerAdapter_Stu adapter
+        final TabPagerAdapter_Res pagerAdapter = new TabPagerAdapter_Res(getSupportFragmentManager(), tabLayout.getTabCount());
+        viewPager.setAdapter(pagerAdapter);
+        viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
 
-        date_text.setText(now);
-//        date_text.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                DialogFragment newFragment = new CalendarFragment();
-//                newFragment.show(getSupportFragmentManager(), "Date Picker");
-//            }
-//        });
+        // Set TabSelectedListener
+        tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
 
-        pre_res.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {
-                count = count - 1;
+            public void onTabSelected(TabLayout.Tab tab) {
+                viewPager.setCurrentItem(tab.getPosition());
+            }
 
-                Calendar cal = Calendar.getInstance();
-                cal.add(Calendar.DATE, count); // +1은 내일
+            @Override
+            public void onTabUnselected(TabLayout.Tab tab) {
 
-                SimpleDateFormat date = new SimpleDateFormat("yyyy-MM-dd");
-                String pre = date.format(cal.getTime());
-                retrofit(pre);
-                date_text.setText(pre);
+            }
+
+            @Override
+            public void onTabReselected(TabLayout.Tab tab) {
+
             }
         });
-        next_res.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                count = count + 1;
 
-                Calendar cal = Calendar.getInstance();
-                cal.add(Calendar.DATE, count); // +1은 내일
-
-                SimpleDateFormat date = new SimpleDateFormat("yyyy-MM-dd");
-                String next = date.format(cal.getTime());
-
-                retrofit(next);
-                date_text.setText(next);
-            }
-        });
     }
 
     @Override
@@ -214,8 +193,8 @@ public class ResActivity extends AppCompatActivity
             startActivity(intent);
 
         } else if (id == R.id.nav_manage) {
-            Intent intent = new Intent(getApplicationContext(), ManageLoginActivity.class);
-            startActivity(intent);
+//            Intent intent = new Intent(getApplicationContext(), ManageLoginActivity.class);
+//            startActivity(intent);
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout_res);
@@ -223,62 +202,4 @@ public class ResActivity extends AppCompatActivity
         return true;
     }
 
-    public void retrofit(String getTime) {
-
-        showProgressDialog();
-
-        Retrofit client = new Retrofit.Builder().baseUrl(getString(R.string.retrofit_url))
-                .addConverterFactory(GsonConverterFactory.create()).build();
-        Interface_meal meal = client.create(Interface_meal.class);
-        retrofit2.Call<Master3> call3 = meal.getMeal(getTime);
-        call3.enqueue(new Callback<Master3>() {
-            @Override
-            public void onResponse(Call<Master3> call, Response<Master3> response) {
-                if (response.body().getResult_code() == 1) {
-                    String source_guk = response.body().getResult_body().getInter();
-                    guk.setText(Html.fromHtml(source_guk));
-                    guk.setMovementMethod(LinkMovementMethod.getInstance());
-
-                    String source_bumin = response.body().getResult_body().getBumin_kyo();
-                    bumin.setText(Html.fromHtml(source_bumin));
-                    bumin.setMovementMethod(LinkMovementMethod.getInstance());
-
-                    String source_gang = response.body().getResult_body().getGang();
-                    gang.setText(Html.fromHtml(source_gang));
-                    gang.setMovementMethod(LinkMovementMethod.getInstance());
-
-                    hideProgressDialog();
-                } else {
-                    log.appendLog("inResActivity code not matched");
-                    Toasty.error(getApplicationContext(), "불러오기 실패", Toast.LENGTH_SHORT).show();
-                    hideProgressDialog();
-                }
-            }
-
-            @Override
-            public void onFailure(Call<Master3> call, Throwable t) {
-                log.appendLog("inResActivity failure");
-                hideProgressDialog();
-                Toasty.error(getApplicationContext(), "불러오기 실패", Toast.LENGTH_SHORT).show();
-                t.printStackTrace();
-            }
-        });
-    }
-
-    private void showProgressDialog() {
-        if (mProgressDialog == null) {
-            mProgressDialog = new ProgressDialog(this);
-            mProgressDialog.setMessage(getString(R.string.loading));
-            mProgressDialog.setIndeterminate(true);
-        }
-
-        mProgressDialog.show();
-    }
-
-    private void hideProgressDialog() {
-        if (mProgressDialog != null && mProgressDialog.isShowing()) {
-            mProgressDialog.hide();
-            mProgressDialog.dismiss();
-        }
-    }
 }

@@ -69,30 +69,30 @@ public class ProSubActivity extends AppCompatActivity implements NavigationView.
                 if(professorArrayList.get(i).getTel().equals(".")){
                     // 둘 다 없을 때
                     adapter.addItem(professorArrayList.get(i).getName(), professorArrayList.get(i).getMajor(),
-                            getResources().getDrawable(R.drawable.call_gone), getResources().getDrawable(R.drawable.phone_gone),
+                            getResources().getDrawable(R.drawable.call_empty), getResources().getDrawable(R.drawable.mail_empty),
                             professorArrayList.get(i).getTel(), professorArrayList.get(i).getEmail());
                 }else{
                     // 이메일은 없고 전화번호가 있을 때
                     adapter.addItem(professorArrayList.get(i).getName(), professorArrayList.get(i).getMajor(),
-                            getResources().getDrawable(R.drawable.call), getResources().getDrawable(R.drawable.phone_gone),
+                            getResources().getDrawable(R.drawable.call_fill), getResources().getDrawable(R.drawable.mail_empty),
                             professorArrayList.get(i).getTel(), professorArrayList.get(i).getEmail());
                 }
             } else if (professorArrayList.get(i).getTel().equals(".")) {
                 if(professorArrayList.get(i).getEmail().equals(".")){
                     // 둘 다 없을 때
                     adapter.addItem(professorArrayList.get(i).getName(), professorArrayList.get(i).getMajor(),
-                            getResources().getDrawable(R.drawable.call_gone), getResources().getDrawable(R.drawable.phone_gone),
+                            getResources().getDrawable(R.drawable.call_empty), getResources().getDrawable(R.drawable.mail_empty),
                             professorArrayList.get(i).getTel(), professorArrayList.get(i).getEmail());
                 }else{
                     // 전화번호는 없고 이메일이 있을 때
                     adapter.addItem(professorArrayList.get(i).getName(), professorArrayList.get(i).getMajor(),
-                            getResources().getDrawable(R.drawable.call_gone), getResources().getDrawable(R.drawable.tomail),
+                            getResources().getDrawable(R.drawable.call_empty), getResources().getDrawable(R.drawable.mail_fill),
                             professorArrayList.get(i).getTel(), professorArrayList.get(i).getEmail());
                 }
             } else {
                 // 둘 다 있을 때
                 adapter.addItem(professorArrayList.get(i).getName(), professorArrayList.get(i).getMajor(),
-                        getResources().getDrawable(R.drawable.call), getResources().getDrawable(R.drawable.tomail),
+                        getResources().getDrawable(R.drawable.call_fill), getResources().getDrawable(R.drawable.mail_fill),
                         professorArrayList.get(i).getTel(), professorArrayList.get(i).getEmail());
             }
         }
@@ -179,8 +179,8 @@ public class ProSubActivity extends AppCompatActivity implements NavigationView.
             startActivity(intent);
 
         } else if (id == R.id.nav_manage) {
-            Intent intent = new Intent(getApplicationContext(), ManageLoginActivity.class);
-            startActivity(intent);
+//            Intent intent = new Intent(getApplicationContext(), ManageLoginActivity.class);
+//            startActivity(intent);
         }
 
 
