@@ -25,7 +25,7 @@ import android.widget.Toast;
 
 import com.donga.examples.boomin.AppendLog;
 import com.donga.examples.boomin.R;
-import com.donga.examples.boomin.Singleton.TabPagerAdapter_Res;
+import com.donga.examples.boomin.TabPagerAdapter_Res;
 import com.donga.examples.boomin.TabPagerAdapter_Stu;
 import com.donga.examples.boomin.retrofit.retrofitMeal.Interface_meal;
 import com.donga.examples.boomin.retrofit.retrofitMeal.Master3;
@@ -70,7 +70,7 @@ public class ResActivity extends AppCompatActivity
 
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
-        drawer.setDrawerListener(toggle);
+        drawer.addDrawerListener(toggle);
         toggle.syncState();
 
         navigationView.setNavigationItemSelectedListener(this);
