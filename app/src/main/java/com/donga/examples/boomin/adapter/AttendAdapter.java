@@ -26,10 +26,10 @@ public class AttendAdapter extends RecyclerView.Adapter<AttendAdapter.ViewHolder
 
         public ViewHolder(View view) {
             super(view);
-            dateText = (TextView)view.findViewById(R.id.manage_attend_date);
-            titleText = (TextView)view.findViewById(R.id.manage_attend_title);
-            none_pcnotis_id = (TextView)view.findViewById(R.id.manage_attend_none_pcnotis_id);
-            cardview = (CardView)view.findViewById(R.id.attend_cardview);
+            dateText = view.findViewById(R.id.manage_attend_date);
+            titleText = view.findViewById(R.id.manage_attend_title);
+            none_pcnotis_id = view.findViewById(R.id.manage_attend_none_pcnotis_id);
+            cardview = view.findViewById(R.id.attend_cardview);
         }
     }
 

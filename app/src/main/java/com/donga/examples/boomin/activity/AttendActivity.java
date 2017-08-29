@@ -36,7 +36,6 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class AttendActivity extends AppCompatActivity {
     AppendLog log = new AppendLog();
     private ProgressDialog mProgressDialog;
-//    ProgressDialogController pdc = new ProgressDialogController(AttendActivity.this);
 
     int attend;
     String attend2;
@@ -92,8 +91,8 @@ public class AttendActivity extends AppCompatActivity {
                     }
 
                     View view = findViewById(R.id.linearView);
-                    final TextView attend_people = (TextView) view.findViewById(R.id.attend_people);
-                    final TextView attend_ok_people = (TextView) view.findViewById(R.id.attend_ok_people);
+                    final TextView attend_people = view.findViewById(R.id.attend_people);
+                    final TextView attend_ok_people = view.findViewById(R.id.attend_ok_people);
                     int total_people = none + ok + no;
                     attend_people.setText(String.valueOf(total_people));
                     attend_ok_people.setText(String.valueOf(ok));

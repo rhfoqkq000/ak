@@ -1,15 +1,18 @@
 package com.donga.examples.boomin.listviewAdapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.donga.examples.boomin.R;
+import com.donga.examples.boomin.activity.RoomDetailActivity;
 import com.donga.examples.boomin.listviewItem.RoomListViewItem;
 
 import java.util.ArrayList;
@@ -40,7 +43,6 @@ public class RoomListViewAdapter extends BaseAdapter {
     // position에 위치한 데이터를 화면에 출력하는데 사용될 View를 리턴. : 필수 구현
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        final int pos = position;
         final Context context = parent.getContext();
         ViewHolder viewHolder = null;
         View view = myViews.get(position);
@@ -54,11 +56,12 @@ public class RoomListViewAdapter extends BaseAdapter {
             viewHolder = new ViewHolder();
 
             // 화면에 표시될 View(Layout이 inflate된)으로부터 위젯에 대한 참조 획득
-            viewHolder.text_room1 = (TextView) convertView.findViewById(R.id.text_room1);
-            viewHolder.text_room2 = (TextView) convertView.findViewById(R.id.text_room2);
-            viewHolder.text_room3 = (TextView) convertView.findViewById(R.id.text_room3);
-            viewHolder.text_room4 = (TextView) convertView.findViewById(R.id.text_room4);
-            viewHolder.text_room5 = (TextView) convertView.findViewById(R.id.text_room5);
+            viewHolder.layout = convertView.findViewById(R.id.listviewId);
+            viewHolder.text_room1 = convertView.findViewById(R.id.text_room1);
+            viewHolder.text_room2 = convertView.findViewById(R.id.text_room2);
+            viewHolder.text_room3 = convertView.findViewById(R.id.text_room3);
+            viewHolder.text_room4 = convertView.findViewById(R.id.text_room4);
+            viewHolder.text_room5 = convertView.findViewById(R.id.text_room5);
 
 
             // Data Set(listViewItemList)에서 position에 위치한 데이터 참조 획득
@@ -75,6 +78,13 @@ public class RoomListViewAdapter extends BaseAdapter {
             viewHolder.text_room4.setText(listViewItem.getTitle4());
             viewHolder.text_room5.setText(change+"%");
 
+//            viewHolder.layout.setOnClickListener(new View.OnClickListener() {
+//                @Override
+//                public void onClick(View view) {
+//                    Intent intent = new Intent(context, RoomDetailActivity.class);
+//                    startActivity(intent);
+//                }
+//            });
 
             convertView.setTag(viewHolder);
 
@@ -87,6 +97,8 @@ public class RoomListViewAdapter extends BaseAdapter {
             } else{
                 viewHolder.text_room5.setTextColor(Color.parseColor("#128c00"));
             }
+
+
         }else{
             viewHolder = (ViewHolder)convertView.getTag();
         }
@@ -123,6 +135,7 @@ public class RoomListViewAdapter extends BaseAdapter {
     }
 
     class ViewHolder{
+        LinearLayout layout;
         TextView text_room1, text_room2, text_room3, text_room4, text_room5;
     }
 }

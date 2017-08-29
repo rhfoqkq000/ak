@@ -8,6 +8,6 @@ import retrofit2.http.GET;
  */
 
 public interface Interface_room {
-    @GET("/donga/getWebSeat")
+    @GET("/getWebSeat")
     Call<Master4> getRoom();
 }

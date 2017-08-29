@@ -26,11 +26,9 @@ public class TabPagerAdapter_Wisper extends FragmentStatePagerAdapter {
         // Returning the current tabs
         switch (position) {
             case 0:
-                Wisper_noticeFragment noticeFragment = new Wisper_noticeFragment();
-                return noticeFragment;
+                return new Wisper_noticeFragment();
             case 1:
-                Wisper_okFragment okFragment = new Wisper_okFragment();
-                return okFragment;
+                return new Wisper_okFragment();
             default:
                 return null;
         }

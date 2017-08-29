@@ -139,7 +139,7 @@ public class Stu_GrageFragment extends Fragment {
         final View rootview = inflater.inflate(R.layout.fragment_grades, container, false);
         ButterKnife.bind(this, rootview);
 
-        final SwipeRefreshLayout swipeRefreshLayout = (SwipeRefreshLayout) rootview.findViewById(R.id.swiper);
+        final SwipeRefreshLayout swipeRefreshLayout = rootview.findViewById(R.id.swiper);
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
@@ -165,12 +165,8 @@ public class Stu_GrageFragment extends Fragment {
         document = database.getDocument(String.valueOf(sharedPreferences.getInt("stuID", 0))+"GRADE");
 
         if(document.getProperty("grade") == null) {
-            Logger.d("이프");
-
             retrofitGrade();
         }else{
-            Logger.d("엘스당, "+document.getProperty("grade"));
-
             ObjectMapper mapper = new ObjectMapper();
             Result_body resultBody = mapper.convertValue(document.getProperties().get("grade"), Result_body.class);
 
@@ -216,10 +212,8 @@ public class Stu_GrageFragment extends Fragment {
         sharedPreferences = getContext().getSharedPreferences(getResources().getString(R.string.SFLAG), Context.MODE_PRIVATE);
 
         // Create the documenteDocument(database);
-        String revDocumentId = String.valueOf(sharedPreferences.getInt("stuID", 0))+"GRADE";
-        String documentId = revDocumentId;
-//        String documentId = String.valueOf(sharedPreferences.getInt("stuID", 0));
-        document = database.getDocument(documentId);
+        //        String documentId = String.valueOf(sharedPreferences.getInt("stuID", 0));
+        document = database.getDocument(String.valueOf(sharedPreferences.getInt("stuID", 0))+"GRADE");
         if (document.getProperty("grade") == null) {
 
             Map<String, Object> properties = new HashMap<>();

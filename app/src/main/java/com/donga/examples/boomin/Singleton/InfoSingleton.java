@@ -47,14 +47,6 @@ public class InfoSingleton {
         this.id = id;
     }
 
-    public String getFromGetCircleNoticeID() {
-        return fromGetCircleNoticeID;
-    }
-
-    public void setFromGetCircleNoticeID(String fromGetCircleNoticeID) {
-        this.fromGetCircleNoticeID = fromGetCircleNoticeID;
-    }
-
     public String getDevice_version() {
         return device_version;
     }

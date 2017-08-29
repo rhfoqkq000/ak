@@ -11,7 +11,6 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -19,17 +18,11 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 
 import com.donga.examples.boomin.R;
-import com.donga.examples.boomin.Singleton.NoticeSingleton;
 import com.donga.examples.boomin.listviewAdapter.HelpListViewAdapter;
 import com.orhanobut.logger.Logger;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
-import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
 
 /**
  * Created by rhfoq on 2017-02-17.
@@ -156,13 +149,13 @@ public class HelpActivity extends AppCompatActivity implements NavigationView.On
         int id = item.getItemId();
 
         if (id == R.id.nav_res) {
-            Intent intent = new Intent(getApplicationContext(), ResActivity.class);
+            Intent intent = new Intent(getApplicationContext(), ResKActivity.class);
             startActivity(intent);
         } else if (id == R.id.nav_room) {
             Intent intent = new Intent(getApplicationContext(), RoomActivity.class);
             startActivity(intent);
         } else if (id == R.id.nav_pro) {
-            Intent intent = new Intent(getApplicationContext(), ProActivity.class);
+            Intent intent = new Intent(getApplicationContext(), ProKActivity.class);
             startActivity(intent);
         } else if (id == R.id.nav_stu) {
             Intent intent = new Intent(getApplicationContext(), StudentActivity.class);
@@ -177,7 +170,7 @@ public class HelpActivity extends AppCompatActivity implements NavigationView.On
             Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("http://www.donga.ac.kr"));
             startActivity(intent);
         } else if (id == R.id.nav_noti) {
-            Intent intent = new Intent(getApplicationContext(), NoticeActivity.class);
+            Intent intent = new Intent(getApplicationContext(), NoticeKActivity.class);
             startActivity(intent);
         } else if (id == R.id.nav_change) {
             Intent intent = new Intent(getApplicationContext(), ChangeActivity.class);
@@ -189,14 +182,14 @@ public class HelpActivity extends AppCompatActivity implements NavigationView.On
             SharedPreferences sharedPreferences = getSharedPreferences(getResources().getString(R.string.SFLAG), Context.MODE_PRIVATE);
             SharedPreferences.Editor editor = sharedPreferences.edit();
             editor.clear();
-            editor.commit();
+            editor.apply();
             Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
             intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             startActivity(intent);
         } else if (id == R.id.nav_manage) {
-//            Intent intent = new Intent(getApplicationContext(), ManageLoginActivity.class);
-//            startActivity(intent);
+            Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("http://45.77.31.224/"));
+            startActivity(intent);
         }
 
 

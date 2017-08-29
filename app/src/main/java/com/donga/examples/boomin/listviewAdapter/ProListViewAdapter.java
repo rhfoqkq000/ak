@@ -61,16 +61,16 @@ public class ProListViewAdapter extends BaseAdapter {
                 case ITEM_VIEW_TYPE_TITLE:
                     convertView = inflater.inflate(R.layout.listview_pro_main_title, parent, false);
 //                    convertView = inflater.inflate(R.layout.listview_pro_main_name, parent, false);
-                    TextView pro_main_title = (TextView) convertView.findViewById(R.id.pro_main_title);
-//                    TextView pro_main_title = (TextView) convertView.findViewById(R.id.pro_main_name);
+                    TextView pro_main_title = convertView.findViewById(R.id.pro_main_title);
+//                    TextView pro_main_title = convertView.findViewById(R.id.pro_main_name);
                     pro_main_title.setText(listViewItem.getPro_main_title());
 
                     break;
                 case ITEM_VIEW_TYPE_NAME:
                     convertView = inflater.inflate(R.layout.listview_pro_main_name,
                             parent, false);
-                    TextView pro_main_name = (TextView) convertView.findViewById(R.id.pro_main_name);
-                    ImageView pro_main_arrow = (ImageView) convertView.findViewById(R.id.pro_main_arrow);
+                    TextView pro_main_name = convertView.findViewById(R.id.pro_main_name);
+                    ImageView pro_main_arrow = convertView.findViewById(R.id.pro_main_arrow);
 
                     pro_main_name.setText(listViewItem.getPro_main_name());
                     pro_main_arrow.setImageDrawable(listViewItem.getPro_main_arrow());

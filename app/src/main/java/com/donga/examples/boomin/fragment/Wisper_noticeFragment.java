@@ -23,6 +23,7 @@ import com.donga.examples.boomin.retrofit.retrofitNormalNotis.Interface_getNorma
 import com.donga.examples.boomin.retrofit.retrofitNormalNotis.Master;
 import com.donga.examples.boomin.retrofit.retrofitRemoveNormalNotis.Interface_removeNormalNotis;
 import com.donga.examples.boomin.retrofit.retrofitRemoveNormalNotis.JsonRequest;
+import com.orhanobut.logger.Logger;
 
 import java.util.ArrayList;
 
@@ -89,6 +90,7 @@ public class Wisper_noticeFragment extends Fragment {
                     // 확인 버튼 클릭시 설정
                     public void onClick(DialogInterface dialog, int whichButton){
                         noticeIdArray = NoticeSingleton.getInstance().getNoticeIdArray();
+                        Logger.d(noticeIdArray);
                         if(noticeIdArray.isEmpty()){
                             Toasty.error(getContext(), "선택된 항목이 없습니다.", Toast.LENGTH_SHORT).show();
                         }else{
@@ -98,8 +100,8 @@ public class Wisper_noticeFragment extends Fragment {
                                     .addConverterFactory(GsonConverterFactory.create()).build();
                             Interface_removeNormalNotis remove = client.create(Interface_removeNormalNotis.class);
                             JsonRequest jsonRequest = new JsonRequest(NoticeSingleton.getInstance().getNoticeIdArray());
-                            Call<com.donga.examples.boomin.retrofit.retrofitRemoveNormalNotis.Master> call = remove.removeNormalNotis("application/json",
-                                    jsonRequest);
+                            Call<com.donga.examples.boomin.retrofit.retrofitRemoveNormalNotis.Master> call =
+                                    remove.removeNormalNotis("application/json", jsonRequest);
                             call.enqueue(new Callback<com.donga.examples.boomin.retrofit.retrofitRemoveNormalNotis.Master>() {
                                 @Override
                                 public void onResponse(Call<com.donga.examples.boomin.retrofit.retrofitRemoveNormalNotis.Master> call,

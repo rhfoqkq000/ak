@@ -48,7 +48,6 @@ public class ProSubListViewAdapter extends BaseAdapter {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        final int pos = position;
         final Context context = parent.getContext();
 
         if (convertView == null) {
@@ -56,12 +55,12 @@ public class ProSubListViewAdapter extends BaseAdapter {
             convertView = inflater.inflate(R.layout.listview_pro_sub, parent, false);
         }
 
-        TextView pro_sub_name = (TextView) convertView.findViewById(R.id.pro_sub_name);
-        TextView pro_sub_major = (TextView) convertView.findViewById(R.id.pro_sub_major);
-        final ImageView pro_sub_call = (ImageView) convertView.findViewById(R.id.pro_sub_call);
-        ImageView pro_sub_mail = (ImageView) convertView.findViewById(R.id.pro_sub_mail);
-        final TextView pro_call_gone = (TextView) convertView.findViewById(R.id.pro_call_gone);
-        final TextView pro_mail_gone = (TextView) convertView.findViewById(R.id.pro_mail_gone);
+        TextView pro_sub_name = convertView.findViewById(R.id.pro_sub_name);
+        TextView pro_sub_major = convertView.findViewById(R.id.pro_sub_major);
+        final ImageView pro_sub_call = convertView.findViewById(R.id.pro_sub_call);
+        ImageView pro_sub_mail = convertView.findViewById(R.id.pro_sub_mail);
+        final TextView pro_call_gone = convertView.findViewById(R.id.pro_call_gone);
+        final TextView pro_mail_gone = convertView.findViewById(R.id.pro_mail_gone);
 
         ProSubListViewItem listData = mlistData.get(position);
 
@@ -94,7 +93,7 @@ public class ProSubListViewAdapter extends BaseAdapter {
                     Toasty.error(context, "등록된 전화번호가 없습니다.", Toast.LENGTH_SHORT).show();
                     return false;
                 } else {
-                    ClipboardManager clipboardManager = (ClipboardManager) context.getSystemService(context.CLIPBOARD_SERVICE);
+                    ClipboardManager clipboardManager = (ClipboardManager) context.getSystemService(Context.CLIPBOARD_SERVICE);
                     ClipData clipData = ClipData.newPlainText("label", pro_call_gone.getText().toString());
                     clipboardManager.setPrimaryClip(clipData);
                     return true;
@@ -125,7 +124,7 @@ public class ProSubListViewAdapter extends BaseAdapter {
                     return false;
                 } else {
 
-                    ClipboardManager clipboardManager = (ClipboardManager) context.getSystemService(context.CLIPBOARD_SERVICE);
+                    ClipboardManager clipboardManager = (ClipboardManager) context.getSystemService(Context.CLIPBOARD_SERVICE);
                     ClipData clipData = ClipData.newPlainText("label", pro_mail_gone.getText().toString());
                     clipboardManager.setPrimaryClip(clipData);
                     return true;

@@ -7,8 +7,8 @@ import java.util.ArrayList;
  */
 
 public class Master4 {
-    int result_code;
-    ArrayList<Seat> result_body;
+    private int result_code;
+    private ArrayList<Seat> result_body;
 
     public ArrayList<Seat> getResult_body() {
         return result_body;

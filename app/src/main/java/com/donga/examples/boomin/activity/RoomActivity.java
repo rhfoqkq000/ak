@@ -20,6 +20,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -29,7 +30,6 @@ import com.donga.examples.boomin.R;
 import com.donga.examples.boomin.listviewAdapter.RoomListViewAdapter;
 import com.donga.examples.boomin.retrofit.retrofitRoom.Interface_room;
 import com.donga.examples.boomin.retrofit.retrofitRoom.Master4;
-import com.orhanobut.logger.Logger;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -84,7 +84,7 @@ public class RoomActivity extends AppCompatActivity
         editor = sharedPreferences.edit();
         if(!sharedPreferences.contains("roomActivityHelp")){
             editor.putInt("roomActivityHelp", 0);
-            editor.commit();
+            editor.apply();
             showPopup();
         } else{
             showPopup();
@@ -148,13 +148,13 @@ public class RoomActivity extends AppCompatActivity
         int id = item.getItemId();
 
         if (id == R.id.nav_res) {
-            Intent intent = new Intent(getApplicationContext(), ResActivity.class);
+            Intent intent = new Intent(getApplicationContext(), ResKActivity.class);
             startActivity(intent);
         } else if (id == R.id.nav_room) {
             Intent intent = new Intent(getApplicationContext(), RoomActivity.class);
             startActivity(intent);
         } else if (id == R.id.nav_pro) {
-            Intent intent = new Intent(getApplicationContext(), ProActivity.class);
+            Intent intent = new Intent(getApplicationContext(), ProKActivity.class);
             startActivity(intent);
         } else if (id == R.id.nav_stu) {
             Intent intent = new Intent(getApplicationContext(), StudentActivity.class);
@@ -169,7 +169,7 @@ public class RoomActivity extends AppCompatActivity
             Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("http://www.donga.ac.kr"));
             startActivity(intent);
         } else if (id == R.id.nav_noti) {
-            Intent intent = new Intent(getApplicationContext(), NoticeActivity.class);
+            Intent intent = new Intent(getApplicationContext(), NoticeKActivity.class);
             startActivity(intent);
         } else if (id == R.id.nav_change) {
             Intent intent = new Intent(getApplicationContext(), ChangeActivity.class);
@@ -181,14 +181,14 @@ public class RoomActivity extends AppCompatActivity
             SharedPreferences sharedPreferences = getSharedPreferences(getResources().getString(R.string.SFLAG), Context.MODE_PRIVATE);
             SharedPreferences.Editor editor = sharedPreferences.edit();
             editor.clear();
-            editor.commit();
+            editor.apply();
             Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
             intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             startActivity(intent);
 
         } else if (id == R.id.nav_manage) {
-            Intent intent = new Intent(getApplicationContext(), ManageLoginActivity.class);
+            Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("http://45.77.31.224/"));
             startActivity(intent);
         }
 
@@ -216,14 +216,14 @@ public class RoomActivity extends AppCompatActivity
 
     public void retrofit() {
         //retrofit 통신
-        Retrofit client = new Retrofit.Builder().baseUrl(getString(R.string.retrofit_url))
+        Retrofit client = new Retrofit.Builder().baseUrl("http://dongaboomin.xyz:3000/")
                 .addConverterFactory(GsonConverterFactory.create()).build();
         Interface_room room = client.create(Interface_room.class);
         Call<Master4> call4 = room.getRoom();
         call4.enqueue(new Callback<Master4>() {
             @Override
-            public void onResponse(Call<Master4> call, Response<Master4> response) {
-                if (response.body().getResult_code() == 1) {
+            public void onResponse(Call<Master4> call, final Response<Master4> response) {
+                if (response.body().getResult_code() == 200) {
                     // Adapter 생성
                     RoomListViewAdapter adapter = new RoomListViewAdapter();
                     // Adapter달기
@@ -239,8 +239,18 @@ public class RoomActivity extends AppCompatActivity
                             tv_room5 = (TextView) header.findViewById(R.id.text_room5);
                             tv_room5.setTextColor(Color.RED);
                         }
-                        hideProgressDialog();
                     }
+                    listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                        @Override
+                        public void onItemClick(AdapterView<?> adapterView, View view, int j, long l) {
+                            Intent intent = new Intent(getApplicationContext(), RoomDetailActivity.class);
+                            Log.i("before intent", response.body().getResult_body().get(j).getUrl());
+                            intent.putExtra("url", response.body().getResult_body().get(j).getUrl());
+                            startActivity(intent);
+                        }
+                    });
+
+                    hideProgressDialog();
                 } else {
                     log.appendLog("inRoomActivity code not matched");
                     Toasty.error(getApplicationContext(), "불러오기 실패", Toast.LENGTH_SHORT).show();
@@ -267,7 +277,7 @@ public class RoomActivity extends AppCompatActivity
     public void showPopup(){
         if(sharedPreferences.getInt("roomActivityHelp", 0)==0){
             AlertDialog.Builder alert_confirm = new AlertDialog.Builder(this);
-            alert_confirm.setMessage("위쪽으로 스크롤하시면 새로고침됩니다.").setCancelable(false).setPositiveButton("확인",
+            alert_confirm.setMessage("위쪽으로 스크롤하시면 새로고침됩니다. 각 줄을 터치하시면 좌석현황을 보실 수 있습니다.").setCancelable(false).setPositiveButton("확인",
                     new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
@@ -280,7 +290,6 @@ public class RoomActivity extends AppCompatActivity
                             // 'No'
                             editor.putInt("roomActivityHelp", 1);
                             editor.commit();
-                            Logger.d(sharedPreferences.getInt("roomActivityHelp", 0));
                         }
                     });
             AlertDialog alert = alert_confirm.create();

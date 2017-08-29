@@ -5,7 +5,7 @@ package com.donga.examples.boomin.retrofit.retrofitRoom;
  */
 
 public class Seat {
-    String loc, all, use, remain, util;
+    private String loc, all, use, remain, util, url;
 
     public String getAll() {
         return all;
@@ -25,5 +25,9 @@ public class Seat {
 
     public String getUtil() {
         return util;
+    }
+
+    public String getUrl() {
+        return url;
     }
 }

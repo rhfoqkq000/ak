@@ -17,7 +17,7 @@ import java.util.ArrayList;
  */
 public class NoticeListViewAdapter extends BaseAdapter {
 
-    public ArrayList<NoticeListViewItem> mlistData = new ArrayList<NoticeListViewItem>();
+    private ArrayList<NoticeListViewItem> mlistData = new ArrayList<NoticeListViewItem>();
 
     public NoticeListViewAdapter(){
     }
@@ -47,7 +47,6 @@ public class NoticeListViewAdapter extends BaseAdapter {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        final int pos = position;
         final Context context = parent.getContext();
 
         if(convertView == null){
@@ -55,19 +54,21 @@ public class NoticeListViewAdapter extends BaseAdapter {
             convertView = inflater.inflate(R.layout.listview_notice, parent, false);
         }
 
-        TextView textView = (TextView)convertView.findViewById(R.id.notice_text);
+        TextView textView = convertView.findViewById(R.id.notice_text);
+        TextView timeView = convertView.findViewById(R.id.notice_time);
 
         NoticeListViewItem listData = mlistData.get(position);
 
         textView.setText(listData.getNotice_text());
+        timeView.setText(listData.getNotice_time());
 
         return convertView;
     }
 
-    public void addItem(String text){
+    public void addItem(String text, String time){
         NoticeListViewItem addInfo = new NoticeListViewItem();
         addInfo.setNotice_text(text);
-
+        addInfo.setNotice_time(time);
         mlistData.add(addInfo);
     }
 }

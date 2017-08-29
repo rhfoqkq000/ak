@@ -4,7 +4,6 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -17,11 +16,9 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.couchbase.lite.CouchbaseLiteException;
 import com.couchbase.lite.Database;
 import com.couchbase.lite.Document;
 import com.couchbase.lite.Manager;
-import com.couchbase.lite.android.AndroidContext;
 import com.donga.examples.boomin.AppendLog;
 import com.donga.examples.boomin.R;
 import com.donga.examples.boomin.Singleton.InfoSingleton;
@@ -414,7 +411,7 @@ public class Stu_ScheFragment extends Fragment {
 
         showProgressDialog();
 
-        final SwipeRefreshLayout swipeRefreshLayout = (SwipeRefreshLayout) rootview.findViewById(R.id.swiper);
+        final SwipeRefreshLayout swipeRefreshLayout = rootview.findViewById(R.id.swiper);
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
@@ -575,34 +572,36 @@ public class Stu_ScheFragment extends Fragment {
         friTvArray.add(night_fri9);
         friTvArray.add(night_fri10);
 
-        manager = null;
-        database = null;
-        try {
-            manager = new Manager(new AndroidContext(getContext()), Manager.DEFAULT_OPTIONS);
-            database = manager.getDatabase(DB_NAME);
-        } catch (Exception e) {
-            Log.e(TAG, "Error getting database", e);
-        }
-        sharedPreferences = getContext().getSharedPreferences(getResources().getString(R.string.SFLAG), Context.MODE_PRIVATE);
-        document = database.getDocument(String.valueOf(sharedPreferences.getInt("stuID", 0)));
+//        manager = null;
+//        database = null;
+//        try {
+//            manager = new Manager(new AndroidContext(getContext()), Manager.DEFAULT_OPTIONS);
+//            database = manager.getDatabase(DB_NAME);
+//        } catch (Exception e) {
+//            Log.e(TAG, "Error getting database", e);
+//        }
+//        sharedPreferences = getContext().getSharedPreferences(getResources().getString(R.string.SFLAG), Context.MODE_PRIVATE);
+//        document = database.getDocument(String.valueOf(sharedPreferences.getInt("stuID", 0)));
+//
+//        if (document.getProperty("properties") == null) {
+//                try {
+//                Logger.d("이프없당");
+//
+//                retrofitSche();
+//            } catch (Exception e) {
+//                log.appendLog("inScheFragment exception");
+//                hideProgressDialog();
+//                Toasty.error(getContext(), "불러오기 실패", Toast.LENGTH_SHORT).show();
+//                e.printStackTrace();
+//            }
+//        } else{
+//            Logger.d("엘스");
+//            ArrayList<ArrayList<String>> resultBody = (ArrayList<ArrayList<String>>)document.getProperties().get("properties");
+//            setSchedule(resultBody);
+//            hideProgressDialog();
+//        }
 
-        if (document.getProperty("properties") == null) {
-                try {
-                Logger.d("이프없당");
-
-                retrofitSche();
-            } catch (Exception e) {
-                log.appendLog("inScheFragment exception");
-                hideProgressDialog();
-                Toasty.error(getContext(), "불러오기 실패", Toast.LENGTH_SHORT).show();
-                e.printStackTrace();
-            }
-        } else{
-            Logger.d("엘스");
-            ArrayList<ArrayList<String>> resultBody = (ArrayList<ArrayList<String>>)document.getProperties().get("properties");
-            setSchedule(resultBody);
-            hideProgressDialog();
-        }
+        retrofitSche();
 
         return rootview;
     }
@@ -640,7 +639,7 @@ public class Stu_ScheFragment extends Fragment {
 
     public void setText(ArrayList<TextView> tvArray, String get5string, ArrayList<ArrayList<String>> resultBody, int i){
         int start = Integer.parseInt(get5string.substring(1, get5string.indexOf("-")))-3;
-        int end = Integer.parseInt(get5string.substring(get5string.indexOf("-")+1, get5string.indexOf("(")));
+//        int end = Integer.parseInt(get5string.substring(get5string.indexOf("-")+1, get5string.indexOf("(")));
         tvArray.get(start).setText(get5string.substring(get5string.indexOf("(")+1, get5string.indexOf(" ")));
         if(!resultBody.get(i).get(3).equals("")){
             blank = resultBody.get(i).get(3);
@@ -668,43 +667,43 @@ public class Stu_ScheFragment extends Fragment {
     }
 
 
-    private void helloCBL(ArrayList<ArrayList<String>> resultBody) {
+//    private void helloCBL(ArrayList<ArrayList<String>> resultBody) {
+//
+//        sharedPreferences = getContext().getSharedPreferences(getResources().getString(R.string.SFLAG), Context.MODE_PRIVATE);
+////        editor = sharedPreferences.edit();
+//
+//        // Create the documenteDocument(database);
+//        String documentId = String.valueOf(sharedPreferences.getInt("stuID", 0));
+//        // stuID라는 이름의 Document 생성
+//        document = database.getDocument(documentId);
+//
+//        if (document.getProperty("properties") == null){
+//            Map<String, Object> properties = new HashMap<>();
+//            // properties 형식 안에 "properties"라는 이름의 resultBody를 put
+//            properties.put("properties", resultBody);
+//            try {
+//                document.putProperties(properties);
+//                Log.i("dddddd", String.valueOf(document.getProperties()));
+//            } catch (Exception e) {
+//                e.printStackTrace();
+//            }
+//        }
+//    }
 
-        sharedPreferences = getContext().getSharedPreferences(getResources().getString(R.string.SFLAG), Context.MODE_PRIVATE);
-        editor = sharedPreferences.edit();
-
-        // Create the documenteDocument(database);
-        String documentId = String.valueOf(sharedPreferences.getInt("stuID", 0));
-        // stuID라는 이름의 Document 생성
-        document = database.getDocument(documentId);
-
-        if (document.getProperty("properties") == null){
-            Map<String, Object> properties = new HashMap<>();
-            // properties 형식 안에 "properties"라는 이름의 resultBody를 put
-            properties.put("properties", resultBody);
-            try {
-                document.putProperties(properties);
-                Log.i("dddddd", String.valueOf(document.getProperties()));
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        }
-    }
-
-    private void updateDoc(Database database, String documentId) {
-        Document document = database.getDocument(documentId);
-        try {
-            // Update the document with more data
-            Map<String, Object> updatedProperties = new HashMap<String, Object>();
-            updatedProperties.putAll(document.getProperties());
-            updatedProperties.put("eventDescription", "Everyone is invited!");
-            updatedProperties.put("address", "123 Elm St.");
-            // Save to the Couchbase local Couchbase Lite DB
-            document.putProperties(updatedProperties);
-        } catch (CouchbaseLiteException e) {
-            Log.e(TAG, "Error putting", e);
-        }
-    }
+//    private void updateDoc(Database database, String documentId) {
+//        Document document = database.getDocument(documentId);
+//        try {
+//            // Update the document with more data
+//            Map<String, Object> updatedProperties = new HashMap<String, Object>();
+//            updatedProperties.putAll(document.getProperties());
+//            updatedProperties.put("eventDescription", "Everyone is invited!");
+//            updatedProperties.put("address", "123 Elm St.");
+//            // Save to the Couchbase local Couchbase Lite DB
+//            document.putProperties(updatedProperties);
+//        } catch (CouchbaseLiteException e) {
+//            Log.e(TAG, "Error putting", e);
+//        }
+//    }
 
     public void setSchedule(ArrayList<ArrayList<String>> resultBody){
         ArrayList<String> codeArray = new ArrayList<String>();
@@ -754,7 +753,6 @@ public class Stu_ScheFragment extends Fragment {
                         setColor(get5string, friTvArray, colorArray2, codeArray);
                         break;
                     default:
-                        Logger.d("default");
                         break;
                 }
             }
@@ -784,39 +782,44 @@ public class Stu_ScheFragment extends Fragment {
     }
 
     public void retrofitSche(){
+        showProgressDialog();
         Retrofit client = new Retrofit.Builder().baseUrl(getString(R.string.retrofit_url))
                 .addConverterFactory(GsonConverterFactory.create()).build();
         Interface_sche sche = client.create(Interface_sche.class);
 
-        Call<Master> call = null;
+        Call<Master> call;
         try {
             call = sche.getTimeTable(InfoSingleton.getInstance().getStuId(),
                     Decrypt(InfoSingleton.getInstance().getStuPw(), getString(R.string.decrypt_key)));
+            call.enqueue(new Callback<Master>() {
+                @Override
+                public void onResponse(Call<Master> call, Response<Master> response) {
+                    if(response.body().getResult_code() == 1){
+                        ArrayList<ArrayList<String>> resultBody = response.body().getResult_body();
+//                        helloCBL(resultBody);
+                        setSchedule(resultBody);
+                        hideProgressDialog();
+                    }else{
+                        hideProgressDialog();
+                        Toasty.error(getContext(), "불러오기 실패", Toast.LENGTH_SHORT).show();
+                        log.appendLog("inScheFragment code not matched");
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<Master> call, Throwable t) {
+                    Toasty.error(getContext(), "불러오기 실패", Toast.LENGTH_SHORT).show();
+                    log.appendLog("inScheFragment failure");
+                    hideProgressDialog();
+                    t.printStackTrace();
+                }
+            });
         } catch (Exception e) {
+            Toasty.error(getContext(), "불러오기 실패", Toast.LENGTH_SHORT).show();
             e.printStackTrace();
         }
-        call.enqueue(new Callback<Master>() {
-            @Override
-            public void onResponse(Call<Master> call, Response<Master> response) {
-                if(response.body().getResult_code() == 1){
-                    ArrayList<ArrayList<String>> resultBody = response.body().getResult_body();
-                    helloCBL(resultBody);
-                    setSchedule(resultBody);
-                    hideProgressDialog();
-                }else{
-                    hideProgressDialog();
-                    Toasty.error(getContext(), "불러오기 실패", Toast.LENGTH_SHORT).show();
-                    log.appendLog("inScheFragment code not matched");
-                }
-            }
 
-            @Override
-            public void onFailure(Call<Master> call, Throwable t) {
-                Toasty.error(getContext(), "불러오기 실패", Toast.LENGTH_SHORT).show();
-                log.appendLog("inScheFragment failure");
-                hideProgressDialog();
-                t.printStackTrace();
-            }
-        });
     }
+
+
 }

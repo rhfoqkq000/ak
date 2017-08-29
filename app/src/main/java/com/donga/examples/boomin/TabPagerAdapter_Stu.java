@@ -4,7 +4,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 
-import com.donga.examples.boomin.fragment.Stu_AchievFragment;
+import com.donga.examples.boomin.fragment.Stu_AchievKFragment;
 import com.donga.examples.boomin.fragment.Stu_GrageFragment;
 import com.donga.examples.boomin.fragment.Stu_ScheFragment;
 
@@ -27,14 +27,11 @@ public class TabPagerAdapter_Stu extends FragmentStatePagerAdapter {
         // Returning the current tabs
         switch (position) {
             case 0:
-                Stu_ScheFragment scheFragment = new Stu_ScheFragment();
-                return scheFragment;
+                return new Stu_ScheFragment();
             case 1:
-                Stu_GrageFragment grageFragment = new Stu_GrageFragment();
-                return grageFragment;
+                return new Stu_GrageFragment();
             case 2:
-                Stu_AchievFragment achievFragment = new Stu_AchievFragment();
-                return achievFragment;
+                return new Stu_AchievKFragment();
             default:
                 return null;
         }

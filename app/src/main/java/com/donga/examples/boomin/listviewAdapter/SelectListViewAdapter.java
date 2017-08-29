@@ -43,7 +43,6 @@ public class SelectListViewAdapter extends BaseAdapter {
     // position에 위치한 데이터를 화면에 출력하는데 사용될 View를 리턴. : 필수 구현
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        final int pos = position;
         final Context context = parent.getContext();
         final ViewHolder viewHolder;
         View view = myViews.get(position);
@@ -57,9 +56,9 @@ public class SelectListViewAdapter extends BaseAdapter {
             viewHolder = new ViewHolder();
 
             // 화면에 표시될 View(Layout이 inflate된)으로부터 위젯에 대한 참조 획득
-            viewHolder.text_title = (TextView) convertView.findViewById(R.id.select_text);
-            viewHolder.text_none_id = (TextView) convertView.findViewById(R.id.select_none_id);
-            viewHolder.checkBox = (CheckBox) convertView.findViewById(R.id.select_checkbox);
+            viewHolder.text_title = convertView.findViewById(R.id.select_text);
+            viewHolder.text_none_id = convertView.findViewById(R.id.select_none_id);
+            viewHolder.checkBox = convertView.findViewById(R.id.select_checkbox);
 
             // Data Set(listViewItemList)에서 position에 위치한 데이터 참조 획득
             SelectListViewItem listViewItem = listViewItemList.get(position);

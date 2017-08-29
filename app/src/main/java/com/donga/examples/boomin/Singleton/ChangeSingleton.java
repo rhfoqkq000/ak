@@ -8,10 +8,10 @@ import java.util.ArrayList;
 
 public class ChangeSingleton {
     private static ChangeSingleton mInstance = null;
-    private ArrayList<String> mArray = new ArrayList<String>();
-    private ArrayList<String> dialogArray = new ArrayList<String>();
-    private ArrayList<String> wisperAdapterArray = new ArrayList<String>();
-    private ArrayList<String> changeIdList = new ArrayList<String>();
+    private ArrayList<String> mArray = new ArrayList<>();
+    private ArrayList<String> dialogArray = new ArrayList<>();
+    private ArrayList<String> wisperAdapterArray = new ArrayList<>();
+    private ArrayList<String> changeIdList = new ArrayList<>();
 
     public static ChangeSingleton getInstance() {
         if(mInstance == null)
