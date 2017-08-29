@@ -49,7 +49,6 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class LoginActivity extends AppCompatActivity {
     private ProgressDialog mProgressDialog;
     public final int MY_PERMISSIONS_REQUEST_READ_PHONE_STATE = 1;
-    private final long FINISH_INTERVAL_TIME = 2000;
     private long backPressedTime = 0;
     AppendLog log = new AppendLog();
     Activity activity = this;
@@ -88,7 +87,7 @@ public class LoginActivity extends AppCompatActivity {
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
-                    editor.commit();
+                    editor.apply();
 
                     //Firebase push token
                     String token = FirebaseInstanceId.getInstance().getToken();
@@ -100,7 +99,8 @@ public class LoginActivity extends AppCompatActivity {
                     TelephonyManager tManager = (TelephonyManager) getBaseContext()
                             .getSystemService(Context.TELEPHONY_SERVICE);
                     Call<com.donga.examples.boomin.retrofit.retrofitFirstLogin.Master> call5 = firstLogin.loginUser(GetDevicesUUID(getApplicationContext()),
-                            "ANDROID", Build.MODEL, tManager.getNetworkOperatorName(), String.valueOf(Build.VERSION.SDK_INT), token, String.valueOf(sharedPreferences.getInt("ID", 0)));
+                            "ANDROID", Build.MODEL, tManager.getNetworkOperatorName(), String.valueOf(Build.VERSION.SDK_INT), token,
+                            String.valueOf(sharedPreferences.getInt("ID", 0)));
                     call5.enqueue(new Callback<com.donga.examples.boomin.retrofit.retrofitFirstLogin.Master>() {
                         @Override
                         public void onResponse(Call<com.donga.examples.boomin.retrofit.retrofitFirstLogin.Master> call,
@@ -297,6 +297,7 @@ public class LoginActivity extends AppCompatActivity {
         long tempTime = System.currentTimeMillis();
         long intervalTime = tempTime - backPressedTime;
 
+        long FINISH_INTERVAL_TIME = 2000;
         if (0 <= intervalTime && FINISH_INTERVAL_TIME >= intervalTime) {
             super.onBackPressed();
         } else {

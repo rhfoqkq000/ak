@@ -28,17 +28,13 @@ public class TabPagerAdapter_Manage extends FragmentStatePagerAdapter {
         // Returning the current tabs
         switch (position) {
             case 0:
-                Manage_MemberFragment memberFragment= new Manage_MemberFragment();
-                return memberFragment;
+                return new Manage_MemberFragment();
             case 1:
-                Manage_LetterFragment letterFragment = new Manage_LetterFragment();
-                return letterFragment;
+                return new Manage_LetterFragment();
             case 2:
-                Manage_AttendFragment attendFragment = new Manage_AttendFragment();
-                return attendFragment;
+                return new Manage_AttendFragment();
             case 3:
-                Manage_SendFragment sendFragment = new Manage_SendFragment();
-                return sendFragment;
+                return new Manage_SendFragment();
             default:
                 return null;
         }

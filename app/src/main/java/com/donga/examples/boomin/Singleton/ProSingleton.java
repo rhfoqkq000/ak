@@ -2,6 +2,8 @@ package com.donga.examples.boomin.Singleton;
 
 import com.donga.examples.boomin.retrofit.retrofitProfessor.Professor;
 
+import org.json.JSONArray;
+
 import java.util.ArrayList;
 
 /**
@@ -9,7 +11,8 @@ import java.util.ArrayList;
  */
 public class ProSingleton {
     private static ProSingleton mInstance = null;
-    ArrayList<Professor> professorArrayList;
+    private ArrayList<Professor> professorArrayList;
+    private JSONArray professorJSONArray;
 
     public static ProSingleton getInstance() {
         if(mInstance == null)
@@ -28,5 +31,13 @@ public class ProSingleton {
 
     public void setProfessorArrayList(ArrayList<Professor> professorArrayList) {
         this.professorArrayList = professorArrayList;
+    }
+
+    public JSONArray getProfessorJSONArray() {
+        return professorJSONArray;
+    }
+
+    public void setProfessorJSONArray(JSONArray professorJSONArray) {
+        this.professorJSONArray = professorJSONArray;
     }
 }

@@ -24,12 +24,6 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import com.afollestad.materialdialogs.MaterialDialog;
-import com.couchbase.lite.CouchbaseLiteException;
-import com.couchbase.lite.Database;
-import com.couchbase.lite.DatabaseOptions;
-import com.couchbase.lite.Document;
-import com.couchbase.lite.Manager;
-import com.couchbase.lite.android.AndroidContext;
 import com.donga.examples.boomin.AppendLog;
 import com.donga.examples.boomin.MarketVersionChecker;
 import com.donga.examples.boomin.R;
@@ -43,11 +37,8 @@ import com.donga.examples.boomin.retrofit.retrofitSetCircle.JsonRequest;
 import com.jaredrummler.materialspinner.MaterialSpinner;
 import com.orhanobut.logger.Logger;
 
-import java.io.IOException;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -86,7 +77,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
 
     @OnClick(R.id.menu_res)
     void menu_res() {
-        Intent intent = new Intent(getApplicationContext(), ResActivity.class);
+        Intent intent = new Intent(getApplicationContext(), ResKActivity.class);
         startActivity(intent);
     }
 
@@ -110,7 +101,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
 
     @OnClick(R.id.menu_prof)
     void menu_prof() {
-        Intent intent = new Intent(getApplicationContext(), ProActivity.class);
+        Intent intent = new Intent(getApplicationContext(), ProKActivity.class);
         startActivity(intent);
     }
 
@@ -195,7 +186,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
             int pushCount = sharedPreferences.getInt("pushCount", 0);
             pushCount++;
             editor.putInt("pushCount", pushCount);
-            editor.commit();
+            editor.apply();
             ShortcutBadger.applyCount(getApplicationContext(), pushCount);
 
             Intent i = new Intent(getApplicationContext(), WisperActivity.class);
@@ -210,14 +201,14 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
                 ArrayList<String> list_major = new ArrayList<String>();
                 list_major.add("경영정보학과");
                 list_major.add("경영학과");
-                boolean wrapInScrollView = false;
+//                boolean wrapInScrollView = false;
                 final MaterialDialog dialog = new MaterialDialog.Builder(this)
-                        .customView(R.layout.activity_select_dialog, wrapInScrollView)
+                        .customView(R.layout.activity_select_dialog, false)
                         .build();
 
                 View view = dialog.getCustomView();
-                listView = (ListView)view.findViewById(R.id.list_select);
-                final MaterialSpinner select_spinner = (MaterialSpinner)view.findViewById(R.id.select_spinner);
+                listView = view.findViewById(R.id.list_select);
+                final MaterialSpinner select_spinner = view.findViewById(R.id.select_spinner);
                 select_spinner.setItems(list_major);
                 select_spinner.setOnItemSelectedListener(new MaterialSpinner.OnItemSelectedListener() {
                     @Override
@@ -229,12 +220,12 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
 
                 getCircle(select_spinner.getItems().get(0).toString());
 
-                Button select_btn_ok = (Button)view.findViewById(R.id.select_btn_ok_btn);
+                Button select_btn_ok = view.findViewById(R.id.select_btn_ok_btn);
                 select_btn_ok.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         showProgressDialog();
-                        SharedPreferences sharedPreferences = getSharedPreferences(getString(R.string.SFLAG), Context.MODE_PRIVATE);
+                        final SharedPreferences sharedPreferences = getSharedPreferences(getString(R.string.SFLAG), Context.MODE_PRIVATE);
 
                         Retrofit client = new Retrofit.Builder().baseUrl(getString(R.string.retrofit_url))
                                 .addConverterFactory(GsonConverterFactory.create()).build();
@@ -247,6 +238,9 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
                             @Override
                             public void onResponse(Call<com.donga.examples.boomin.retrofit.retrofitSetCircle.Master> call, Response<com.donga.examples.boomin.retrofit.retrofitSetCircle.Master> response) {
                                 if(response.body().getResult_code() == 1){
+                                    SharedPreferences.Editor editor = sharedPreferences.edit();
+                                    editor.putInt("checkCircle", 0);
+                                    editor.apply();
                                     hideProgressDialog();
                                     dialog.dismiss();
                                 }else{
@@ -355,13 +349,13 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         int id = item.getItemId();
 
         if (id == R.id.nav_res) {
-            Intent intent = new Intent(getApplicationContext(), ResActivity.class);
+            Intent intent = new Intent(getApplicationContext(), ResKActivity.class);
             startActivity(intent);
         } else if (id == R.id.nav_room) {
             Intent intent = new Intent(getApplicationContext(), RoomActivity.class);
             startActivity(intent);
         } else if (id == R.id.nav_pro) {
-            Intent intent = new Intent(getApplicationContext(), ProActivity.class);
+            Intent intent = new Intent(getApplicationContext(), ProKActivity.class);
             startActivity(intent);
         } else if (id == R.id.nav_stu) {
             Intent intent = new Intent(getApplicationContext(), StudentActivity.class);
@@ -376,7 +370,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
             Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("http://www.donga.ac.kr"));
             startActivity(intent);
         } else if (id == R.id.nav_noti) {
-            Intent intent = new Intent(getApplicationContext(), NoticeActivity.class);
+            Intent intent = new Intent(getApplicationContext(), NoticeKActivity.class);
             startActivity(intent);
         } else if (id == R.id.nav_change) {
             Intent intent = new Intent(getApplicationContext(), ChangeActivity.class);
@@ -388,14 +382,14 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
             SharedPreferences sharedPreferences = getSharedPreferences(getResources().getString(R.string.SFLAG), Context.MODE_PRIVATE);
             SharedPreferences.Editor editor = sharedPreferences.edit();
             editor.clear();
-            editor.commit();
+            editor.apply();
             Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
             intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             startActivity(intent);
         } else if (id == R.id.nav_manage) {
-//            Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("http://www.donga.ac.kr"));
-//            startActivity(intent);
+            Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("http://45.77.31.224/"));
+            startActivity(intent);
         }
 
 

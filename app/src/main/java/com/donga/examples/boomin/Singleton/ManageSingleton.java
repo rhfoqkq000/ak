@@ -6,11 +6,11 @@ package com.donga.examples.boomin.Singleton;
 public class ManageSingleton {
     private static ManageSingleton mInstance = null;
 
-    String token;
-    String managerID;
-    String pcnotis_id;
-    String manageID;
-    String managePW;
+    private String token;
+    private String managerID;
+    private String pcnotis_id;
+    private String manageID;
+    private String managePW;
 
     public static ManageSingleton getInstance() {
         if(mInstance == null)

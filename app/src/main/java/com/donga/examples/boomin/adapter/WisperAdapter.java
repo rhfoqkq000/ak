@@ -150,9 +150,10 @@ public class WisperAdapter extends RecyclerView.Adapter<WisperAdapter.ViewHolder
                     pushCount--;
                     SharedPreferences.Editor editor = sharedPreferences.edit();
                     editor.putInt("pushCount", pushCount);
-                    editor.commit();
+                    editor.apply();
                     ShortcutBadger.applyCount(context, pushCount);
                 }
+                Logger.d("체크인지 노말인지 좀 보자~~~~~");
                 //retrofit 통신
                 Retrofit client = new Retrofit.Builder().baseUrl(context.getString(R.string.retrofit_url))
                         .addConverterFactory(GsonConverterFactory.create()).build();

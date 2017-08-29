@@ -1,30 +1,6 @@
 package com.donga.examples.boomin.activity;
 
-import android.app.ProgressDialog;
-import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
-import android.util.Log;
-import android.view.KeyEvent;
-import android.view.View;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.Toast;
-
-import com.donga.examples.boomin.AppendLog;
-import com.donga.examples.boomin.R;
-import com.donga.examples.boomin.Singleton.ManageSingleton;
-import com.donga.examples.boomin.retrofit.retrofitAuthLogin.Interface_authLogin;
-
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.OnClick;
-import es.dmoral.toasty.Toasty;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
-import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
 
 public class ManageLoginActivity extends AppCompatActivity {
 //    AppendLog log = new AppendLog();

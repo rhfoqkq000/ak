@@ -21,7 +21,7 @@ public class MemberListViewAdapter extends BaseAdapter {
     private static final int ITEM_VIEW_TYPE_LIST = 1;
     private static final int ITEM_VIEW_TYPE_MAX = 3;
 
-    CustomViewHolder holder;
+    private CustomViewHolder holder;
 
 //    boolean[] checkBoxState;
 
@@ -72,16 +72,16 @@ public class MemberListViewAdapter extends BaseAdapter {
                 case ITEM_VIEW_TYPE_DIVI:
                     convertView = inflater.inflate(R.layout.listview_manage_divi,
                             parent, false);
-                    holder.s_divi = (TextView) convertView.findViewById(R.id.manage_member_divi);
+                    holder.s_divi = convertView.findViewById(R.id.manage_member_divi);
 
                     holder.s_divi.setText(listViewItem.getS_divi());
                     break;
                 case ITEM_VIEW_TYPE_LIST:
                     convertView = inflater.inflate(R.layout.listview_manage_member,
                             parent, false);
-                    holder.s_check = (CheckBox) convertView.findViewById(R.id.manage_member_check);
-                    holder.s_id = (TextView) convertView.findViewById(R.id.manage_member_id);
-                    holder.s_name = (TextView) convertView.findViewById(R.id.manage_member_name);
+                    holder.s_check = convertView.findViewById(R.id.manage_member_check);
+                    holder.s_id = convertView.findViewById(R.id.manage_member_id);
+                    holder.s_name = convertView.findViewById(R.id.manage_member_name);
 
                     holder.s_id.setText(listViewItem.getS_id());
                     holder.s_name.setText(listViewItem.getS_name());
@@ -126,7 +126,7 @@ public class MemberListViewAdapter extends BaseAdapter {
     }
 
     public class CustomViewHolder {
-        public TextView s_divi, s_id, s_name;
-        public CheckBox s_check;
+        TextView s_divi, s_id, s_name;
+        CheckBox s_check;
     }
 }

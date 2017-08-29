@@ -24,9 +24,9 @@ public class AllListViewAdapter extends BaseAdapter {
     // 아이템 데이터 리스트.
     private ArrayList<PartListViewItem> listViewItemList = new ArrayList<PartListViewItem>();
 
-    public AllListViewAdapter() {
-
-    }
+//    public AllListViewAdapter() {
+//
+//    }
 
     // Adapter에 사용되는 데이터의 개수를 리턴. : 필수 구현
     @Override
@@ -60,8 +60,8 @@ public class AllListViewAdapter extends BaseAdapter {
                 case ITEM_VIEW_TYPE_TITLE:
                     convertView = inflater.inflate(R.layout.listview_part_title,
                             parent, false);
-                    TextView part_title_year = (TextView) convertView.findViewById(R.id.part_title_year);
-                    TextView part_title_term = (TextView) convertView.findViewById(R.id.part_title_term);
+                    TextView part_title_year = convertView.findViewById(R.id.part_title_year);
+                    TextView part_title_term = convertView.findViewById(R.id.part_title_term);
 
                     part_title_year.setText(listViewItem.getTitle_year());
                     part_title_term.setText(listViewItem.getTitle_term());
@@ -69,8 +69,8 @@ public class AllListViewAdapter extends BaseAdapter {
                 case ITEM_VIEW_TYPE_NAME:
                     convertView = inflater.inflate(R.layout.listview_part_name,
                             parent, false);
-                    TextView part_name_subject = (TextView) convertView.findViewById(R.id.part_name_subject);
-                    TextView part_name_grade = (TextView) convertView.findViewById(R.id.part_name_grade);
+                    TextView part_name_subject = convertView.findViewById(R.id.part_name_subject);
+                    TextView part_name_grade = convertView.findViewById(R.id.part_name_grade);
 
                     part_name_subject.setText(listViewItem.getName_subject());
                     part_name_grade.setText(listViewItem.getName_grade());
@@ -79,8 +79,8 @@ public class AllListViewAdapter extends BaseAdapter {
                     convertView = inflater.inflate(R.layout.listview_part_content,
                             parent, false);
 
-                    TextView part_content_subject = (TextView) convertView.findViewById(R.id.part_content_subject);
-                    TextView part_content_grade = (TextView) convertView.findViewById(R.id.part_content_grade);
+                    TextView part_content_subject = convertView.findViewById(R.id.part_content_subject);
+                    TextView part_content_grade = convertView.findViewById(R.id.part_content_grade);
 
                     part_content_subject.setText(listViewItem.getContent_subject());
                     part_content_grade.setText(listViewItem.getContent_grade());

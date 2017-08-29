@@ -48,9 +48,9 @@ public class AttendListViewAdapter extends BaseAdapter {
 
 
             convertView = inflater.inflate(R.layout.listview_attend, parent, false);
-            holder.attend_id = (TextView) convertView.findViewById(R.id.attend_id);
-            holder.attend_name = (TextView) convertView.findViewById(R.id.attend_name);
-            holder.attend_on = (TextView) convertView.findViewById(R.id.attend_on);
+            holder.attend_id = convertView.findViewById(R.id.attend_id);
+            holder.attend_name = convertView.findViewById(R.id.attend_name);
+            holder.attend_on = convertView.findViewById(R.id.attend_on);
 
             holder.attend_id.setText(listViewItem.getAttend_id());
             holder.attend_name.setText(listViewItem.getAttend_name());
@@ -89,7 +89,7 @@ public class AttendListViewAdapter extends BaseAdapter {
         listViewItemList.add(item);
     }
 
-    public class CustomViewHolder {
-        public TextView attend_id, attend_name, attend_on;
+    private class CustomViewHolder {
+        private TextView attend_id, attend_name, attend_on;
     }
 }

@@ -49,7 +49,7 @@ public class CalendarFragment extends DialogFragment implements DatePickerDialog
     //텍스트에 선택한 날짜 나타내기
     @Override
     public void onDateSet(DatePicker view, final int year, final int month, final int date) {
-        final TextView textView = (TextView) getActivity().findViewById(R.id.date_text);
+        final TextView textView = getActivity().findViewById(R.id.date_text);
 
         if (month < 10 && date < 10) {
             String new_month = "0" + (month + 1);
@@ -80,9 +80,9 @@ public class CalendarFragment extends DialogFragment implements DatePickerDialog
 
         showProgressDialog();
 
-        final TextView guk = (TextView) getActivity().findViewById(R.id.guk);
-        final TextView bumin = (TextView) getActivity().findViewById(R.id.bumin);
-        final TextView gang = (TextView) getActivity().findViewById(R.id.gang);
+        final TextView guk = getActivity().findViewById(R.id.guk);
+        final TextView bumin = getActivity().findViewById(R.id.bumin);
+        final TextView gang = getActivity().findViewById(R.id.gang);
 
         Retrofit client = new Retrofit.Builder().baseUrl(getString(R.string.retrofit_url))
                 .addConverterFactory(GsonConverterFactory.create()).build();

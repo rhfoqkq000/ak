@@ -50,7 +50,6 @@ public class HelpListViewAdapter extends BaseAdapter {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        final int pos = position;
         final Context context = parent.getContext();
 
         if(convertView == null){
@@ -58,8 +57,8 @@ public class HelpListViewAdapter extends BaseAdapter {
             convertView = inflater.inflate(R.layout.listview_help, parent, false);
         }
 
-        TextView textView = (TextView)convertView.findViewById(R.id.text_help);
-        ImageView iconImageView = (ImageView)convertView.findViewById(R.id.image_help);
+        TextView textView = convertView.findViewById(R.id.text_help);
+        ImageView iconImageView = convertView.findViewById(R.id.image_help);
 
         HelpListViewItem listData = mlistData.get(position);
 

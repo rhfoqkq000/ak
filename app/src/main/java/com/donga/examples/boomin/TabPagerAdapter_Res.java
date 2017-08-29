@@ -6,9 +6,6 @@ import android.support.v4.app.FragmentStatePagerAdapter;
 
 import com.donga.examples.boomin.fragment.Res_BuminFragment;
 import com.donga.examples.boomin.fragment.Res_HadanFragment;
-import com.donga.examples.boomin.fragment.Stu_AchievFragment;
-import com.donga.examples.boomin.fragment.Stu_GrageFragment;
-import com.donga.examples.boomin.fragment.Stu_ScheFragment;
 
 /**
  * Created by rhfoq on 2017-02-15.
@@ -29,11 +26,9 @@ public class TabPagerAdapter_Res extends FragmentStatePagerAdapter {
         // Returning the current tabs
         switch (position) {
             case 0:
-                Res_HadanFragment hadanFragment = new Res_HadanFragment();
-                return hadanFragment;
+                return new Res_HadanFragment();
             case 1:
-                Res_BuminFragment buminFragment = new Res_BuminFragment();
-                return buminFragment;
+                return new Res_BuminFragment();
             default:
                 return null;
         }

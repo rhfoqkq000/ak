@@ -16,7 +16,6 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.util.TypedValue;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -99,18 +98,18 @@ public class EmptyActivity extends AppCompatActivity
         navigationView.setNavigationItemSelectedListener(this);
 
         List<String> empty_day_list = Arrays.asList(getResources().getStringArray(R.array.empty_day));
-        final ArrayList<String> empty_clock_list = new ArrayList<>();
-        for(int i = 3; i<=20; i++){
-            empty_clock_list.add(String.valueOf(i));
-        }
+//        final ArrayList<String> empty_clock_list = new ArrayList<>();
+//        for(int i = 3; i<=20; i++){
+//            empty_clock_list.add(String.valueOf(i));
+//        }
         String[] empty_array = getResources().getStringArray(R.array.empty_clock);
         final ArrayList<String> empty_array2 = new ArrayList(Arrays.asList(empty_array));
-        HashMap<ArrayList<String>, ArrayList<String>> empty_hash = new HashMap<>();
-        empty_hash.put(empty_clock_list, empty_array2);
+//        HashMap<ArrayList<String>, ArrayList<String>> empty_hash = new HashMap<>();
+//        empty_hash.put(empty_clock_list, empty_array2);
 
-        ArrayAdapter<String> empty_day_adapter = new ArrayAdapter<String>(this, R.layout.spinner_item,
+        ArrayAdapter<String> empty_day_adapter = new ArrayAdapter<>(this, R.layout.spinner_item,
                 empty_day_list);
-        ArrayAdapter<String> empty_clock_adapter = new ArrayAdapter<String>(this, R.layout.spinner_item,
+        ArrayAdapter<String> empty_clock_adapter = new ArrayAdapter<>(this, R.layout.spinner_item,
                 empty_array2);
         empty_day.setAdapter(empty_day_adapter);
         empty_clock1.setAdapter(empty_clock_adapter);
@@ -119,12 +118,12 @@ public class EmptyActivity extends AppCompatActivity
         empty_clock1.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                ArrayList<String> empty_clock2_list = new ArrayList<String>();
+                ArrayList<String> empty_clock2_list = new ArrayList<>();
                 int selected = Integer.parseInt(parent.getSelectedItem().toString().split("\\(")[0]);
                 for (int i = selected; i <= 20; i++) {
                     empty_clock2_list.add(empty_array2.get(i-3));
                 }
-                ArrayAdapter<String> empty_clock2_adapter = new ArrayAdapter<String>(getApplicationContext(),
+                ArrayAdapter<String> empty_clock2_adapter = new ArrayAdapter<>(getApplicationContext(),
                         R.layout.spinner_item, empty_clock2_list);
                 empty_clock2.setAdapter(empty_clock2_adapter);
             }
@@ -267,13 +266,13 @@ public class EmptyActivity extends AppCompatActivity
         int id = item.getItemId();
 
         if (id == R.id.nav_res) {
-            Intent intent = new Intent(getApplicationContext(), ResActivity.class);
+            Intent intent = new Intent(getApplicationContext(), ResKActivity.class);
             startActivity(intent);
         } else if (id == R.id.nav_room) {
             Intent intent = new Intent(getApplicationContext(), RoomActivity.class);
             startActivity(intent);
         } else if (id == R.id.nav_pro) {
-            Intent intent = new Intent(getApplicationContext(), ProActivity.class);
+            Intent intent = new Intent(getApplicationContext(), ProKActivity.class);
             startActivity(intent);
         } else if (id == R.id.nav_stu) {
             Intent intent = new Intent(getApplicationContext(), StudentActivity.class);
@@ -288,7 +287,7 @@ public class EmptyActivity extends AppCompatActivity
             Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("http://www.donga.ac.kr"));
             startActivity(intent);
         } else if (id == R.id.nav_noti) {
-            Intent intent = new Intent(getApplicationContext(), NoticeActivity.class);
+            Intent intent = new Intent(getApplicationContext(), NoticeKActivity.class);
             startActivity(intent);
         } else if (id == R.id.nav_change) {
             Intent intent = new Intent(getApplicationContext(), ChangeActivity.class);
@@ -300,15 +299,15 @@ public class EmptyActivity extends AppCompatActivity
             SharedPreferences sharedPreferences = getSharedPreferences(getResources().getString(R.string.SFLAG), Context.MODE_PRIVATE);
             SharedPreferences.Editor editor = sharedPreferences.edit();
             editor.clear();
-            editor.commit();
+            editor.apply();
             Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
             intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             startActivity(intent);
 
         } else if (id == R.id.nav_manage) {
-//            Intent intent = new Intent(getApplicationContext(), ManageLoginActivity.class);
-//            startActivity(intent);
+            Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("http://45.77.31.224/"));
+            startActivity(intent);
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout_empty);

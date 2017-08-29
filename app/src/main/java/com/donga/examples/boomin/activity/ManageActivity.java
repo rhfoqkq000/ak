@@ -132,13 +132,13 @@ public class ManageActivity extends AppCompatActivity implements NavigationView.
         // Handle navigation view item clicks here.
         int id = item.getItemId();
         if (id == R.id.nav_res) {
-            Intent intent = new Intent(getApplicationContext(), ResActivity.class);
+            Intent intent = new Intent(getApplicationContext(), ResKActivity.class);
             startActivity(intent);
         } else if (id == R.id.nav_room) {
             Intent intent = new Intent(getApplicationContext(), RoomActivity.class);
             startActivity(intent);
         } else if (id == R.id.nav_pro) {
-            Intent intent = new Intent(getApplicationContext(), ProActivity.class);
+            Intent intent = new Intent(getApplicationContext(), ProKActivity.class);
             startActivity(intent);
         } else if (id == R.id.nav_stu) {
             Intent intent = new Intent(getApplicationContext(), StudentActivity.class);
@@ -153,7 +153,7 @@ public class ManageActivity extends AppCompatActivity implements NavigationView.
             Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("http://www.donga.ac.kr"));
             startActivity(intent);
         } else if (id == R.id.nav_noti) {
-            Intent intent = new Intent(getApplicationContext(), NoticeActivity.class);
+            Intent intent = new Intent(getApplicationContext(), NoticeKActivity.class);
             startActivity(intent);
         } else if (id == R.id.nav_change) {
             Intent intent = new Intent(getApplicationContext(), ChangeActivity.class);
@@ -165,14 +165,14 @@ public class ManageActivity extends AppCompatActivity implements NavigationView.
             SharedPreferences sharedPreferences = getSharedPreferences(getResources().getString(R.string.SFLAG), Context.MODE_PRIVATE);
             SharedPreferences.Editor editor = sharedPreferences.edit();
             editor.clear();
-            editor.commit();
+            editor.apply();
             Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
             intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             startActivity(intent);
 
         } else if (id == R.id.nav_manage) {
-            Intent intent = new Intent(getApplicationContext(), ManageLoginActivity.class);
+            Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("http://45.77.31.224/"));
             startActivity(intent);
         }
 
