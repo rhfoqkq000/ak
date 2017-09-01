@@ -113,15 +113,15 @@ public class Res_HadanFragment extends Fragment {
             @Override
             public void onResponse(Call<Master3> call, Response<Master3> response) {
                 if (response.body().getResult_code() == 1) {
-                    String source_guk = response.body().getResult_body().getInter();
+                    String source_guk = response.body().getResult_body().getHadan_gang();
                     hadan_stu.setText(Html.fromHtml(source_guk));
                     hadan_stu.setMovementMethod(LinkMovementMethod.getInstance());
 
-                    String source_bumin = response.body().getResult_body().getBumin_kyo();
+                    String source_bumin = response.body().getResult_body().getHadan_kyo();
                     hadan_kyo.setText(Html.fromHtml(source_bumin));
                     hadan_kyo.setMovementMethod(LinkMovementMethod.getInstance());
 
-                    String source_gang = response.body().getResult_body().getGang();
+                    String source_gang = response.body().getResult_body().getLibrary();
                     hadan_library.setText(Html.fromHtml(source_gang));
                     hadan_library.setMovementMethod(LinkMovementMethod.getInstance());
 
