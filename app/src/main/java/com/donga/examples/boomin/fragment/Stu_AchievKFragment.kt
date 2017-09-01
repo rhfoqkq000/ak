@@ -110,7 +110,7 @@ class Stu_AchievKFragment: Fragment() {
 
         all_ok.setOnClickListener {
             FuelManager.instance.basePath = getString(R.string.retrofit_url)
-            FuelManager.instance.baseParams = listOf("stuId" to InfoSingleton.getInstance().stuId, "stuPw" to Decrypt(InfoSingleton.getInstance().stuPw, getString(R.string.decrypt_key)))
+            FuelManager.instance.baseParams = listOf("stuId" to InfoSingleton.getInstance().stuId, "stuPw" to InfoSingleton.getInstance().stuPw)
             "donga/getAllGrade".httpPost().responseObject(Achiev.Deserializer()) { _, _, result ->
                 result.fold({ (result_code, result_body) ->
 
@@ -141,7 +141,7 @@ class Stu_AchievKFragment: Fragment() {
             Logger.d(hash[achiev_side.getItems<String>()[achiev_side.selectedIndex].toString()].toString())
             FuelManager.instance.basePath = getString(R.string.retrofit_url)
             FuelManager.instance.baseParams = listOf("stuId" to InfoSingleton.getInstance().stuId,
-                    "stuPw" to Decrypt(InfoSingleton.getInstance().stuPw, getString(R.string.decrypt_key)),
+                    "stuPw" to InfoSingleton.getInstance().stuPw,
                     "year" to achiev_year.getItems<String>()[achiev_year.selectedIndex].toString(),
                     "smt" to hash[achiev_side.getItems<String>()[achiev_side.selectedIndex].toString()].toString())
             "donga/getSpeGrade".httpPost().responseObject(Achiev.Deserializer()) { _, _, result ->
@@ -171,7 +171,7 @@ class Stu_AchievKFragment: Fragment() {
 
     data class Result_body(val allGrade:String? = null,val avgGrade: String? = null, val detail:ArrayList<ArrayList<String>>? = null)
     data class Achiev(val result_code: Int = 0,
-                     val result_body: Result_body? = null) {
+                      val result_body: Result_body? = null) {
         //User Deserializer
         class Deserializer : ResponseDeserializable<Achiev> {
             override fun deserialize(content: String) = Gson().fromJson(content, Achiev::class.java)

@@ -73,9 +73,6 @@
             android:name=".activity.AttendActivity"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".activity.WisperActivity"
-            android:theme="@style/AppTheme.NoActionBar" />
-        <activity
             android:name=".activity.NoticeKActivity"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity

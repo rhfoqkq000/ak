@@ -7,6 +7,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.telephony.TelephonyManager;
+import android.util.Base64;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -25,6 +26,10 @@ import io.fabric.sdk.android.Fabric;
 import com.appsee.Appsee;
 
 import java.util.UUID;
+
+import javax.crypto.Cipher;
+import javax.crypto.spec.IvParameterSpec;
+import javax.crypto.spec.SecretKeySpec;
 
 import es.dmoral.toasty.Toasty;
 import me.leolin.shortcutbadger.ShortcutBadger;
@@ -108,7 +113,12 @@ public class FirstActivity extends AppCompatActivity {
                                 Intent intent = new Intent(getApplicationContext(), HomeActivity.class);
 
                                 InfoSingleton.getInstance().setStuId(String.valueOf(sharedPreferences.getInt("stuID", 0)));
-                                InfoSingleton.getInstance().setStuPw(sharedPreferences.getString("pw", ""));
+//                                InfoSingleton.getInstance().setStuPw(sharedPreferences.getString("pw", ""));
+                                try {
+                                    InfoSingleton.getInstance().setStuPw(Decrypt(sharedPreferences.getString("pw", ""), getString(R.string.decrypt_key)));
+                                } catch (Exception e) {
+                                    e.printStackTrace();
+                                }
 
                                 if (PushSingleton.getInstance().getmString() != null) {
                                     Bundle bun = new Bundle();
@@ -273,6 +283,21 @@ public class FirstActivity extends AppCompatActivity {
 //        }
 //        return true;
 //    }
+
+    // MD5 복호화
+    public static String Decrypt(String text, String key) throws Exception {
+        Cipher cipher = Cipher.getInstance("AES/CBC/PKCS5Padding");
+        byte[] keyBytes = new byte[16];
+        byte[] b = key.getBytes("UTF-8");
+        int len = b.length;
+        if (len > keyBytes.length) len = keyBytes.length;
+        System.arraycopy(b, 0, keyBytes, 0, len);
+        SecretKeySpec keySpec = new SecretKeySpec(keyBytes, "AES");
+        IvParameterSpec ivSpec = new IvParameterSpec(keyBytes);
+        cipher.init(Cipher.DECRYPT_MODE, keySpec, ivSpec);
+        byte[] results = cipher.doFinal(Base64.decode(text, 0));
+        return new String(results, "UTF-8");
+    }
 
     // Device UUID 구하기
     private String GetDevicesUUID(Context mContext) {

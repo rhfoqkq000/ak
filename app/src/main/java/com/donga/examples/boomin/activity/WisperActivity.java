@@ -178,7 +178,7 @@ public class WisperActivity extends AppCompatActivity
             startActivity(intent);
 
         } else if (id == R.id.nav_manage) {
-            Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("http://45.77.31.224/"));
+            Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("http://booadmin.xyz"));
             startActivity(intent);
         }
 

@@ -105,23 +105,23 @@ public class Res_HadanFragment extends Fragment {
 
         showProgressDialog();
 
-        Retrofit client = new Retrofit.Builder().baseUrl(getString(R.string.retrofit_url))
+        Retrofit client = new Retrofit.Builder().baseUrl("http://www.dongaboomin.xyz:3000/")
                 .addConverterFactory(GsonConverterFactory.create()).build();
         Interface_meal meal = client.create(Interface_meal.class);
         retrofit2.Call<Master3> call3 = meal.getMeal(getTime);
         call3.enqueue(new Callback<Master3>() {
             @Override
             public void onResponse(Call<Master3> call, Response<Master3> response) {
-                if (response.body().getResult_code() == 1) {
-                    String source_guk = response.body().getResult_body().getInter();
+                if (response.body().getResult_code() == 200) {
+                    String source_guk = response.body().getResult_body().getHadan_gang();
                     hadan_stu.setText(Html.fromHtml(source_guk));
                     hadan_stu.setMovementMethod(LinkMovementMethod.getInstance());
 
-                    String source_bumin = response.body().getResult_body().getBumin_kyo();
+                    String source_bumin = response.body().getResult_body().getHadan_kyo();
                     hadan_kyo.setText(Html.fromHtml(source_bumin));
                     hadan_kyo.setMovementMethod(LinkMovementMethod.getInstance());
 
-                    String source_gang = response.body().getResult_body().getGang();
+                    String source_gang = response.body().getResult_body().getLibrary();
                     hadan_library.setText(Html.fromHtml(source_gang));
                     hadan_library.setMovementMethod(LinkMovementMethod.getInstance());
 

@@ -9,6 +9,6 @@ import retrofit2.http.Query;
  */
 
 public interface Interface_meal {
-    @GET("/donga/meal")
+    @GET("/meal")
     Call<Master3> getMeal(@Query("date") String date);
 }
