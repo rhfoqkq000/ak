@@ -601,6 +601,12 @@ public class Stu_ScheFragment extends Fragment {
 //            hideProgressDialog();
 //        }
 
+        try {
+            Logger.d(InfoSingleton.getInstance().getStuId()+", "+InfoSingleton.getInstance().getStuPw());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
         retrofitSche();
 
         return rootview;
@@ -715,7 +721,7 @@ public class Stu_ScheFragment extends Fragment {
         for(int i = 0; i < resultBody.size(); i++){
             String get5string = resultBody.get(i).get(6);
             if(!get5string.equals("")){
-                if(!get5string.equals(" ")) {
+                if(!get5string.equals(" ")) {
                     if(!resultBody.get(i).get(1).equals("")){
                         if (!codeArray.contains(resultBody.get(i).get(1))) {
                             codeArray.add(resultBody.get(i).get(1));
@@ -782,6 +788,7 @@ public class Stu_ScheFragment extends Fragment {
     }
 
     public void retrofitSche(){
+
         showProgressDialog();
         Retrofit client = new Retrofit.Builder().baseUrl(getString(R.string.retrofit_url))
                 .addConverterFactory(GsonConverterFactory.create()).build();
@@ -790,7 +797,7 @@ public class Stu_ScheFragment extends Fragment {
         Call<Master> call;
         try {
             call = sche.getTimeTable(InfoSingleton.getInstance().getStuId(),
-                    Decrypt(InfoSingleton.getInstance().getStuPw(), getString(R.string.decrypt_key)));
+                    InfoSingleton.getInstance().getStuPw());
             call.enqueue(new Callback<Master>() {
                 @Override
                 public void onResponse(Call<Master> call, Response<Master> response) {

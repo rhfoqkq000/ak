@@ -108,7 +108,7 @@ public class LoginActivity extends AppCompatActivity {
                             if (response.body().getResult_code() == 1 || response.body().getResult_code() == 2) {
                                 InfoSingleton.getInstance().setStuId(String.valueOf(sharedPreferences.getInt("stuID", 0)));
                                 try {
-                                    InfoSingleton.getInstance().setStuPw(Encrypt(sharedPreferences.getString("pw", ""), getString(R.string.decrypt_key)));
+                                    InfoSingleton.getInstance().setStuPw(sharedPreferences.getString("pw", ""));
                                 } catch (Exception e) {
                                     e.printStackTrace();
                                 }
