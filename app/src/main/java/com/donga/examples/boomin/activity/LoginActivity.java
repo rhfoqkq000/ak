@@ -107,7 +107,11 @@ public class LoginActivity extends AppCompatActivity {
                                                Response<com.donga.examples.boomin.retrofit.retrofitFirstLogin.Master> response) {
                             if (response.body().getResult_code() == 1 || response.body().getResult_code() == 2) {
                                 InfoSingleton.getInstance().setStuId(String.valueOf(sharedPreferences.getInt("stuID", 0)));
-                                InfoSingleton.getInstance().setStuPw(sharedPreferences.getString("pw", ""));
+                                try {
+                                    InfoSingleton.getInstance().setStuPw(Encrypt(sharedPreferences.getString("pw", ""), getString(R.string.decrypt_key)));
+                                } catch (Exception e) {
+                                    e.printStackTrace();
+                                }
 
                                 Retrofit client = new Retrofit.Builder().baseUrl(getString(R.string.retrofit_url))
                                         .addConverterFactory(GsonConverterFactory.create()).build();

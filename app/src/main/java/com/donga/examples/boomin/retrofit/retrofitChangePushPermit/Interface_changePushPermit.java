@@ -9,6 +9,6 @@ import retrofit2.http.Query;
  */
 
 public interface Interface_changePushPermit {
-    @GET("/change_push_permit?user_id=5")
+    @GET("/change_push_permit")
     Call<Master> changePushPermit(@Query("user_id") String user_id);
 }
