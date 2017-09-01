@@ -11,12 +11,15 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TableLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.couchbase.lite.CouchbaseLiteException;
 import com.couchbase.lite.Database;
 import com.couchbase.lite.Document;
 import com.couchbase.lite.Manager;
+import com.couchbase.lite.SavedRevision;
 import com.couchbase.lite.android.AndroidContext;
 import com.donga.examples.boomin.AppendLog;
 import com.donga.examples.boomin.R;
@@ -27,6 +30,7 @@ import com.donga.examples.boomin.retrofit.retrofitGrad.Result_body;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.orhanobut.logger.Logger;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -107,30 +111,56 @@ public class Stu_GrageFragment extends Fragment {
     @BindView(R.id.kyo_34)
     TextView kyo_34;
 
+    @BindView(R.id.hak_01)
+    TextView hak_01;
+    @BindView(R.id.hak_02)
+    TextView hak_02;
+    @BindView(R.id.hak_11)
+    TextView hak_11;
+    @BindView(R.id.hak_12)
+    TextView hak_12;
+    @BindView(R.id.hak_21)
+    TextView hak_21;
+    @BindView(R.id.hak_22)
+    TextView hak_22;
+    @BindView(R.id.hak_31)
+    TextView hak_31;
+    @BindView(R.id.hak_32)
+    TextView hak_32;
+
     @BindView(R.id.jun_01)
     TextView jun_01;
     @BindView(R.id.jun_02)
     TextView jun_02;
+    @BindView(R.id.jun_03)
+    TextView jun_03;
     @BindView(R.id.jun_11)
     TextView jun_11;
     @BindView(R.id.jun_12)
     TextView jun_12;
+    @BindView(R.id.jun_13)
+    TextView jun_13;
     @BindView(R.id.jun_21)
     TextView jun_21;
     @BindView(R.id.jun_22)
     TextView jun_22;
+    @BindView(R.id.jun_23)
+    TextView jun_23;
     @BindView(R.id.jun_31)
     TextView jun_31;
     @BindView(R.id.jun_32)
     TextView jun_32;
+    @BindView(R.id.jun_33)
+    TextView jun_33;
 
+    @BindView(R.id.ja_0)
+    TextView ja_0;
     @BindView(R.id.ja_1)
     TextView ja_1;
     @BindView(R.id.ja_2)
     TextView ja_2;
     @BindView(R.id.ja_3)
     TextView ja_3;
-
 
     private ProgressDialog mProgressDialog;
 
@@ -152,6 +182,7 @@ public class Stu_GrageFragment extends Fragment {
 
         showProgressDialog();
 
+//        retrofitGrade();
         manager = null;
         database = null;
         try {
@@ -237,75 +268,116 @@ public class Stu_GrageFragment extends Fragment {
         tv_smart.setText(resultBody.getInfo().getSmart());
 
         ArrayList<String> title = resultBody.getTitle2();
-        kyo_02.setText(title.get(0).split("교양")[0]);
-        kyo_03.setText(title.get(1).split("교양")[0]);
-        kyo_04.setText(title.get(2).split("교양")[0]);
-        kyo_05.setText(title.get(3).split("교양")[0]);
+        title.add("자유선택");
+        ArrayList<String> needArr = resultBody.getNeed();
+        ArrayList<String> getArr = resultBody.getGet();
+        ArrayList<String> pmArr = resultBody.getPm();
 
-        kyo_11.setText(resultBody.getNeed().get(1));
-        kyo_12.setText(resultBody.getNeed().get(2));
-        kyo_13.setText(resultBody.getNeed().get(3));
-        kyo_14.setText(resultBody.getNeed().get(4));
-
-        kyo_21.setText(resultBody.getGet().get(1));
-        kyo_22.setText(resultBody.getGet().get(2));
-        kyo_23.setText(resultBody.getGet().get(3));
-        kyo_24.setText(resultBody.getGet().get(4));
-
-        kyo_31.setText(resultBody.getPm().get(1));
-        if (0 > Integer.parseInt(resultBody.getPm().get(1))) {
-            kyo_31.setTextColor(getResources().getColor(R.color.Red));
-        }
-        kyo_32.setText(resultBody.getPm().get(2));
-        if (0 > Integer.parseInt(resultBody.getPm().get(2))) {
-            kyo_32.setTextColor(getResources().getColor(R.color.Red));
-        }
-        kyo_33.setText(resultBody.getPm().get(3));
-        if (0 > Integer.parseInt(resultBody.getPm().get(3))) {
-            kyo_33.setTextColor(getResources().getColor(R.color.Red));
-        }
-        kyo_34.setText(resultBody.getPm().get(4));
-        if (0 > Integer.parseInt(resultBody.getPm().get(4))) {
-            kyo_34.setTextColor(getResources().getColor(R.color.Red));
+        ArrayList<Integer> filledTitleIndex = new ArrayList<>();
+        for (int i = 0; i < title.size(); i++){
+            if (!title.get(i).equals("")) {
+                filledTitleIndex.add(i);
+            }
         }
 
-        jun_01.setText(resultBody.getTitle2().get(6));
-        jun_02.setText(resultBody.getTitle2().get(7));
+        ArrayList<TextView> titleTvArray = new ArrayList<>();
+        titleTvArray.add(kyo_02);
+        titleTvArray.add(kyo_03);
+        titleTvArray.add(kyo_04);
+        titleTvArray.add(kyo_05);
+        titleTvArray.add(hak_01);
+        titleTvArray.add(hak_02);
+        titleTvArray.add(jun_01);
+        titleTvArray.add(jun_02);
+        titleTvArray.add(jun_03);
+        titleTvArray.add(ja_0);
 
-        jun_11.setText(resultBody.getNeed().get(7));
-        jun_12.setText(resultBody.getNeed().get(8));
+        ArrayList<TextView> needTvArray = new ArrayList<>();
+        needTvArray.add(kyo_11);
+        needTvArray.add(kyo_12);
+        needTvArray.add(kyo_13);
+        needTvArray.add(kyo_14);
+        needTvArray.add(hak_11);
+        needTvArray.add(hak_12);
+        needTvArray.add(jun_11);
+        needTvArray.add(jun_12);
+        needTvArray.add(jun_13);
+        needTvArray.add(ja_1);
 
-        jun_21.setText(resultBody.getGet().get(7));
-        jun_22.setText(resultBody.getGet().get(8));
+        ArrayList<TextView> getTvArray = new ArrayList<>();
+        getTvArray.add(kyo_21);
+        getTvArray.add(kyo_22);
+        getTvArray.add(kyo_23);
+        getTvArray.add(kyo_24);
+        getTvArray.add(hak_21);
+        getTvArray.add(hak_22);
+        getTvArray.add(jun_21);
+        getTvArray.add(jun_22);
+        getTvArray.add(jun_23);
+        getTvArray.add(ja_2);
 
-        jun_31.setText(resultBody.getPm().get(7));
-        if (0 > Integer.parseInt(resultBody.getPm().get(7))) {
-            jun_31.setTextColor(getResources().getColor(R.color.Red));
-        }
-        jun_32.setText(resultBody.getPm().get(8));
-        if (0 > Integer.parseInt(resultBody.getPm().get(8))) {
-            jun_32.setTextColor(getResources().getColor(R.color.Red));
-        }
+        ArrayList<TextView> pmTvArray = new ArrayList<>();
+        pmTvArray.add(kyo_31);
+        pmTvArray.add(kyo_32);
+        pmTvArray.add(kyo_33);
+        pmTvArray.add(kyo_34);
+        pmTvArray.add(hak_31);
+        pmTvArray.add(hak_32);
+        pmTvArray.add(jun_31);
+        pmTvArray.add(jun_32);
+        pmTvArray.add(jun_33);
+        pmTvArray.add(ja_3);
 
-        ja_1.setText(resultBody.getNeed().get(10));
-        ja_2.setText(resultBody.getGet().get(10));
-        ja_3.setText(resultBody.getPm().get(10));
-        if (0 > Integer.parseInt(resultBody.getPm().get(10))) {
-            ja_3.setTextColor(getResources().getColor(R.color.Red));
+        for (int i = 0; i < title.size(); i++){
+            if (!title.get(i).equals("")){
+                titleTvArray.get(i).setText(valid(title.get(i)));
+//                Logger.d("원문:"+title.get(i)+", 결과:"+valid(title.get(i)));
+            }
+            if (!needArr.get(i+1).equals("")){
+                needTvArray.get(i).setText(needArr.get(i+1));
+//                Logger.d(i+"번째 필요학점 ~~~~" + needArr.get(i+1)+", title::"+title.get(i));
+            }
+            if (!getArr.get(i+1).equals("")){
+                getTvArray.get(i).setText(getArr.get(i+1));
+            }
+            if (!pmArr.get(i+1).equals("")){
+                pmTvArray.get(i).setText(pmArr.get(i+1));
+                if (0 > Integer.parseInt(pmArr.get(i+1))) {
+                    pmTvArray.get(i).setTextColor(getResources().getColor(R.color.Red));
+                }
+            }
         }
 
         hideProgressDialog();
     }
 
+    public static boolean validate(String str) {
+        final Pattern VALID_PERCENT_REGEX = Pattern.compile("교양");
+        Matcher matcher = VALID_PERCENT_REGEX.matcher(str);
+//        return matcher.find();
+        return matcher.find();
+    }
+
+    public String valid(String str){
+        return str.replaceAll("교양", "");
+    }
+
     public void retrofitGrade(){
+        try {
+            document.delete();
+        } catch (CouchbaseLiteException e) {
+            e.printStackTrace();
+        }
+
         //retrofit 통신
         Retrofit client = new Retrofit.Builder().baseUrl(getString(R.string.retrofit_url))
                 .addConverterFactory(GsonConverterFactory.create()).build();
-        Interface_grad sche = client.create(Interface_grad.class);
+        Interface_grad grad = client.create(Interface_grad.class);
         try {
             Call<Master> call =
-                    sche.getSchedule(InfoSingleton.getInstance().getStuId(),
-                            Decrypt(InfoSingleton.getInstance().getStuPw(), getString(R.string.decrypt_key)));
+                    grad.getSchedule(InfoSingleton.getInstance().getStuId(),
+                            InfoSingleton.getInstance().getStuPw());
+//            Call<Master> call = grad.getSchedule();
             call.enqueue(new Callback<Master>() {
                 @Override
                 public void onResponse(Call<com.donga.examples.boomin.retrofit.retrofitGrad.Master> call, Response<Master> response) {
