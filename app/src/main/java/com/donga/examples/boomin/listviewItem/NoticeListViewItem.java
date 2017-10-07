@@ -5,7 +5,7 @@ package com.donga.examples.boomin.listviewItem;
  */
 public class NoticeListViewItem {
 
-    private String notice_text, notice_time;
+    private String notice_text, notice_time, notice_content;
 
     public String getNotice_text() {
         return notice_text;
@@ -21,5 +21,13 @@ public class NoticeListViewItem {
 
     public void setNotice_time(String notice_time) {
         this.notice_time = notice_time;
+    }
+
+    public String getNotice_content() {
+        return notice_content;
+    }
+
+    public void setNotice_content(String notice_content) {
+        this.notice_content = notice_content;
     }
 }

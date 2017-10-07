@@ -1,5 +1,6 @@
 package com.donga.examples.boomin.activity;
 
+
 import android.Manifest;
 import android.app.Activity;
 import android.app.ProgressDialog;
@@ -83,7 +84,7 @@ public class LoginActivity extends AppCompatActivity {
                     InfoSingleton.getInstance().setId(String.valueOf(response.body().getResult_body().getId()));
                     editor.putString("UUID", GetDevicesUUID(getApplicationContext()));
                     try {
-                        editor.putString("pw", Encrypt(s_pw.getText().toString(), getString(R.string.decrypt_key)));
+                        editor.putString("pw", s_pw.getText().toString());
                     } catch (Exception e) {
                         e.printStackTrace();
                     }

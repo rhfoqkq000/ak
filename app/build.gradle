@@ -7,14 +7,14 @@ repositories {
 }
 android {
     compileSdkVersion 26
-    buildToolsVersion "26.0.0"
+    buildToolsVersion '26.0.2'
 
     defaultConfig {
         applicationId "com.donga.examples.boomin"
         minSdkVersion 21
         targetSdkVersion 26
-        versionCode 11
-        versionName "4.0.1"
+        versionCode 13
+        versionName "4.0.3"
         multiDexEnabled true
     }
     dexOptions {

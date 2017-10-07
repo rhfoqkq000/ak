@@ -5,17 +5,10 @@ import android.appwidget.AppWidgetProvider;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.graphics.Color;
-import android.util.Base64;
-import android.util.Log;
 import android.view.View;
 import android.widget.RemoteViews;
-import android.widget.TextView;
 import android.widget.Toast;
 
-import com.couchbase.lite.Database;
-import com.couchbase.lite.Document;
-import com.couchbase.lite.Manager;
-import com.couchbase.lite.android.AndroidContext;
 import com.donga.examples.boomin.Singleton.InfoSingleton;
 import com.donga.examples.boomin.Singleton.ScheduleSingleton;
 import com.donga.examples.boomin.retrofit.retrofitSchedule.Interface_sche;
@@ -24,10 +17,6 @@ import com.orhanobut.logger.Logger;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-
-import javax.crypto.Cipher;
-import javax.crypto.spec.IvParameterSpec;
-import javax.crypto.spec.SecretKeySpec;
 
 import es.dmoral.toasty.Toasty;
 import retrofit2.Call;
@@ -43,9 +32,9 @@ public class BooWidget extends AppWidgetProvider {
 
     SharedPreferences sharedPreferences;
 
-    Document document;
-    Manager manager;
-    Database database;
+//    Document document;
+//    Manager manager;
+//    Database database;
 
     public static final String DB_NAME = "app";
     static String blank = "";
@@ -187,58 +176,57 @@ public class BooWidget extends AppWidgetProvider {
 
     @Override
     public void onUpdate(final Context context, final AppWidgetManager appWidgetManager, final int[] appWidgetIds) {
-        manager = null;
-        database = null;
-        try {
-            manager = new Manager(new AndroidContext(context), Manager.DEFAULT_OPTIONS);
-            database = manager.getDatabase(DB_NAME);
-        } catch (Exception e) {
-            Toasty.error(context, "불러오기 실패", Toast.LENGTH_SHORT).show();
-        }
-        sharedPreferences = context.getSharedPreferences(context.getResources().getString(R.string.SFLAG), Context.MODE_PRIVATE);
-        document = database.getDocument(String.valueOf(sharedPreferences.getInt("stuID", 0)));
-
-        if(document.getProperty("properties")!=null){
-            Logger.d(document.getProperty("properties"));
-            ArrayList<ArrayList<String>> resultBody = (ArrayList<ArrayList<String>>)document.getProperties().get("properties");
-            for (int appWidgetId : appWidgetIds) {
-                updateAppWidget(context, appWidgetManager, appWidgetId, resultBody);
-            }
-        }else {
-            Toasty.error(context, "BOO 앱에서 시간표를 먼저 확인해주세요.", Toast.LENGTH_SHORT).show();
-//            Retrofit client = new Retrofit.Builder().baseUrl(context.getString(R.string.retrofit_url))
-//                    .addConverterFactory(GsonConverterFactory.create()).build();
-//            Interface_sche sche = client.create(Interface_sche.class);
+//        manager = null;
+//        database = null;
+//        try {
+//            manager = new Manager(new AndroidContext(context), Manager.DEFAULT_OPTIONS);
+//            database = manager.getDatabase(DB_NAME);
+//        } catch (Exception e) {
+//            Toasty.error(context, "불러오기 실패", Toast.LENGTH_SHORT).show();
+//        }
+//        sharedPreferences = context.getSharedPreferences(context.getResources().getString(R.string.SFLAG), Context.MODE_PRIVATE);
+//        document = database.getDocument(String.valueOf(sharedPreferences.getInt("stuID", 0)));
 //
-//            Call<Master> call = null;
-//            try {
-//                call = sche.getTimeTable(InfoSingleton.getInstance().getStuId(),
-//                        Decrypt(InfoSingleton.getInstance().getStuPw(), context.getString(R.string.decrypt_key)));
-//            } catch (Exception e) {
-//                e.printStackTrace();
+//        if(document.getProperty("properties")!=null){
+//            Logger.d(document.getProperty("properties"));
+//            ArrayList<ArrayList<String>> resultBody = (ArrayList<ArrayList<String>>)document.getProperties().get("properties");
+//            for (int appWidgetId : appWidgetIds) {
+//                updateAppWidget(context, appWidgetManager, appWidgetId, resultBody);
 //            }
-//            call.enqueue(new Callback<Master>() {
-//                @Override
-//                public void onResponse(Call<Master> call, Response<Master> response) {
-//                    if (response.body().getResult_code() == 1) {
-//                        ArrayList<ArrayList<String>> resultBody = response.body().getResult_body();
-////                    setSchedule(resultBody, context);
-//
-//                        for (int appWidgetId : appWidgetIds) {
-//                            updateAppWidget(context, appWidgetManager, appWidgetId, resultBody);
-//                        }
-//                    } else {
-//                        Toasty.error(context, "불러오기 실패", Toast.LENGTH_SHORT).show();
-//                    }
-//                }
-//
-//                @Override
-//                public void onFailure(Call<Master> call, Throwable t) {
-//                    Toasty.error(context, "불러오기 실패", Toast.LENGTH_SHORT).show();
-//                    t.printStackTrace();
-//                }
-//            });
+//        }else {
+//            Toasty.error(context, "BOO 앱에서 시간표를 먼저 확인해주세요.", Toast.LENGTH_SHORT).show();
+
+        Retrofit client = new Retrofit.Builder().baseUrl(context.getString(R.string.retrofit_url))
+                .addConverterFactory(GsonConverterFactory.create()).build();
+        Interface_sche sche = client.create(Interface_sche.class);
+
+        Call<Master> call = null;
+        try {
+            call = sche.getTimeTable(InfoSingleton.getInstance().getStuId(),
+                    InfoSingleton.getInstance().getStuPw());
+        } catch (Exception e) {
+            e.printStackTrace();
         }
+        call.enqueue(new Callback<Master>() {
+            @Override
+            public void onResponse(Call<Master> call, Response<Master> response) {
+                if (response.body().getResult_code() == 1) {
+                    ArrayList<ArrayList<String>> resultBody = response.body().getResult_body();
+                    for (int appWidgetId : appWidgetIds) {
+                        updateAppWidget(context, appWidgetManager, appWidgetId, resultBody);
+                    }
+                } else {
+                    Toasty.error(context, "불러오기 실패", Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Master> call, Throwable t) {
+                Toasty.error(context, "불러오기 실패", Toast.LENGTH_SHORT).show();
+                t.printStackTrace();
+            }
+        });
+//        }
 
     }
 
@@ -251,20 +239,4 @@ public class BooWidget extends AppWidgetProvider {
     public void onDisabled(Context context) {
         // Enter relevant functionality for when the last widget is disabled
     }
-
-    // MD5 복호화
-    public static String Decrypt(String text, String key) throws Exception {
-        Cipher cipher = Cipher.getInstance("AES/CBC/PKCS5Padding");
-        byte[] keyBytes = new byte[16];
-        byte[] b = key.getBytes("UTF-8");
-        int len = b.length;
-        if (len > keyBytes.length) len = keyBytes.length;
-        System.arraycopy(b, 0, keyBytes, 0, len);
-        SecretKeySpec keySpec = new SecretKeySpec(keyBytes, "AES");
-        IvParameterSpec ivSpec = new IvParameterSpec(keyBytes);
-        cipher.init(Cipher.DECRYPT_MODE, keySpec, ivSpec);
-        byte[] results = cipher.doFinal(Base64.decode(text, 0));
-        return new String(results, "UTF-8");
-    }
 }
-
